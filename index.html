@@ -1054,7 +1054,7 @@ if ('IntersectionObserver' in window) {
 var watched = this.revealEls;
 this.io = new IntersectionObserver(function (entries) {
 entries.forEach(function (en) { if (en.isIntersecting) en.target.dataset.in = '1'; });
-}, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+}, { rootMargin: '0px 0px -22% 0px', threshold: 0 });
 // A zoomed-out canvas shows the whole board at once, so everything "appears" before anyone
 // reads it. Whatever then sits fully below the screen is reset, and plays when scrolled to.
 if (!this.reduce) {
