@@ -1,0 +1,2329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Juhui Seo · UX/UI & Product Designer</title>
+<meta name="description" content="Juhui Seo, a UX/UI and product designer based in the Netherlands. Research first, then a design system, then working code.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Juhui Seo · UX/UI & Product Designer">
+<meta property="og:description" content="Juhui Seo, a UX/UI and product designer based in the Netherlands. Research first, then a design system, then working code.">
+<meta property="og:image" content="/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F9F7F2">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@500;600;700;800;900&amp;family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&amp;family=Nanum+Pen+Script&amp;display=swap">
+<style>
+body{margin:0;background:#F9F7F2}
+a{color:#151515}a:hover{color:#2343B5}
+.cta{transition:transform 160ms cubic-bezier(0.22,1,0.36,1),background-color 160ms cubic-bezier(0.22,1,0.36,1)}
+.cta svg{transition:transform 160ms cubic-bezier(0.22,1,0.36,1)}
+.cta:hover{transform:scale(1.05);background-color:#16297A !important}
+.cta:hover svg{transform:translateY(2px)}
+.cta:active{transform:scale(0.97);transition-duration:90ms}
+@media (max-width: 640px){
+.brand{font-size:30px !important}
+.hdr{padding-top:12px !important;padding-bottom:10px !important;row-gap:6px !important}
+}
+/* Mobile header: name + Menu button; the links open as a full-screen sheet. */
+.menubtn{display:none;appearance:none;border:1.5px solid #151515;background:transparent;color:#151515;border-radius:999px;padding:8px 16px;font:500 15px/1 Roboto,system-ui,sans-serif;cursor:pointer;min-height:40px}
+.menubtn:focus-visible{outline:2px solid #2343B5;outline-offset:3px}
+.mnav{position:fixed;inset:0;z-index:60;background:#F9F7F2;display:flex;flex-direction:column;padding:12px 24px 32px;box-sizing:border-box;opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity 260ms cubic-bezier(.22,1,.36,1),transform 260ms cubic-bezier(.22,1,.36,1),visibility 0s linear 260ms}
+.mnav[data-open="1"]{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.mnav-top{display:flex;align-items:center;justify-content:space-between;min-height:52px}
+.mnav-top .menubtn{display:inline-flex;align-items:center}
+.mnav-brand{font-family:'Darker Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:1}
+.mnav-links{display:flex;flex-direction:column;gap:6px;margin-top:40px}
+.mnav-links a{font-family:'Darker Grotesque',sans-serif;font-weight:800;font-size:clamp(44px,13vw,64px);line-height:1.05;color:#151515;text-decoration:none;opacity:0;transform:translateY(10px);transition:opacity 320ms cubic-bezier(.22,1,.36,1),transform 320ms cubic-bezier(.22,1,.36,1);transition-delay:calc(60ms + var(--i) * 45ms)}
+.mnav[data-open="1"] .mnav-links a{opacity:1;transform:none}
+.mnav-links a:active{color:#2343B5}
+@media (max-width: 760px){
+.mainnav{display:none !important}
+.hdr > .menubtn{display:inline-flex;align-items:center}
+.hdr{flex-wrap:nowrap !important}
+}
+@media (prefers-reduced-motion: reduce){.mnav,.mnav-links a{transition:none}}
+/* Custom cursor: a small ink dot, only on devices with a real mouse. */
+.dot{position:fixed;left:0;top:0;z-index:100;pointer-events:none;opacity:0;transition:opacity 160ms cubic-bezier(.22,1,.36,1)}
+.dot i{display:block;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#151515;transition:transform 200ms cubic-bezier(.22,1,.36,1),background-color 160ms cubic-bezier(.22,1,.36,1)}
+.dot[data-on="1"]{opacity:1}
+.dot[data-hover="1"] i{transform:scale(3.4);background:rgba(21,21,21,.22)}
+.dot[data-dark="1"] i{background:#F9F7F2}
+.dot[data-dark="1"][data-hover="1"] i{background:rgba(249,247,242,.35)}
+.dot[data-down="1"] i{transform:scale(.7)}
+.dot[data-hover="1"][data-down="1"] i{transform:scale(2.8)}
+.has-dot,.has-dot *{cursor:none !important}
+/* Project images: the dot turns into a label, and the picture drifts a little with the mouse. */
+.dot b{position:absolute;left:0;top:0;transform:translate(-50%,-50%) scale(.4);opacity:0;width:112px;height:112px;box-sizing:border-box;padding:0 14px;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:50%;background:rgba(21,21,21,.38);-webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2);border:1px solid rgba(249,247,242,.5);color:#FFFFFF;font:500 14px/1.25 Roboto,system-ui,sans-serif;letter-spacing:.01em;transition:transform 260ms cubic-bezier(.22,1,.36,1),opacity 180ms cubic-bezier(.22,1,.36,1)}
+.dot[data-label="1"] b{transform:translate(-50%,-50%) scale(1);opacity:1}
+.dot[data-label="1"] i{transform:scale(0) !important}
+.pm{overflow:hidden}
+.pm > *{transform:translate(var(--px,0px),var(--py,0px)) scale(var(--ps,1));transition:transform 600ms cubic-bezier(.22,1,.36,1)}
+@media (prefers-reduced-motion: reduce){.pm > *{transform:none !important;transition:none !important}}
+.cta:focus-visible{outline:2px solid #2343B5;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.cta,.cta svg{transform:none !important}}
+
+/* Scroll reveal: a small rise and fade with a slow start and a long, soft landing. */
+[data-rv]{opacity:0;transform:translateY(28px);transition:opacity 900ms cubic-bezier(.55,0,.1,1),transform 900ms cubic-bezier(.55,0,.1,1);transition-delay:var(--rd,0ms)}
+[data-rv][data-in="1"]{opacity:1;transform:none}
+.rv-off [data-rv]{opacity:1 !important;transform:none !important;transition:none !important}
+.hero-trig{all:unset;position:absolute;inset:0;cursor:pointer;border-radius:16px}
+.hero-trig:focus-visible{outline:2px solid #2343B5;outline-offset:6px}
+.hero-hint{position:absolute;right:calc(100% - 10px);top:30%;display:block;font-family:'Nanum Pen Script',cursive;font-size:26px;line-height:1;color:#4F4A42;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 200ms}
+/* Arrow sits above the words, starting over their middle and reaching past their end toward the drawing. */
+.hero-hint img{position:absolute;left:45%;bottom:calc(100% + 2px);width:72px;height:auto;display:block}
+/* The hint appears once the bubble has said hi, then stays (hidden only while a line is being typed). */
+.hero-par[data-hint="1"] .hero-hint{opacity:1}
+.hero-par[data-hint="1"][data-tapped="1"] .hero-hint{opacity:0}
+.hero-par{container-type:inline-size}
+/* Three ink dots under the caption: which of the three lines is showing. Hidden until the first tap. */
+.cap-dots{display:flex;gap:8px;justify-content:center;margin-top:10px;visibility:hidden}
+.cap-dots i{width:7px;height:7px;border-radius:50%;border:1.5px solid #2343B5;box-sizing:border-box;transition:background-color 200ms cubic-bezier(.22,1,.36,1),transform 200ms cubic-bezier(.22,1,.36,1)}
+.cap-dots i[data-on="1"]{background:#2343B5;transform:scale(1.15)}
+/* Phones and tablets: no hover, so no "click me" hint; the bubble sizes itself as a share of the
+   drawing (percent and container units) instead of fixed px, and stays inside the column. */
+@media (hover: none){
+.hero-hint{font-size:24px}
+.hero-hint .hk-c{display:none}
+.hero-hint img{width:60px;left:50%}
+}
+@media (hover: hover){.hero-hint .hk-t{display:none}}
+@media (max-width: 760px){
+.hero-par [data-bubble]{right:0 !important;top:-3% !important;width:46% !important;padding:6.4% 2% 9% !important;font-size:clamp(12px, 8.2cqw, 30px) !important}
+}
+.heroimg{filter:blur(12px);transform:scale(1.04);transition:filter 1100ms cubic-bezier(.55,0,.1,1),transform 1100ms cubic-bezier(.55,0,.1,1)}
+.heroimg[data-in="1"],.rv-off .heroimg{filter:none;transform:none}
+@media (prefers-reduced-motion: reduce){[data-rv],.heroimg{opacity:1 !important;transform:none !important;filter:none !important;transition:none !important}}
+
+/* How I build: scrolling sets data-step / data-on on #build; these rules do the motion. */
+#build .step{cursor:pointer;display:flex;gap:18px;align-items:baseline;padding:12px 0;border-bottom:1px solid rgba(21,21,21,0.18)}
+#build .num{flex:0 0 56px;font-family:'Darker Grotesque',sans-serif;font-weight:900;font-size:44px;line-height:.8;color:#8A8378;transition:color 200ms cubic-bezier(.22,1,.36,1)}
+#build .txt{min-width:0;display:flex;flex-direction:column;gap:4px}
+#build .ttl{font-size:19px;font-weight:700;color:#4F4A42;transition:color 200ms cubic-bezier(.22,1,.36,1)}
+#build .desc{display:none;font-size:15px;line-height:1.5;color:#4F4A42}
+#build .tools{display:none;font-size:13px;color:#4F4A42}
+#build .kit{display:none;flex-wrap:wrap;gap:8px;margin-top:8px}
+#build[data-step="0"] .s0 .kit,#build[data-step="1"] .s1 .kit,#build[data-step="2"] .s2 .kit,#build[data-step="3"] .s3 .kit{display:flex}
+#build .tl{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#151515}
+#build .tl-i{flex:0 0 28px;width:28px;height:28px;display:grid;place-items:center;border-radius:6px;background:#FFFFFF;border:1px solid rgba(21,21,21,.16);font-family:'Darker Grotesque',sans-serif;font-weight:900;font-size:15px;line-height:1;color:#4F4A42;overflow:hidden}
+#build .tl-i img{width:100%;height:100%;object-fit:contain;display:block}
+#build .step:hover .ttl{color:#151515}
+#build .step:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:4px}
+#build[data-step="0"] .s0 .num,#build[data-step="1"] .s1 .num,#build[data-step="2"] .s2 .num,#build[data-step="3"] .s3 .num{color:var(--blue)}
+#build[data-step="0"] .s0 .ttl,#build[data-step="1"] .s1 .ttl,#build[data-step="2"] .s2 .ttl,#build[data-step="3"] .s3 .ttl{color:#151515}
+#build[data-step="0"] .s0 .desc,#build[data-step="1"] .s1 .desc,#build[data-step="2"] .s2 .desc,#build[data-step="3"] .s3 .desc,
+#build[data-step="0"] .s0 .tools,#build[data-step="1"] .s1 .tools,#build[data-step="2"] .s2 .tools,#build[data-step="3"] .s3 .tools{display:block}
+/* Exits are quick and quiet; entrances take longer and start a beat later, so cards never muddle. */
+#build .card{position:absolute;inset:0;opacity:0;transform:translateY(10px) scale(.985);transition:opacity 160ms cubic-bezier(.4,0,1,1),transform 160ms cubic-bezier(.4,0,1,1)}
+#build .c3s{inset:auto;right:-4%;top:-8%;width:24%;aspect-ratio:1/1;z-index:6;pointer-events:none;transform:scale(.9) rotate(-8deg)}
+#build .card{pointer-events:none}
+#build[data-step="0"] .c0,#build[data-step="1"] .c1,#build[data-step="2"] .c2,#build[data-step="3"] .c3,#build[data-step="3"] .c3s{pointer-events:auto}
+#build[data-step="3"] .c3s{pointer-events:none}
+#build[data-step="0"] .c0,#build[data-step="1"] .c1,#build[data-step="2"] .c2,#build[data-step="3"] .c3,#build[data-step="3"] .c3s{opacity:1;transform:none;transition:opacity 380ms cubic-bezier(.22,1,.36,1) 60ms,transform 380ms cubic-bezier(.22,1,.36,1) 60ms}
+/* How I build: each step shows a small stack of real photos; click a photo or the arrows to bring the next one forward. */
+#build .deck{position:absolute;left:5%;right:5%;top:3%;bottom:12%}
+#build .dk{position:absolute;left:0;right:0;top:0;margin:0;padding:2cqw 2cqw 0;background:#FFFFFF;border:1px solid rgba(21,21,21,.14);border-radius:3px;box-sizing:border-box;cursor:pointer;transform-origin:50% 60%;transition:transform 460ms cubic-bezier(.22,1,.36,1),box-shadow 300ms cubic-bezier(.22,1,.36,1)}
+#build .dk img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:left top;border-radius:2px;background:#E6DECF;pointer-events:none}
+#build .dk figcaption{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:1.8cqw .4cqw 2cqw}
+#build .dk-t{min-width:0;display:flex;gap:8px;align-items:baseline;font-size:max(13px,2.8cqw);font-weight:500;color:#151515;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#build .dk-p{font-weight:400;color:#4F4A42}
+#build .dk-tool{flex:none;padding:4px 10px;border-radius:999px;background:#DCE2F4;color:#16297A;font-size:max(11px,2.3cqw);font-weight:500;line-height:1.2;white-space:nowrap}
+#build .dk[data-pos="0"]{z-index:3;transform:none;box-shadow:0 10px 26px rgba(21,21,21,.10)}
+#build .dk[data-pos="1"]{z-index:2;transform:translate(2.2cqw,1.8cqw) rotate(2.6deg)}
+#build .dk[data-pos="2"]{z-index:1;transform:translate(-2.2cqw,2.6cqw) rotate(-3deg)}
+#build .dk-nav{position:absolute;right:5%;bottom:0;z-index:5;display:flex;align-items:center;gap:6px}
+#build .dk-b{position:relative;width:34px;height:34px;padding:0;border-radius:50%;border:1.5px solid #151515;background:#F9F7F2;color:#151515;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background-color 180ms cubic-bezier(.22,1,.36,1),color 180ms cubic-bezier(.22,1,.36,1)}
+#build .dk-b::before{content:"";position:absolute;inset:-5px}
+#build .dk-b:hover{background:var(--blue);border-color:var(--blue);color:#F9F7F2}
+#build .dk-b:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+#build .dk-b svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#build .dk figcaption{transition:opacity 260ms ease}
+#build .dk:not([data-pos="0"]) figcaption{opacity:0}
+#build .dk-count{min-width:44px;text-align:center;font-size:13px;font-variant-numeric:tabular-nums;color:#4F4A42}
+@media (prefers-reduced-motion: reduce){#build .dk{transition:none}}
+#build .bar{width:32px;height:4px;border-radius:2px;background:rgba(21,21,21,.15);transition:background-color 200ms cubic-bezier(.22,1,.36,1)}
+#build[data-step="0"] .b0,#build[data-step="1"] .b0,#build[data-step="1"] .b1,#build[data-step="2"] .b0,#build[data-step="2"] .b1,#build[data-step="2"] .b2,#build[data-step="3"] .bar{background:var(--blue)}
+#build .bline{stroke-dashoffset:1;transition:stroke-dashoffset 280ms cubic-bezier(.65,0,.35,1)}
+#build[data-on="1"] .bline{stroke-dashoffset:0;transition-duration:560ms}
+/* Phone, pinned: only the current step, no aside, tighter spacing, so title + step + card fit. */
+@media (max-width: 759px){
+#build[data-pin="1"] .step{display:none}
+#build[data-pin="1"][data-step="0"] .s0,#build[data-pin="1"][data-step="1"] .s1,#build[data-pin="1"][data-step="2"] .s2,#build[data-pin="1"][data-step="3"] .s3{display:flex}
+#build[data-pin="1"] .note{display:none}
+#build[data-pin="1"] .pin-inner{padding-top:16px !important;padding-bottom:16px !important;row-gap:16px !important}
+#build[data-pin="1"] .leftcol{gap:14px !important}
+#build .num{font-size:36px;flex-basis:46px}
+#build .tools{display:none !important}
+#build .kit{gap:6px;margin-top:2px}
+#build .tl-i{flex-basis:22px;width:22px;height:22px;border-radius:5px}
+#build[data-pin="1"] .bh{font-size:34px !important}
+#build[data-pin="1"] .desc{display:none !important}
+#build[data-pin="1"][data-step="0"] .s0 .desc,#build[data-pin="1"][data-step="1"] .s1 .desc,#build[data-pin="1"][data-step="2"] .s2 .desc,#build[data-pin="1"][data-step="3"] .s3 .desc{display:-webkit-box !important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+}
+/* Low screens (short laptops): drop the aside and tighten the list so the pinned view fits. */
+#build[data-short="1"] .note{display:none}
+#build[data-short="1"] .step{padding:8px 0}
+#build[data-short="1"] .tools{display:none !important}
+#build[data-short="1"] .kit{margin-top:2px}
+/* Section looks (option E): Selected work on brand blue with a blueprint grid and a wavy bottom edge;
+   How I build on warm kraft paper. */
+html,body{overflow-anchor:none}
+#work{position:relative;border-top:0 !important;color:#F9F7F2;background-color:#2343B5;
+background-image:linear-gradient(rgba(255,255,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+background-size:120px 120px,120px 120px,24px 24px,24px 24px;background-position:-1px -1px}
+#work::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:28px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'%3E%3Cpath d='M0 28 V14 Q30 2 60 14 T120 14 T180 14 T240 14 V28 Z' fill='%23F9F7F2'/%3E%3C/svg%3E") repeat-x left bottom/240px 28px}
+#work > div{padding-bottom:128px !important}
+#work a{color:#F9F7F2 !important}
+/* Structural selectors (not inline-style matches), so they hold however the styles are serialised. */
+#work h2 span[style]{color:#FFFFFF !important}
+#work > div > div:first-child > span{color:rgba(249,247,242,.8) !important}
+#work a span:not([style*="border-radius"]),#work a p{color:rgba(249,247,242,.8) !important}
+#work a span[style*="border-radius"]{color:#F9F7F2 !important;border-color:rgba(249,247,242,.7) !important}
+#work a h3,#work a > span:first-child:not([style*="border-radius"]),#work a > span:last-child:not([style*="border-radius"])[style*="font-weight"]{color:#FFFFFF !important}
+#work dl{border-top-color:#F9F7F2 !important}
+#work dl > div{border-bottom-color:rgba(249,247,242,.25) !important}
+#work dt{color:rgba(249,247,242,.7) !important}
+#work dd{color:#FFFFFF !important}
+#work > div > a:last-child{border-top-color:#F9F7F2 !important;border-bottom-color:rgba(249,247,242,.25) !important}
+#work img{box-shadow:0 16px 36px rgba(0,0,0,.22)}
+/* Kraft paper: the grain is part of the background, so the wavy top edge (same layers, masked) matches exactly. */
+#build{background:#EDE5D6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0/180px 180px;border-top:0 !important}
+#build::after{content:"";position:absolute;left:0;right:0;top:-27px;height:28px;z-index:2;pointer-events:none;background:#EDE5D6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 -153px/180px 180px;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'%3E%3Cpath d='M0 28 V14 Q30 2 60 14 T120 14 T180 14 T240 14 V28 Z' fill='%23000'/%3E%3C/svg%3E") repeat-x 120px bottom/240px 28px;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'%3E%3Cpath d='M0 28 V14 Q30 2 60 14 T120 14 T180 14 T240 14 V28 Z' fill='%23000'/%3E%3C/svg%3E") repeat-x 120px bottom/240px 28px}
+#build .pin{z-index:1}
+#build .step{border-bottom-color:rgba(21,21,21,.16) !important}
+#build .dk-b{background:#FFFFFF}
+@media (prefers-reduced-motion: reduce){#build .card,#build .bline,#build .num,#build .ttl,#build .bar{transition:none !important}#build .card{transform:none}}
+
+/* Experience: Education on the left, the year in the middle, Experience on the right.
+   Each side has its own rail with a node per card; cards answer hover like the Pop button. */
+.xp{display:flex;flex-direction:column;gap:14px}
+.xp-heads,.xp-yr{display:grid;grid-template-columns:minmax(0,1fr) 136px minmax(0,1fr);align-items:center}
+.xp-head{display:inline-flex;padding:6px 14px;border:1.5px solid rgba(21,21,21,.6);border-radius:999px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(21,21,21,.85)}
+.xp-head-l{justify-self:end}
+.xp-head-r{justify-self:start;border-color:var(--blue);color:var(--blue)}
+.xp-list{position:relative;display:flex;flex-direction:column;gap:14px;padding:6px 0}
+.xp-rail{position:absolute;top:0;bottom:0;width:1.5px;transform-origin:top;transform:scaleY(0);transition:transform 700ms cubic-bezier(.65,0,.35,1)}
+.xp-rail-l{left:calc(50% - 56px);background:rgba(21,21,21,.3)}
+.xp-rail-r{left:calc(50% + 56px);background:var(--blue)}
+.xp-rail{transform:scaleY(var(--xp,0));transition:transform 160ms linear}
+.xp-year,.xp-node{grid-column:2;grid-row:1}
+.xp-year{justify-self:center;position:relative;z-index:1;padding:3px 12px;background:#FFFFFF;border:1.5px solid rgba(21,21,21,.6);border-radius:999px;font-family:'Darker Grotesque',sans-serif;font-weight:900;font-size:24px;line-height:1;color:#4F4A42;transition:color 160ms cubic-bezier(.22,1,.36,1),border-color 160ms cubic-bezier(.22,1,.36,1)}
+.xp-list .xp-rail + .xp-rail + .xp-yr .xp-year{color:var(--blue);border-color:var(--blue)}
+.xp-yr:hover .xp-year{color:var(--blue);border-color:var(--blue)}
+.xp-node{position:relative;z-index:1;width:12px;height:12px;box-sizing:border-box;border-radius:50%;background:var(--paper);border:2px solid #151515;opacity:0;transform:scale(0);transition:opacity 300ms cubic-bezier(.22,1,.36,1) 320ms,transform 520ms cubic-bezier(.34,1.56,.64,1) 320ms,background-color 160ms}
+.xp-node-l{justify-self:start;margin-left:6px}
+.xp-node-r{justify-self:end;margin-right:6px;border-color:var(--blue)}
+.xp-yr[data-in="1"] .xp-node{opacity:1;transform:none}
+.xp-yr:hover .xp-node-r{background:var(--blue)}
+.xp-yr:hover .xp-node-l{background:#151515}
+.xp-cell{min-width:0;opacity:0;transition:opacity 700ms cubic-bezier(.22,1,.36,1),transform 800ms cubic-bezier(.22,1,.36,1)}
+.xp-l{transform:translate(-48px,14px) rotate(-1.5deg)}
+.xp-r{transform:translate(48px,14px) rotate(1.5deg);transition-delay:140ms}
+.xp-yr[data-in="1"] .xp-cell{opacity:1;transform:none}
+.xp-yr .xp-year{opacity:0;transform:scale(.6)}
+.xp-yr[data-in="1"] .xp-year{opacity:1;transform:none;transition:opacity 400ms cubic-bezier(.22,1,.36,1) 80ms,transform 560ms cubic-bezier(.34,1.56,.64,1) 80ms,color 160ms,border-color 160ms}
+.xp-heads .xp-head{opacity:0;transform:translateY(14px);transition:opacity 600ms cubic-bezier(.22,1,.36,1),transform 600ms cubic-bezier(.22,1,.36,1)}
+.xp-heads .xp-head-r{transition-delay:120ms}
+.xp-heads[data-in="1"] .xp-head{opacity:1;transform:none}
+.xp-card{display:flex;flex-direction:column;gap:4px;padding:18px 22px;background:#FFFFFF;border:1.5px solid rgba(21,21,21,.15);border-radius:20px;transition:transform 160ms cubic-bezier(.22,1,.36,1),box-shadow 160ms cubic-bezier(.22,1,.36,1),border-color 160ms cubic-bezier(.22,1,.36,1)}
+.xp-l .xp-card{align-items:flex-end;text-align:right}
+.xp-card:hover{transform:translate(-2px,-2px) scale(1.02);border-color:#151515;box-shadow:6px 6px 0 #151515}
+.xp-r .xp-card:hover{border-color:var(--blue);box-shadow:6px 6px 0 var(--blue)}
+.xp-type{display:none}
+.xp-role{font-size:17px;font-weight:700;color:#151515}
+.xp-org{font-size:15px;color:#4F4A42}
+.xp-tag{margin-top:6px;display:inline-flex;padding:4px 12px;border:1.5px solid rgba(21,21,21,.35);border-radius:999px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4F4A42}
+.xp-r .xp-tag{align-self:flex-start;background:var(--blue);border-color:var(--blue);color:#F9F7F2}
+.xp-l .xp-tag{align-self:flex-end}
+/* Phone: one column; one rail on the left, and each card says whether it is education or experience. */
+@media (max-width:720px){
+.xp-heads,.xp-node,.xp-rail-r{display:none}
+.xp-rail-l{left:30px}
+.xp-yr{grid-template-columns:60px minmax(0,1fr);row-gap:10px;align-items:start}
+.xp-year{grid-column:1;grid-row:1 / span 2;justify-self:start;font-size:20px;padding:3px 9px}
+.xp-cell{grid-column:2}
+.xp-r{grid-row:1}
+.xp-l{grid-row:2;transform:translate(32px,14px)}
+.xp-r{transform:translate(32px,14px)}
+.xp-empty{display:none}
+.xp-l .xp-card{align-items:flex-start;text-align:left}
+.xp-l .xp-tag{align-self:flex-start}
+.xp-type{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4F4A42}
+.xp-r .xp-type{color:var(--blue)}
+}
+@media (prefers-reduced-motion: reduce){.xp-rail,.xp-cell,.xp-card,.xp-node,.xp-year,.xp-head{transition:none !important}.xp-rail{transform:none}.xp-cell,.xp-year,.xp-head{opacity:1 !important;transform:none !important}.xp-node{opacity:1;transform:none}.xp-card:hover{transform:none}}
+/* Who am I: clothesline */
+.cl-stage{position:relative;height:clamp(560px,54vw,780px);overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.cl-stage[data-drag="1"]{cursor:grabbing}
+.cl-line{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.cl-line path{fill:none;stroke:#2343B5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.cl-pc{--cw:clamp(150px,15vw,216px);position:absolute;left:0;top:0;margin:0;width:var(--cw);box-sizing:border-box;padding:12px 12px 14px;background:#FFFFFF;border:1px solid rgba(21,21,21,.14);border-radius:3px;transform-origin:50% -20px;will-change:transform;display:flex;flex-direction:column;gap:10px;outline:none}
+.cl-pc:focus-visible{outline:2px solid #2343B5;outline-offset:4px}
+.cl-ph{aspect-ratio:4/5;border-radius:2px;background:#E6DECF;display:flex;align-items:center;justify-content:center;font-family:'Nanum Pen Script',cursive;font-size:24px;color:#4F4A42;text-align:center;padding:12px;box-sizing:border-box}
+.cl-ph.dr{background:#DCE2F4;color:#16297A}
+.cl-ph img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.cl-ph:has(img){padding:0;overflow:hidden}
+.cl-ph.cut{background:#FFFFFF}
+.cl-ph.cut img{object-position:50% 0}
+.cl-ph.wide{aspect-ratio:5/4}
+.cl-ph.fit{background:#000000}
+.cl-ph.fit img{object-fit:contain}
+.cl-ph.fit{position:relative}
+.cl-yt{position:absolute;right:8px;bottom:8px;min-height:26px;padding:0 10px;box-sizing:border-box;border-radius:999px;background:#F9F7F2;color:#151515;font:500 11px/1 Roboto,system-ui,sans-serif;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;cursor:pointer;transition:background-color 180ms cubic-bezier(.22,1,.36,1),color 180ms cubic-bezier(.22,1,.36,1)}
+.cl-yt::before{content:"";position:absolute;inset:-9px -6px}
+.cl-yt:hover{background:#2343B5;color:#F9F7F2}
+.cl-yt:focus-visible{outline:2px solid #F9F7F2;outline-offset:3px}
+.cl-pc figcaption{font-family:'Nanum Pen Script',cursive;font-size:clamp(20px,1.8vw,26px);line-height:1;color:#2343B5;text-align:center;min-height:1em}
+.cl-pin{position:absolute;left:50%;top:-34px;width:16px;height:44px;margin-left:-8px;overflow:visible}
+.cl-pin path{fill:#F9F7F2;stroke:#151515;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cl-hint{font-family:'Nanum Pen Script',cursive;line-height:1;font-size:26px;color:#4F4A42;transform:rotate(-2deg)}
+.cl-pz{min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid #151515;background:#F9F7F2;color:#151515;font:500 14px/1 Roboto,system-ui,sans-serif;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.cl-pz:hover{border-color:#2343B5;color:#2343B5}
+.cl-pz:focus-visible{outline:2px solid #2343B5;outline-offset:3px}
+/* Where each card hangs before the script takes over (the canvas preview, or no JavaScript) */
+.cl-stage > figure.cl-pc:nth-of-type(1){left:1.88%;top:24.45%;transform:rotate(14.8deg)}
+.cl-stage > figure.cl-pc:nth-of-type(2){left:21.67%;top:32.89%;transform:rotate(11.1deg)}
+.cl-stage > figure.cl-pc:nth-of-type(3){left:41.46%;top:38.83%;transform:rotate(7.3deg)}
+.cl-stage > figure.cl-pc:nth-of-type(4){left:61.25%;top:42.26%;transform:rotate(3.4deg)}
+.cl-stage > figure.cl-pc:nth-of-type(5){left:81.04%;top:43.18%;transform:rotate(-0.5deg)}
+.cl-stage > figure.cl-pc:nth-of-type(6){left:100.83%;top:41.60%;transform:rotate(-4.4deg)}
+.cl-stage > figure.cl-pc:nth-of-type(7){left:115%;top:30%}
+.cl-stage > figure.cl-pc:nth-of-type(8){left:115%;top:30%}
+.cl-stage > figure.cl-pc:nth-of-type(9){left:115%;top:30%}
+.cl-stage > figure.cl-pc:nth-of-type(10){left:115%;top:30%}
+.cl-stage > figure.cl-pc:nth-of-type(11){left:115%;top:30%}
+.cl-stage > figure.cl-pc:nth-of-type(12){left:115%;top:30%}
+.cl-stage > figure.cl-pc:nth-of-type(13){left:115%;top:30%}
+.cl-stage > figure.cl-pc:nth-of-type(14){left:115%;top:30%}
+/* Lead: the countries get underlined one by one, then "people" gets circled */
+.cl-lead .cl-mk,.cl-lead .cl-ring{position:relative;white-space:nowrap}
+.cl-lead svg{position:absolute;overflow:visible;pointer-events:none}
+.cl-lead .cl-mk svg{left:-2%;bottom:-.16em;width:104%;height:.34em}
+.cl-lead .cl-ring svg{left:-16%;top:-34%;width:132%;height:168%}
+.cl-lead path{fill:none;stroke:#2343B5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1;stroke-dashoffset:1;transition:stroke-dashoffset 650ms cubic-bezier(.55,0,.1,1) var(--d,0ms)}
+.cl-lead .cl-mk path{stroke-width:2.6}
+.cl-lead .cl-ring path{stroke-width:2.2;transition-duration:950ms;transition-delay:1000ms}
+.cl-lead[data-on="1"] path{stroke-dashoffset:0}
+@media (prefers-reduced-motion: reduce){.cl-lead path{stroke-dashoffset:0;transition:none}}
+.cl-ctrl{max-width:1280px;margin:0 auto;padding:4px clamp(40px,6vw,88px) 0;display:flex;justify-content:flex-end;align-items:center;gap:18px;flex-wrap:wrap}
+.cl-top{max-width:1280px;margin:0 auto;padding:96px clamp(40px,6vw,88px) 40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px;align-items:end}
+@media (max-width: 900px){.cl-top{grid-template-columns:minmax(0,1fr);gap:40px;padding-top:80px}.cl-top > div{max-width:620px}}
+@media (max-width: 640px){.cl-stage{height:500px}}
+@media (max-width: 640px){.cl-top,.cl-ctrl{padding-left:24px;padding-right:24px}}
+
+/* Playground project modal (built once by pgInit, lives on <body>) */
+.pg-pills{display:flex;flex-wrap:wrap;gap:6px}
+.pg-pill{display:inline-flex;align-items:center;padding:4px 11px;border-radius:999px;border:1px solid rgba(21,21,21,.2);font-size:13px;line-height:1.3;color:#4F4A42;background:rgba(255,255,255,.5)}
+.pgm{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;background:rgba(21,21,21,.6);opacity:0;visibility:hidden;transition:opacity 260ms cubic-bezier(.22,1,.36,1),visibility 0s 260ms;font-family:Roboto,system-ui,sans-serif;color:#151515}
+.pgm[data-open="1"]{opacity:1;visibility:visible;transition:opacity 260ms cubic-bezier(.22,1,.36,1)}
+.pgm-box{position:relative;width:min(1040px,100%);height:min(680px,100%);background:#F9F7F2;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden;transform:translateY(16px) scale(.98);transition:transform 360ms cubic-bezier(.22,1,.36,1)}
+.pgm[data-open="1"] .pgm-box{transform:none}
+.pgm-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+.pgm-media{position:relative;background:#EDE5D6;display:flex;flex-direction:column;gap:10px;padding:20px;min-height:0}
+.pgm-stage{position:relative;flex:1;min-height:0;display:flex}
+.pgm-img{position:relative;flex:1;min-height:0;border-radius:8px;overflow:hidden;background:transparent;display:flex;align-items:center;justify-content:center}
+.pgm-img img,.pgm-img video{display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+.pgm-img img.fill{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;object-position:center top}
+.pgm-dot{position:relative}
+.pgm-play{position:absolute;inset:0;margin:auto;width:0;height:0;border-left:11px solid #FFFFFF;border-top:7px solid transparent;border-bottom:7px solid transparent;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
+.pgm-ph{font-family:'Nanum Pen Script',cursive;font-size:32px;color:#2343B5}
+.pgm-ib{position:absolute;top:50%;width:36px;height:48px;margin-top:-24px;border:0;border-radius:6px;background:none;padding:0;color:rgba(35,67,181,.6);cursor:pointer;display:grid;place-items:center;filter:drop-shadow(0 0 3px rgba(255,255,255,.9))}
+.pgm-ib svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pgm-ib[data-dir="-1"]{left:8px}.pgm-ib[data-dir="1"]{right:8px}
+.pgm-ib:hover{color:#2343B5}
+.pgm-cap{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:#4F4A42}
+.pgm-cap{align-items:center}
+.pgm-dots{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:3px 3px 2px;margin:0 -3px;flex:none}
+.pgm-dots::-webkit-scrollbar{display:none}
+.pgm-dots:empty{display:none}
+.pgm-dot{flex:0 0 72px;height:48px;padding:0;border:0;border-radius:4px;overflow:hidden;background:#FFFFFF;cursor:pointer;opacity:.55;outline:2px solid transparent;outline-offset:1px;transition:opacity 160ms,outline-color 160ms;display:grid;place-items:center}
+.pgm-dot img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top}
+.pgm-dot span{font-family:'Nanum Pen Script',cursive;font-size:14px;color:#2343B5;line-height:1}
+.pgm-dot:hover{opacity:.85}
+.pgm-dot[aria-current="true"]{opacity:1;outline-color:#2343B5}
+.pgm-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.pgm-ib{transition:opacity 180ms,background-color 160ms,color 160ms}
+@media (hover: hover){.pgm-ib{opacity:0}.pgm-media:hover .pgm-ib,.pgm-ib:focus-visible{opacity:1}}
+@media (hover: none){.pgm-ib{display:none !important}}
+.pgm-info{position:relative;display:flex;flex-direction:column;min-height:0}
+.pgm-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:40px 36px 24px;display:flex;flex-direction:column;gap:16px}
+.pgm-scroll{scrollbar-width:none}
+.pgm-scroll::-webkit-scrollbar{display:none}
+/* Custom thin scroll indicator: shows on hover (native overlay bars don't repaint reliably on hover). */
+.pgm-bar{position:absolute;right:2px;width:6px;border-radius:6px;opacity:0;transition:opacity 180ms;pointer-events:none}
+.pgm-bar[hidden]{display:none}
+.pgm-info:hover .pgm-bar,.pgm-info:focus-within .pgm-bar,.pgm-bar[data-moving="1"]{opacity:1}
+.pgm-thumb{position:absolute;left:0;right:0;border-radius:6px;background:rgba(21,21,21,.2)}
+.pgm-tag{align-self:flex-start;padding:5px 12px;border-radius:999px;background:#DCE2F4;color:#16297A;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.pgm-t{margin:0;font-family:'Darker Grotesque',sans-serif;font-weight:900;font-size:52px;line-height:.9;letter-spacing:-.01em}
+.pgm-lead{margin:0;font-size:17px;line-height:1.5}
+.pgm-meta{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:4px 0 0;font-size:14px}
+.pgm-meta dt{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#4F4A42;padding-top:2px}
+.pgm-meta dd{margin:0}
+.pgm-h{margin:12px 0 0;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#2343B5}
+.pgm-p{margin:0;font-size:15px;line-height:1.6}
+.pgm-ul{margin:0;padding-left:18px;font-size:15px;line-height:1.6;display:flex;flex-direction:column;gap:4px}
+.pgm-cta{position:relative;padding:14px 36px 22px;display:flex;gap:10px;flex-wrap:wrap}
+.pgm-cta::before{content:"";position:absolute;left:0;right:0;top:-40px;height:40px;background:linear-gradient(rgba(249,247,242,0),#F9F7F2);pointer-events:none}
+.pgm-cta:empty{display:none}
+.pgm-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;background:#2343B5;color:#F9F7F2;font-weight:500;font-size:15px;text-decoration:none}
+.pgm-btn:hover{background:#16297A}
+.pgm-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 24px;border-top:1px solid rgba(21,21,21,.14);background:#F9F7F2}
+.pgm-nb{border:0;background:none;padding:6px 4px;font:inherit;font-size:15px;font-weight:500;color:#151515;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.pgm-nb span{color:#4F4A42;font-weight:400}
+.pgm-nb[hidden]{display:inline-flex;visibility:hidden}
+.pgm-nb:hover,.pgm-nb:hover span{color:#2343B5}
+.pgm-x{position:absolute;top:14px;right:14px;z-index:2;width:40px;height:40px;border:0;border-radius:50%;background:none;padding:0;font-size:28px;line-height:1;cursor:pointer;display:grid;place-items:center;color:#151515}
+.pgm-x:hover{color:#2343B5}
+.pgm button:focus-visible,.pgm a:focus-visible{outline:2px solid #2343B5;outline-offset:3px}
+@media (max-width: 760px){
+.pgm{padding:0;align-items:flex-end}
+.pgm-box{width:100%;height:100%;border-radius:0;transform:translateY(40px)}
+.pgm-body{display:block;overflow-y:auto;overscroll-behavior:contain}
+.pgm-media{padding:56px 16px 12px}
+.pgm-stage{flex:none}
+.pgm-img{flex:none;width:100%;aspect-ratio:4/3}
+.pgm-dot{flex-basis:60px;height:40px}
+.pgm-scroll{overflow:visible;padding:20px 20px 12px}
+.pgm-cta::before{display:none}
+.pgm-cta{padding:8px 20px 20px}
+.pgm-t{font-size:42px}
+.pgm-nav{padding:12px 16px}
+.pgm-nb span{display:none}
+}
+@media (prefers-reduced-motion: reduce){.pgm,.pgm-box{transition:none}}
+/* Words from collaborators: framed quote + person tabs */
+.wd-frame[data-rv]{transition:opacity 900ms cubic-bezier(.55,0,.1,1) var(--rd,0ms),transform 900ms cubic-bezier(.55,0,.1,1) var(--rd,0ms),border-radius 200ms}
+.wd-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:start}
+.wd-wrap{display:grid;grid-template-columns:minmax(0,1fr) 210px;align-items:stretch}
+.wd-frame{background:#2343B5;padding:12px;border-radius:24px;transition:border-radius 200ms}
+.wd-wrap[data-act="0"] .wd-frame{border-top-right-radius:0}
+.wd-wrap[data-act="3"] .wd-frame{border-bottom-right-radius:0}
+.wd-card{margin:0;height:100%;box-sizing:border-box;background:#F9F7F2;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:0;padding:36px 32px 32px;min-height:400px}
+.wd-mark{font-family:'Nanum Pen Script',cursive;font-size:96px;line-height:.4;height:30px;margin-bottom:10px;transform:translateY(14px);color:#2343B5}
+.wd-q{margin:0;max-width:440px;font-family:Roboto,system-ui,sans-serif;font-weight:300;font-size:16px;line-height:1.45;color:#151515}
+.wd-cap{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:22px}
+.wd-name{font-family:'Darker Grotesque',sans-serif;font-weight:800;font-size:24px;line-height:1;color:#2343B5}
+.wd-role{font-size:13px;color:#4F4A42}
+.wd-link{font-size:13px;color:#4F4A42}
+.wd-link[hidden]{display:none}
+.wd-tabs{display:flex;flex-direction:column}
+.wd-tab{all:unset;box-sizing:border-box;flex:1;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid rgba(21,21,21,0.18);font-family:Roboto,system-ui,sans-serif;color:#151515;transition:background-color 200ms,color 200ms}
+.wd-tab:last-child{border-bottom:0}
+.wd-tab:hover{background:rgba(35,67,181,0.06)}
+.wd-tab:focus-visible{outline:2px solid #2343B5;outline-offset:-4px}
+.wd-tab[aria-pressed="true"]{background:#2343B5;color:#F9F7F2;border-radius:0 18px 18px 0;border-bottom-color:transparent}
+.wd-av{flex:none;width:56px;height:56px;border-radius:50%;border:1.5px solid #151515;background:#F9F7F2;overflow:hidden;display:block}
+.wd-av img{width:100%;height:100%;display:block;object-fit:cover}
+.wd-tab[aria-pressed="true"] .wd-av{border-color:#F9F7F2}
+.wd-ico{width:34px;height:34px;fill:none;stroke:#151515;stroke-width:2.2;stroke-linecap:round}
+.wd-nm{display:flex;flex-direction:column;gap:3px;min-width:0}
+.wd-nm b{font-family:'Darker Grotesque',sans-serif;font-weight:800;font-size:18px;line-height:1}
+.wd-nm small{font-size:12px;line-height:1.3}
+@media (max-width: 860px){.wd-split{grid-template-columns:minmax(0,1fr)}.wd-wrap{grid-template-columns:minmax(0,1fr)}.wd-wrap .wd-frame{border-radius:24px !important}.wd-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}.wd-tab{flex:none;justify-content:center;padding:8px 4px;border-bottom:0;border-radius:14px}.wd-tab[aria-pressed="true"]{border-radius:14px}.wd-nm{display:none}}
+.wd-tab[data-rv]{transition:opacity 900ms cubic-bezier(.55,0,.1,1) var(--rd,0ms),transform 900ms cubic-bezier(.55,0,.1,1) var(--rd,0ms),background-color 200ms,color 200ms}
+.wd-head{display:flex;flex-direction:column;gap:24px;min-width:0}
+.wd-label{font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#4F4A42}
+@media (max-width: 760px){[data-hero-cap]:not([data-shown]){max-height:0;overflow:hidden}[data-hero-cap]:not([data-shown]) + [data-cap-dots]{display:none}}
+/* Playground: tags sit on the card's bottom line, so a two-line title doesn't push one row down. */
+.pg-pills{margin-top:auto}
+/* How I build, phone: content starts at the top, the full step text shows, and the photo controls sit below the caption. */
+@media (max-width: 759px){
+#build[data-pin="1"] .pin{align-items:flex-start !important}
+#build[data-pin="1"][data-step="0"] .s0 .desc,#build[data-pin="1"][data-step="1"] .s1 .desc,#build[data-pin="1"][data-step="2"] .s2 .desc,#build[data-pin="1"][data-step="3"] .s3 .desc{display:block !important;-webkit-line-clamp:unset;overflow:visible}
+#build .deckbox{aspect-ratio:10 / 9 !important}
+}
+/* Header A1: links in a see-through paper pill with a hairline edge; current section is a blue pill; one blue "Let's talk" button. */
+.mainnav.pill{gap:2px !important;padding:5px;border-radius:999px;background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(21,21,21,.1);box-shadow:0 6px 20px rgba(21,21,21,.06);font-size:15px !important}
+.mainnav.pill a{padding:9px 16px;border-radius:999px;color:#151515;text-decoration:none;white-space:nowrap;transition:background-color 180ms cubic-bezier(.22,1,.36,1),color 180ms cubic-bezier(.22,1,.36,1)}
+.mainnav.pill a:hover{background:rgba(35,67,181,.07);color:#151515}
+.mainnav.pill a[aria-current="true"]{background:#2343B5;color:#F9F7F2}
+.mainnav.pill a:focus-visible,.hdr-cta:focus-visible{outline:2px solid #2343B5;outline-offset:2px}
+.hdr-cta{display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;border-radius:999px;padding:11px 20px;font-size:15px;font-weight:500;line-height:1;background:#2343B5;color:#F9F7F2 !important;text-decoration:none;white-space:nowrap;transition:background-color 180ms cubic-bezier(.22,1,.36,1)}
+.hdr-cta:hover{background:#16297A}
+.hdr > .menubtn{background:#2343B5;border-color:#2343B5;color:#F9F7F2}
+@media (max-width: 760px){
+.hdr-cta{display:none !important}
+.hdr{margin:10px 12px !important;padding:6px 6px 6px 14px !important;border-radius:999px;background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(21,21,21,.1);box-shadow:0 6px 20px rgba(21,21,21,.06)}
+.hdr .brand{font-size:24px !important}
+.hdr .brand img{width:32px !important}
+.hdr > .menubtn{min-height:36px;padding:6px 15px}
+}
+/* Hero: the CV button sits under the headline on the left. On phones it stays last, below the drawing. */
+@media (max-width: 760px){.hero-copy{display:contents !important}.hero-copy > h1{flex:1 1 100%;min-width:0}.hero-copy > .cta{order:2}.hero-copy > .sub{flex:1 1 100%}}
+/* Hero background: a faint blue dot grid (designer's notebook) that fades out towards the headline,
+   full page width. It previews the blueprint grid of Selected work below. */
+html,body{overflow-x:clip}
+#top{position:relative;isolation:isolate}
+#top::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;pointer-events:none;background-image:radial-gradient(rgba(35,67,181,.35) 1.2px,transparent 1.4px);background-size:24px 24px;background-position:center top;-webkit-mask-image:radial-gradient(ellipse 60% 85% at 76% 50%,#000 30%,transparent 80%);mask-image:radial-gradient(ellipse 60% 85% at 76% 50%,#000 30%,transparent 80%)}
+@media (max-width: 760px){#top::before{-webkit-mask-image:radial-gradient(ellipse 90% 45% at 50% 62%,#000 25%,transparent 80%);mask-image:radial-gradient(ellipse 90% 45% at 50% 62%,#000 25%,transparent 80%)}}
+/* Hero headline: "I'm a product designer for [rotating word]" + subtext with the complex / simple, easy animation. */
+#top .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#top .rot{display:grid;justify-items:start;overflow:hidden;clip-path:inset(0 -0.2em);contain:paint;padding-bottom:.08em;margin-bottom:-.08em}
+#top .rot .w{grid-area:1/1;color:#2343B5;font-weight:900;white-space:nowrap;opacity:0;transform:translateY(100%)}
+#top .rot .w[data-on="1"]{opacity:1;transform:none}
+#top .sub{margin:-12px 0 20px;font-family:Roboto,system-ui,sans-serif;font-weight:400;font-size:clamp(18px,1.55vw,22px);line-height:1.45;color:#4F4A42;max-width:500px}
+#top .kw{position:relative;display:inline-block;font-weight:700;color:#151515;cursor:default}
+#top .cl,#top .sl{display:inline-block}
+#top .ul{position:absolute;left:0;bottom:-3px;width:100%;height:6px;overflow:visible;pointer-events:none}
+#top .ul path{fill:none;stroke:#2343B5;stroke-width:3;stroke-linecap:round;stroke-dasharray:1 2;stroke-dashoffset:1}
+@media (max-width: 760px){#top .rot .w{white-space:normal}#top .sub{margin-top:0}}
+</style>
+<script src="/dc-lite.js" defer></script>
+</head>
+<body>
+<template id="dc">
+
+<div ref="{{refRoot}}" style="position: relative; background: {{paper}}; color: #151515; font-family: Roboto, system-ui, sans-serif; min-height: 100vh;">
+
+<!-- HEADER -->
+<header style="position: sticky; top: 0; z-index: 20; background: {{paper}}; border-bottom: 1px solid {{headerLine}}; transition: border-color 200ms cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="hdr" style="max-width: 1280px; margin: 0 auto; padding: 20px clamp(40px, 6vw, 88px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+<a href="#top" class="brand" style="display: inline-flex; align-items: center; gap: 12px; font-family: 'Darker Grotesque', sans-serif; font-weight: 800; font-size: 36px; line-height: 1; text-decoration: none; color: #151515;"><img src="/assets/3686ecb19fa4d0be98c5f110534276f8.png" alt="" width="44" height="41" style="width: 44px; height: auto; display: block;">Juhui Seo</a>
+<nav aria-label="Main" class="mainnav pill" style="display: flex; align-items: center; font-weight: 500;">
+<a href="#work" data-spy="work">Work</a>
+<a href="#about" data-spy="about">About</a>
+<a href="#build" data-spy="build">How I build</a>
+<a href="#playground" data-spy="playground">Playground</a>
+</nav>
+<a href="#contact" class="hdr-cta">Let’s talk</a>
+<button type="button" class="menubtn" data-menu-toggle="" aria-expanded="false" aria-controls="mnav">Menu</button>
+</div>
+</header>
+<div id="mnav" class="mnav" data-menu="" data-open="0" role="dialog" aria-modal="true" aria-label="Menu">
+<div class="mnav-top"><span class="mnav-brand" style="display: inline-flex; align-items: center; gap: 10px;"><img src="/assets/3686ecb19fa4d0be98c5f110534276f8.png" alt="" width="38" height="35" style="width: 38px; height: auto; display: block;">Juhui Seo</span><button type="button" class="menubtn" data-menu-close="">Close</button></div>
+<nav aria-label="Main" class="mnav-links">
+<a href="#work" style="--i:0">Work</a>
+<a href="#about" style="--i:1">About</a>
+<a href="#build" style="--i:2">How I build</a>
+<a href="#playground" style="--i:3">Playground</a>
+<a href="#contact" style="--i:4">Contact</a>
+</nav>
+</div>
+
+<!-- HERO -->
+<section id="top" style="max-width: 1280px; margin: 0 auto; padding: 48px clamp(40px, 6vw, 88px) 56px; display: flex; flex-direction: column; gap: 40px; min-height: 620px; box-sizing: border-box;">
+
+<div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: center; flex-grow: 1;">
+<div class="hero-copy" style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 36px;">
+<h1 ref="{{refHero}}" class="hero-h" style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 800; font-size: clamp(40px, 4.4vw, 62px); line-height: 0.92; letter-spacing: -0.02em;"><span class="sr">I’m a product designer for SaaS, AI-powered Products, Digital Products, Web Experiences, Interfaces and Emerging Technologies.</span><span aria-hidden="true"><span data-hl style="display: inline-block;">I’m a product</span><br><span data-hl style="display: inline-block;">designer for</span><br><span data-hl style="display: block;"><span class="rot" data-rot><span class="w" data-w data-on="1">SaaS</span><span class="w" data-w>AI-powered Products</span><span class="w" data-w>Digital Products</span><span class="w" data-w>Web Experiences</span><span class="w" data-w>Interfaces</span><span class="w" data-w>Emerging Technologies</span></span></span></span></h1>
+<p class="sub" data-hl>I turn <span class="kw cx" data-kw><span class="sr">complex</span><span aria-hidden="true"><span class="cl" data-cl style="transform: translate(0em, 0.08em) rotate(-14deg);">c</span><span class="cl" data-cl style="transform: translate(-0.02em, -0.13em) rotate(10deg);">o</span><span class="cl" data-cl style="transform: translate(0.03em, 0.11em) rotate(-7deg);">m</span><span class="cl" data-cl style="transform: translate(-0.03em, -0.07em) rotate(17deg);">p</span><span class="cl" data-cl style="transform: translate(0.02em, 0.15em) rotate(-11deg);">l</span><span class="cl" data-cl style="transform: translate(-0.02em, -0.1em) rotate(8deg);">e</span><span class="cl" data-cl style="transform: translate(0.03em, 0.05em) rotate(-19deg);">x</span></span></span> problems into <span class="kw se" data-kw><span class="sr">simple, easy</span><span aria-hidden="true" style="white-space: nowrap;"><span class="sl" data-sl>s</span><span class="sl" data-sl>i</span><span class="sl" data-sl>m</span><span class="sl" data-sl>p</span><span class="sl" data-sl>l</span><span class="sl" data-sl>e</span><span class="sl" data-sl>,</span><span class="sl" data-sl style="white-space: pre;"> </span><span class="sl" data-sl>e</span><span class="sl" data-sl>a</span><span class="sl" data-sl>s</span><span class="sl" data-sl>y</span></span><svg class="ul" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path data-uls pathLength="1" d="M 1 5 C 30 7, 70 3, 99 5"></path></svg></span> experiences.</p>
+<a data-hero-cta="" class="cta" href="https://drive.google.com/file/d/1UcGFloLD6n_Vip1qXap4kGKRBxOyPTVd/view?usp=sharing" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; min-height: 48px; box-sizing: border-box; border-radius: 999px; background: {{blue}}; color: #F9F7F2; text-decoration: none; font-size: 17px; font-weight: 500;">Download CV
+<svg aria-hidden="true" viewBox="0 0 16 16" style="width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;"><path d="M8 2 V11 M4 7.5 L8 11.5 L12 7.5 M3 14 H13"></path></svg></a>
+</div>
+
+<div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+<div class="hero-par" style="position: relative; width: 70%; max-width: 294px; aspect-ratio: 847 / 927; will-change: transform; transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);">
+<img class="heroimg" src="/assets/4550541bc7f7dff7af826f5da56a2c22.png" alt="Drawing of Juhui smiling behind a laptop, holding up a brush" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; user-select: none;">
+<button type="button" class="hero-trig" data-hero-trig="" data-hover="1" aria-label="Show who I am"></button>
+<div data-bubble="" aria-hidden="true" style="position: absolute; right: -12%; top: -5%; width: 52%; aspect-ratio: 1052 / 509; box-sizing: border-box; padding: 6.9% 2.2% 9.7%; display: flex; align-items: center; justify-content: center; text-align: center; background: url('/assets/10914ea7222007828edbe575080ae602.png') center / 100% 100% no-repeat; font-family: 'Nanum Pen Script', cursive; font-size: 30px; line-height: 1; color: #151515; white-space: nowrap; transform-origin: 20% 100%; pointer-events: none; font-size: clamp(12px, 8.3cqw, 30px);"><span style="white-space: nowrap;"><span data-bch="" style="display: inline-block;">H</span><span data-bch="" style="display: inline-block;">i</span><span data-bch="" style="display: inline-block;">,</span></span><span data-bch="" style="display: inline-block; white-space: pre;"> </span><span style="white-space: nowrap;"><span data-bch="" style="display: inline-block;">I</span><span data-bch="" style="display: inline-block;">'</span><span data-bch="" style="display: inline-block;">m</span></span><span data-bch="" style="display: inline-block; white-space: pre;"> </span><span style="white-space: nowrap;"><span data-bch="" style="display: inline-block;">J</span><span data-bch="" style="display: inline-block;">u</span><span data-bch="" style="display: inline-block;">h</span><span data-bch="" style="display: inline-block;">u</span><span data-bch="" style="display: inline-block;">i</span><span data-bch="" style="display: inline-block;">!</span></span></div>
+<span class="hero-hint" aria-hidden="true"><span class="hk-c" data-hk-c="">click me</span><span class="hk-t" data-hk-t="">tap me</span><img src="/assets/395b5021ab3799fd86e87c7ba7326a6e.png" alt="" draggable="false"></span>
+</div>
+<span data-hero-cap="" style="transition: translate 900ms cubic-bezier(0.22, 1, 0.36, 1); font-family: 'Nanum Pen Script', cursive; font-size: 34px; line-height: 0.95; color: {{blue}}; transform: rotate(-4deg); text-align: center; display: grid; justify-items: center; align-items: center;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">Juhui Seo, a UX/UI &amp; Product Designer based in the Netherlands. Research first, then a design system, then working code. Let’s solve your problem together. Bring it on!</span><span data-cap-line="0" aria-hidden="true" style="grid-area: 1 / 1; visibility: hidden;"><span data-caret="" aria-hidden="true" style="display: inline-block; width: 2px; height: 0.8em; margin-left: 2px; vertical-align: -0.05em; background: {{blue}}; opacity: 0;"></span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">J</span><span data-cch="" style="display: inline-block; opacity: 0;">u</span><span data-cch="" style="display: inline-block; opacity: 0;">h</span><span data-cch="" style="display: inline-block; opacity: 0;">u</span><span data-cch="" style="display: inline-block; opacity: 0;">i</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">S</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">o</span><span data-cch="" style="display: inline-block; opacity: 0;">,</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">a</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">U</span><span data-cch="" style="display: inline-block; opacity: 0;">X</span><span data-cch="" style="display: inline-block; opacity: 0;">/</span><span data-cch="" style="display: inline-block; opacity: 0;">U</span><span data-cch="" style="display: inline-block; opacity: 0;">I</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">&amp;</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">P</span><span data-cch="" style="display: inline-block; opacity: 0;">r</span><span data-cch="" style="display: inline-block; opacity: 0;">o</span><span data-cch="" style="display: inline-block; opacity: 0;">d</span><span data-cch="" style="display: inline-block; opacity: 0;">u</span><span data-cch="" style="display: inline-block; opacity: 0;">c</span><span data-cch="" style="display: inline-block; opacity: 0;">t</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">D</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">s</span><span data-cch="" style="display: inline-block; opacity: 0;">i</span><span data-cch="" style="display: inline-block; opacity: 0;">g</span><span data-cch="" style="display: inline-block; opacity: 0;">n</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">r</span></span><br><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">b</span><span data-cch="" style="display: inline-block; opacity: 0;">a</span><span data-cch="" style="display: inline-block; opacity: 0;">s</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">d</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">i</span><span data-cch="" style="display: inline-block; opacity: 0;">n</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">t</span><span data-cch="" style="display: inline-block; opacity: 0;">h</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">N</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">t</span><span data-cch="" style="display: inline-block; opacity: 0;">h</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">r</span><span data-cch="" style="display: inline-block; opacity: 0;">l</span><span data-cch="" style="display: inline-block; opacity: 0;">a</span><span data-cch="" style="display: inline-block; opacity: 0;">n</span><span data-cch="" style="display: inline-block; opacity: 0;">d</span><span data-cch="" style="display: inline-block; opacity: 0;">s</span><span data-cch="" style="display: inline-block; opacity: 0;">.</span></span></span><span data-cap-line="1" aria-hidden="true" style="grid-area: 1 / 1; visibility: hidden;"><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">R</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">s</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">a</span><span data-cch="" style="display: inline-block; opacity: 0;">r</span><span data-cch="" style="display: inline-block; opacity: 0;">c</span><span data-cch="" style="display: inline-block; opacity: 0;">h</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">f</span><span data-cch="" style="display: inline-block; opacity: 0;">i</span><span data-cch="" style="display: inline-block; opacity: 0;">r</span><span data-cch="" style="display: inline-block; opacity: 0;">s</span><span data-cch="" style="display: inline-block; opacity: 0;">t</span><span data-cch="" style="display: inline-block; opacity: 0;">,</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">t</span><span data-cch="" style="display: inline-block; opacity: 0;">h</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">n</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">a</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">d</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">s</span><span data-cch="" style="display: inline-block; opacity: 0;">i</span><span data-cch="" style="display: inline-block; opacity: 0;">g</span><span data-cch="" style="display: inline-block; opacity: 0;">n</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">s</span><span data-cch="" style="display: inline-block; opacity: 0;">y</span><span data-cch="" style="display: inline-block; opacity: 0;">s</span><span data-cch="" style="display: inline-block; opacity: 0;">t</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">m</span><span data-cch="" style="display: inline-block; opacity: 0;">,</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">t</span><span data-cch="" style="display: inline-block; opacity: 0;">h</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">n</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">w</span><span data-cch="" style="display: inline-block; opacity: 0;">o</span><span data-cch="" style="display: inline-block; opacity: 0;">r</span><span data-cch="" style="display: inline-block; opacity: 0;">k</span><span data-cch="" style="display: inline-block; opacity: 0;">i</span><span data-cch="" style="display: inline-block; opacity: 0;">n</span><span data-cch="" style="display: inline-block; opacity: 0;">g</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">c</span><span data-cch="" style="display: inline-block; opacity: 0;">o</span><span data-cch="" style="display: inline-block; opacity: 0;">d</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">.</span></span></span><span data-cap-line="2" aria-hidden="true" style="grid-area: 1 / 1; visibility: hidden;"><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">L</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">t</span><span data-cch="" style="display: inline-block; opacity: 0;">’</span><span data-cch="" style="display: inline-block; opacity: 0;">s</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">s</span><span data-cch="" style="display: inline-block; opacity: 0;">o</span><span data-cch="" style="display: inline-block; opacity: 0;">l</span><span data-cch="" style="display: inline-block; opacity: 0;">v</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">y</span><span data-cch="" style="display: inline-block; opacity: 0;">o</span><span data-cch="" style="display: inline-block; opacity: 0;">u</span><span data-cch="" style="display: inline-block; opacity: 0;">r</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">p</span><span data-cch="" style="display: inline-block; opacity: 0;">r</span><span data-cch="" style="display: inline-block; opacity: 0;">o</span><span data-cch="" style="display: inline-block; opacity: 0;">b</span><span data-cch="" style="display: inline-block; opacity: 0;">l</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">m</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">t</span><span data-cch="" style="display: inline-block; opacity: 0;">o</span><span data-cch="" style="display: inline-block; opacity: 0;">g</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">t</span><span data-cch="" style="display: inline-block; opacity: 0;">h</span><span data-cch="" style="display: inline-block; opacity: 0;">e</span><span data-cch="" style="display: inline-block; opacity: 0;">r</span><span data-cch="" style="display: inline-block; opacity: 0;">.</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">B</span><span data-cch="" style="display: inline-block; opacity: 0;">r</span><span data-cch="" style="display: inline-block; opacity: 0;">i</span><span data-cch="" style="display: inline-block; opacity: 0;">n</span><span data-cch="" style="display: inline-block; opacity: 0;">g</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">i</span><span data-cch="" style="display: inline-block; opacity: 0;">t</span></span><span data-cch="" style="display: inline-block; white-space: pre; opacity: 0;"> </span><span style="white-space: nowrap;"><span data-cch="" style="display: inline-block; opacity: 0;">o</span><span data-cch="" style="display: inline-block; opacity: 0;">n</span><span data-cch="" style="display: inline-block; opacity: 0;">!</span></span></span></span>
+<span data-cap-dots="" aria-hidden="true" class="cap-dots"><i></i><i></i><i></i></span>
+</div>
+</div>
+
+</section>
+
+<!-- SELECTED WORK -->
+<section id="work" style="border-top: 1px solid rgba(21,21,21,0.18);">
+<div style="max-width: 1280px; margin: 0 auto; padding: 96px clamp(40px, 6vw, 88px); display: flex; flex-direction: column; gap: 48px;">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px;">
+<h2 ref="{{refT0}}" style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 900; font-size: clamp(52px, 8vw, 120px); line-height: 0.84; letter-spacing: -0.02em;">Selected <span style="color: {{blue}};">work</span></h2>
+<span style="font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #4F4A42;">03 projects · 2024 – 2026</span>
+</div>
+
+<!-- Featured: IDEXX -->
+<a href="/idexx" style="display: flex; flex-direction: column; gap: 24px; text-decoration: none; color: #151515;">
+<div style="aspect-ratio: 1920 / 974; border-radius: 4px; overflow: hidden; background: #F9F7F2;"><img src="/assets/77c94a7884df542f302f16502b95455b.webp" alt="Redesigned Animana stock dashboard on a laptop, with the book-in modal in front" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center bottom;"></div>
+<div style="display: flex; flex-wrap: wrap; gap: 24px 32px; align-items: flex-start;">
+<div style="flex: 7 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+<span style="align-self: flex-start; display: inline-flex; align-items: center; padding: 6px 14px; border: 1.5px solid rgba(21,21,21,0.6); border-radius: 999px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(21,21,21,0.85);">Case 01 Graduation internship</span>
+<h3 style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 800; font-size: 72px; line-height: 0.86;">IDEXX · Animana</h3>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; font-style: italic;">How might vet clinics manage stock in one place, without giving up halfway?</p>
+</div>
+<dl style="flex: 5 1 300px; min-width: 0; margin: 0; display: flex; flex-direction: column; border-top: 2px solid #151515;">
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(21,21,21,0.18); font-size: 15px;"><dt style="font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #4F4A42;">Role</dt><dd style="margin: 0; text-align: right;">Sole UX designer, cross-functional team</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(21,21,21,0.18); font-size: 15px;"><dt style="font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #4F4A42;">When</dt><dd style="margin: 0; text-align: right;">Jan – Jul 2026</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(21,21,21,0.18); font-size: 15px;"><dt style="font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #4F4A42;">Research</dt><dd style="margin: 0; text-align: right;">5 clinic visits + interviews</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(21,21,21,0.18); font-size: 15px;"><dt style="font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #4F4A42;">Outcome</dt><dd style="margin: 0; text-align: right; color: {{blue}}; font-weight: 500;">Development-ready, on the roadmap</dd></div>
+</dl>
+</div>
+</a>
+
+<!-- Two-up: NSTEM + Miles -->
+<div style="display: flex; flex-wrap: wrap; gap: 32px;">
+<a href="/nstem" style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 16px; text-decoration: none; color: #151515;">
+<div style="height: 360px; border-radius: 4px; overflow: hidden; background: #E6E6E6;"><img src="/assets/1c80499240329b39029cd704cd278dbe.webp" alt="Redesigned NSTEM homepage on a laptop" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center;"></div>
+<span style="align-self: flex-start; display: inline-flex; align-items: center; padding: 6px 14px; border: 1.5px solid rgba(21,21,21,0.6); border-radius: 999px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(21,21,21,0.85);">Case 02 Nonprofit client · 2025</span>
+<h3 style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 800; font-size: 48px; line-height: 0.9;">NSTEM</h3>
+<p style="margin: 0; font-size: 19px; line-height: 1.5; font-style: italic;">How might a nonprofit’s site make sense to students, and still keep its brand?</p>
+<span style="font-size: 14px; line-height: 1.45; color: #4F4A42;">1 of 3 designers, with the founder and 2 developers</span>
+</a>
+<a href="/miles" style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 16px; text-decoration: none; color: #151515;">
+<div style="height: 360px; border-radius: 4px; overflow: hidden; background: #151515;"><img src="/assets/a6367e50ead14afe7b4a6e48ee81a7c6.webp" alt="Miles logo on a Galaxy Watch" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 75% center;"></div>
+<span style="align-self: flex-start; display: inline-flex; align-items: center; padding: 6px 14px; border: 1.5px solid rgba(21,21,21,0.6); border-radius: 999px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(21,21,21,0.85);">Case 03 Client brief · 2024</span>
+<h3 style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 800; font-size: 48px; line-height: 0.9;">Miles</h3>
+<p style="margin: 0; font-size: 19px; line-height: 1.5; font-style: italic;">How might patients, families and professionals act on suicide risk after hospital discharge?</p>
+<span style="font-size: 14px; line-height: 1.45; color: #4F4A42;">Individual project for Stichting Bestaanskracht · 3 expert interviews → 3 connected apps</span>
+</a>
+</div>
+
+</div>
+</section>
+
+<!-- WORDS FROM COLLABORATORS -->
+<section id="words" style="border-top: 1px solid rgba(21,21,21,0.18);">
+<div style="max-width: 1280px; margin: 0 auto; padding: 96px clamp(40px, 6vw, 88px);">
+<div class="wd-split"><div class="wd-head"><h2 ref="{{refT2}}" style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 900; font-size: clamp(52px, 8vw, 120px); line-height: 0.84; letter-spacing: -0.02em;">Words from <span style="color: {{blue}};">collaborators</span></h2><span class="wd-label">From people I’ve worked with</span></div><div class="wd-wrap" data-act="{{wdAct}}"><div class="wd-frame" data-rv="" style="--rd: 0ms;"><figure class="wd-card"><span aria-hidden="true" class="wd-mark">“</span><blockquote style="margin: 0;"><p data-aq="" class="wd-q">{{wdQ}}</p></blockquote><figcaption class="wd-cap"><span data-an="" class="wd-name">{{wdN}}</span><span data-ar="" class="wd-role">{{wdR}}</span><a data-al="" href="{{wdL}}" target="_blank" rel="noopener noreferrer" class="wd-link" style="display: {{wdLD}};">{{wdLT}}</a></figcaption></figure></div><div class="wd-tabs" role="group" aria-label="Choose a collaborator"><button type="button" data-a="0" aria-label="Craig Davis" data-rv="" style="--rd: 120ms;" aria-pressed="{{wdP0}}" onClick="{{wdPick0}}" class="wd-tab"><span class="wd-av" data-av="craig"><img src="/assets/97191c93967d472407400a628eb48099.png" alt="" width="56" height="56"></span><span class="wd-nm"><b>Craig Davis</b><small>Director of UX Design @IDEXX</small></span></button><button type="button" data-a="1" aria-label="Natalia Nedelko" data-rv="" style="--rd: 210ms;" aria-pressed="{{wdP1}}" onClick="{{wdPick1}}" class="wd-tab"><span class="wd-av" data-av="natalia"><img src="/assets/a94320e48f568432fc0378d9a7e02afc.png" alt="" width="56" height="56"></span><span class="wd-nm"><b>Natalia Nedelko</b><small>Head of Product @IDEXX Animana</small></span></button><button type="button" data-a="2" aria-label="Danica Mast" data-rv="" style="--rd: 300ms;" aria-pressed="{{wdP2}}" onClick="{{wdPick2}}" class="wd-tab"><span class="wd-av" data-av="danica"><img src="/assets/9bacf0d9750c15ee857ab74c010e24ae.png" alt="" width="56" height="56"></span><span class="wd-nm"><b>Danica Mast</b><small>Research Coordinator at De Haagse Hogeschool</small></span></button><button type="button" data-a="3" aria-label="Sheilla Limandjaja" data-rv="" style="--rd: 390ms;" aria-pressed="{{wdP3}}" onClick="{{wdPick3}}" class="wd-tab"><span class="wd-av" data-av="sheilla"><img src="/assets/4770d8e0c4e196693753d92bd805c5fe.png" alt="" width="56" height="56"></span><span class="wd-nm"><b>Sheilla Limandjaja</b><small>UX/UI Designer</small></span></button></div></div></div>
+</div>
+</section>
+
+<!-- WHO AM I + EXPERIENCE -->
+<section id="about" style="border-top: 1px solid rgba(21,21,21,0.18);">
+<div class="cl-top">
+<h2 ref="{{refT1}}" style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 900; font-size: clamp(52px, 8vw, 120px); line-height: 0.84; letter-spacing: -0.02em;">Who am <span style="color: {{blue}};">I</span></h2>
+<div style="display: flex; flex-direction: column; gap: 20px; min-width: 0;">
+<p class="cl-lead" ref="{{refClLead}}" data-on="0" style="margin: 0; font-size: clamp(20px, 1.9vw, 26px); line-height: 1.5;"><span class="cl-mk">Korea<svg viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 7 C 22 3, 46 10, 70 6 C 82 4, 92 5, 98 6"></path></svg></span>, <span class="cl-mk" style="--d:280ms">Lithuania<svg viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 7 C 22 3, 46 10, 70 6 C 82 4, 92 5, 98 6"></path></svg></span>, and now <span class="cl-mk" style="--d:560ms">the Netherlands<svg viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 7 C 22 3, 46 10, 70 6 C 82 4, 92 5, 98 6"></path></svg></span>. Every move taught me the same thing: pay close attention to <span class="cl-ring">people<svg viewBox="0 0 120 50" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M14 30 C 8 10, 64 2, 104 12 C 122 18, 118 42, 62 46 C 22 49, 2 38, 12 22 C 20 10, 52 4, 78 7"></path></svg></span>.</p>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; max-width: 620px;">I’m Juhui. Research and design are where I feel most at home. Outside UX I keep exploring: I vibe code, make videos, write and make visual art. Whether I’m coding or designing, I’m always learning how people think, feel and interact.</p>
+</div>
+</div>
+<div class="cl-stage" ref="{{refClStage}}" data-drag="0" data-hover="1" role="region" aria-label="Photos from my life in UX, hanging on a line">
+<svg class="cl-line" ref="{{refClSvg}}" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true"><path data-dc-d="{{clLineD}}" style="stroke-width:3"></path><path data-dc-d="{{clLineD2}}" style="stroke-width:1.2;opacity:.45"></path></svg>
+<figure class="cl-pc" tabindex="0"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph cut"><img src="/assets/1608465961f5dc6015e3eba3516e9ff6.webp" alt="Juhui looking through a magnifying glass" draggable="false"></div><figcaption>Curious by default</figcaption></figure>
+<figure class="cl-pc" tabindex="0"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph"><img src="/assets/52d8e582531d1726c150974a160ce65d.webp" alt="Juhui working on screens at her desk in the IDEXX office" draggable="false"></div><figcaption>UX intern at IDEXX</figcaption></figure>
+<figure class="cl-pc" tabindex="0"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph"><img src="/assets/3e7c321521c88dcc210fe1313093ce85.webp" alt="Juhui at a UX Rotterdam event, next to a “Join the workshop here” banner" draggable="false"></div><figcaption>UX Rotterdam crew</figcaption></figure>
+<figure class="cl-pc" tabindex="0"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph"><img src="/assets/704b7a5fff337ced5697018941adac0c.webp" alt="Group selfie with fellow designers at the DDW creative jam" draggable="false"></div><figcaption>DDW creative jam</figcaption></figure>
+<figure class="cl-pc" tabindex="0"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph"><img src="/assets/102b74c0896db1070bc43fcefa525cae.webp" alt="Juhui behind a busy coffee bar, with people watching a latte being poured" draggable="false"></div><figcaption>I even draw on coffee</figcaption></figure>
+<figure class="cl-pc" tabindex="0"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph wide"><img src="/assets/a87649eab58ee78b3b73444f60118abd.webp" alt="Two ink-and-watercolour cards with Korean calligraphy: a green branch and a koi fish" draggable="false"></div><figcaption>Ink &amp; calligraphy</figcaption></figure>
+<figure class="cl-pc" tabindex="0"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph fit"><img src="/assets/4e43ee915397e01a7338429ff0c64127.webp" alt="Still from Juhui’s video series Vibe code with me, building on her laptop" draggable="false"><a class="cl-yt" href="https://www.youtube.com/channel/UCyn-fNuBjj2t_fVWONj39Rw" target="_blank" rel="noopener noreferrer" draggable="false"><svg aria-hidden="true" viewBox="0 0 16 16" style="width:9px;height:9px;fill:currentColor;stroke:currentColor;stroke-width:1.4;stroke-linejoin:round"><path d="M5 3 L13 8 L5 13 Z"></path></svg>YouTube<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">: watch my videos (opens in a new tab)</span></a></div><figcaption>Make design content!</figcaption></figure>
+<figure class="cl-pc" aria-hidden="true"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph cut"><img src="/assets/1608465961f5dc6015e3eba3516e9ff6.webp" alt="Juhui looking through a magnifying glass" draggable="false"></div><figcaption>Curious by default</figcaption></figure>
+<figure class="cl-pc" aria-hidden="true"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph"><img src="/assets/52d8e582531d1726c150974a160ce65d.webp" alt="Juhui working on screens at her desk in the IDEXX office" draggable="false"></div><figcaption>UX intern at IDEXX</figcaption></figure>
+<figure class="cl-pc" aria-hidden="true"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph"><img src="/assets/3e7c321521c88dcc210fe1313093ce85.webp" alt="Juhui at a UX Rotterdam event, next to a “Join the workshop here” banner" draggable="false"></div><figcaption>UX Rotterdam crew</figcaption></figure>
+<figure class="cl-pc" aria-hidden="true"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph"><img src="/assets/704b7a5fff337ced5697018941adac0c.webp" alt="Group selfie with fellow designers at the DDW creative jam" draggable="false"></div><figcaption>DDW creative jam</figcaption></figure>
+<figure class="cl-pc" aria-hidden="true"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph"><img src="/assets/102b74c0896db1070bc43fcefa525cae.webp" alt="Juhui behind a busy coffee bar, with people watching a latte being poured" draggable="false"></div><figcaption>I even draw on coffee</figcaption></figure>
+<figure class="cl-pc" aria-hidden="true"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph wide"><img src="/assets/a87649eab58ee78b3b73444f60118abd.webp" alt="Two ink-and-watercolour cards with Korean calligraphy: a green branch and a koi fish" draggable="false"></div><figcaption>Ink &amp; calligraphy</figcaption></figure>
+<figure class="cl-pc" aria-hidden="true"><svg class="cl-pin" viewBox="0 0 16 44" aria-hidden="true"><path d="M5 1 C4 15,4 30,6 43 L10 43 C12 30,12 15,11 1 Z M3.5 17 H12.5"></path></svg><div class="cl-ph fit"><img src="/assets/4e43ee915397e01a7338429ff0c64127.webp" alt="Still from Juhui’s video series Vibe code with me, building on her laptop" draggable="false"><a class="cl-yt" tabindex="-1" href="https://www.youtube.com/channel/UCyn-fNuBjj2t_fVWONj39Rw" target="_blank" rel="noopener noreferrer" draggable="false"><svg aria-hidden="true" viewBox="0 0 16 16" style="width:9px;height:9px;fill:currentColor;stroke:currentColor;stroke-width:1.4;stroke-linejoin:round"><path d="M5 3 L13 8 L5 13 Z"></path></svg>YouTube<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">: watch my videos (opens in a new tab)</span></a></div><figcaption>Make design content!</figcaption></figure>
+</div>
+<div class="cl-ctrl">
+<span class="cl-hint">psst, you can drag the line</span>
+<button type="button" class="cl-pz" onClick="{{clToggle}}" aria-pressed="{{clPressed}}"><svg aria-hidden="true" viewBox="0 0 16 16" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path data-dc-d="{{clPzIcon}}"></path></svg>{{clPauseLabel}}</button>
+</div>
+<div style="max-width: 960px; margin: 0 auto; padding: 72px clamp(40px, 6vw, 88px) 96px;">
+<div class="xp" data-on="0" style="--blue: {{blue}}; --paper: {{paper}};">
+<div class="xp-heads" aria-hidden="true"><span class="xp-head xp-head-l">Education</span><span></span><span class="xp-head xp-head-r">Experience</span></div>
+<div class="xp-list">
+<span class="xp-rail xp-rail-l" aria-hidden="true"></span><span class="xp-rail xp-rail-r" aria-hidden="true"></span>
+<div class="xp-yr" style="--i: 0;">
+<div class="xp-cell xp-l"><div class="xp-card"><span class="xp-type">Education</span><span class="xp-role">BA User Experience Design</span><span class="xp-org">The Hague University of Applied Sciences · 2023 – 2026</span><span class="xp-tag">The Netherlands</span></div></div>
+<span class="xp-node xp-node-l" aria-hidden="true"></span><span class="xp-node xp-node-r" aria-hidden="true"></span><span class="xp-year">2026</span>
+<div class="xp-cell xp-r"><div class="xp-card"><span class="xp-type">Experience</span><span class="xp-role">UX Intern</span><span class="xp-org">IDEXX · Animana · Jan – Jul 2026</span><span class="xp-tag">Hybrid · NL</span></div></div>
+</div>
+<div class="xp-yr" style="--i: 1;">
+<div class="xp-cell xp-l xp-empty" aria-hidden="true"></div>
+<span class="xp-node xp-node-r" aria-hidden="true"></span><span class="xp-year">2025</span>
+<div class="xp-cell xp-r"><div class="xp-card"><span class="xp-type">Experience</span><span class="xp-role">UX Designer</span><span class="xp-org">National STEM Honor Society (NSTEM) · Mar – Dec 2025</span><span class="xp-tag">Remote</span></div></div>
+</div>
+<div class="xp-yr" style="--i: 2;">
+<div class="xp-cell xp-l xp-empty" aria-hidden="true"></div>
+<span class="xp-node xp-node-r" aria-hidden="true"></span><span class="xp-year">2023</span>
+<div class="xp-cell xp-r"><div class="xp-card"><span class="xp-type">Experience</span><span class="xp-role">Operations Manager</span><span class="xp-org">FOODZIM Co. Ltd.</span><span class="xp-tag">Seoul</span></div></div>
+</div>
+<div class="xp-yr" style="--i: 3;">
+<div class="xp-cell xp-l"><div class="xp-card"><span class="xp-type">Education</span><span class="xp-role">Bachelor of Tourism</span><span class="xp-org">Kyung Hee University · 2018 – 2022</span><span class="xp-tag">Seoul</span></div></div>
+<span class="xp-node xp-node-l" aria-hidden="true"></span><span class="xp-node xp-node-r" aria-hidden="true"></span><span class="xp-year">2022</span>
+<div class="xp-cell xp-r"><div class="xp-card"><span class="xp-type">Experience</span><span class="xp-role">Product Management Intern</span><span class="xp-org">Friendstrip Co. Ltd.</span><span class="xp-tag">Seoul</span></div></div>
+</div>
+<div class="xp-yr" style="--i: 4;">
+<div class="xp-cell xp-l"><div class="xp-card"><span class="xp-type">Education</span><span class="xp-role">Exchange programmes</span><span class="xp-org">Vilnius University (Spring) · LCC International University (Fall)</span><span class="xp-tag">Lithuania</span></div></div>
+<span class="xp-node xp-node-l" aria-hidden="true"></span><span class="xp-year">2021</span>
+<div class="xp-cell xp-r xp-empty" aria-hidden="true"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- HOW I BUILD: pinned while you scroll; the card evolves through the four steps.
+     Scrolling only sets data-step on the section; CSS does the rest, so the page never re-renders mid-scroll. -->
+<section id="build" ref="{{refBuild}}" data-step="0" data-on="0" data-pin="{{pinAttr}}" data-short="{{shortAttr}}" style="--blue: {{blue}}; position: relative; border-top: 1px solid rgba(21,21,21,0.18); height: {{buildH}};">
+<div class="pin" style="position: {{pinPos}}; top: {{pinTop}}px; min-height: {{pinMinH}}; box-sizing: border-box; display: flex; align-items: center;">
+<sc-if value="{{hasPinThread}}" hint-placeholder-val="{{ false }}">
+<svg aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 1px; height: 100%; overflow: visible; pointer-events: none; z-index: 1;"><path data-pthread="1" data-dc-d="{{pinD}}" style="fill: none; stroke: {{blue}}; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;"></path></svg>
+</sc-if>
+<div class="pin-inner" style="width: 100%; max-width: 1280px; margin: 0 auto; padding: 24px clamp(40px, 6vw, 88px); box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 24px 64px; align-items: center;">
+
+<div class="leftcol" style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 22px;">
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<h2 class="bh" style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 900; font-size: clamp(36px, 4.6vw, 76px); line-height: 0.88; letter-spacing: -0.02em;">From sticky notes<br><span style="position: relative; display: inline-block;">to <span style="color: {{blue}};">shipped code</span><svg aria-hidden="true" viewBox="0 0 100 10" preserveAspectRatio="none" style="position: absolute; left: 0; bottom: -0.16em; width: 100%; height: 0.12em; overflow: visible; pointer-events: none;"><path class="bline" pathLength="1" d="M 1 5 C 30 3, 70 7, 99 5" style="fill: none; stroke: {{blue}}; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1 2;"></path></svg></span></h2>
+<span class="note" style="font-family: 'Nanum Pen Script', cursive; font-size: 34px; line-height: 1; color: {{blue}}; transform: rotate(-3deg); align-self: flex-start;">this site is one, too ↓</span>
+</div>
+<ol class="steps" style="list-style: none; margin: 0; padding: 0; border-top: 2px solid #151515; display: flex; flex-direction: column;">
+<li class="step s0" data-go="0" tabindex="0">
+<span class="num">01</span>
+<span class="txt">
+<span class="ttl">Dig in with user research</span>
+<span class="desc">Interviews and contextual inquiry, then clustering notes until the real problem shows.</span>
+<span class="tools">User interviews · Contextual inquiry · Affinity mapping</span>
+<span class="kit" aria-label="Tools: Miro, FigJam, Marvin"><span class="tl" data-tool="miro" title="Miro"><span class="tl-i" aria-hidden="true"><img src="/assets/19c5d4900188ac7685b420d3b21b86c3.webp" alt="" draggable="false"></span></span><span class="tl" data-tool="figjam" title="FigJam"><span class="tl-i" aria-hidden="true"><img src="/assets/3adb211013f3decc1b6409adee67056a.webp" alt="" draggable="false"></span></span><span class="tl" data-tool="marvin" title="Marvin"><span class="tl-i" aria-hidden="true"><img src="/assets/f1c436798be04494a5914613bd7efe3b.webp" alt="" draggable="false"></span></span></span>
+</span>
+</li>
+<li class="step s1" data-go="1" tabindex="0">
+<span class="num">02</span>
+<span class="txt">
+<span class="ttl">Wireframe it in a system</span>
+<span class="desc">Wireframes built from tokens and components, contrast checked, so every screen stays consistent.</span>
+<span class="tools">Wireframes · Figma · Design systems · Heuristics</span>
+<span class="kit" aria-label="Tools: Figma, Photoshop, Claude, ChatGPT"><span class="tl" data-tool="figma" title="Figma"><span class="tl-i" aria-hidden="true"><img src="/assets/3adb211013f3decc1b6409adee67056a.webp" alt="" draggable="false"></span></span><span class="tl" data-tool="photoshop" title="Photoshop"><span class="tl-i" aria-hidden="true"><img src="/assets/b03f53bf09b011eab9cd7e8098c33fb2.webp" alt="" draggable="false"></span></span><span class="tl" data-tool="claude" title="Claude"><span class="tl-i" aria-hidden="true"><img src="/assets/e3c493f9624cb62e2aac56d4f893d0be.webp" alt="" draggable="false"></span></span><span class="tl" data-tool="chatgpt" title="ChatGPT"><span class="tl-i" aria-hidden="true"><img src="/assets/6a590fa19fe18db42851b149f29711a9.webp" alt="" draggable="false"></span></span></span>
+</span>
+</li>
+<li class="step s2" data-go="2" tabindex="0">
+<span class="num">03</span>
+<span class="txt">
+<span class="ttl">Prototype it with vibe coding</span>
+<span class="desc">Turn the wireframes into a working prototype people can actually click, in days instead of weeks.</span>
+<span class="tools">Claude Code · Lovable · Vercel</span>
+<span class="kit" aria-label="Tools: Figma, Claude Design, Lovable"><span class="tl" data-tool="figma" title="Figma"><span class="tl-i" aria-hidden="true"><img src="/assets/3adb211013f3decc1b6409adee67056a.webp" alt="" draggable="false"></span></span><span class="tl" data-tool="claude-design" title="Claude Design"><span class="tl-i" aria-hidden="true"><img src="/assets/c2fb9724e447705e272041a99810a529.webp" alt="" draggable="false"></span></span><span class="tl" data-tool="lovable" title="Lovable"><span class="tl-i" aria-hidden="true"><img src="/assets/5131832d8c1aa40bc080ce3034485ae7.webp" alt="" draggable="false"></span></span></span>
+</span>
+</li>
+<li class="step s3" data-go="3" tabindex="0">
+<span class="num">04</span>
+<span class="txt">
+<span class="ttl">Test, iterate, ship</span>
+<span class="desc">Test on the real thing, fix what doesn’t hold up, test again, then hand it over ready to ship.</span>
+<span class="tools">Usability testing · Iteration · Hand-off</span>
+<span class="kit" aria-label="Tools: Miro, FigJam, Marvin, Claude"><span class="tl" data-tool="miro" title="Miro"><span class="tl-i" aria-hidden="true"><img src="/assets/19c5d4900188ac7685b420d3b21b86c3.webp" alt="" draggable="false"></span></span><span class="tl" data-tool="figjam" title="FigJam"><span class="tl-i" aria-hidden="true"><img src="/assets/3adb211013f3decc1b6409adee67056a.webp" alt="" draggable="false"></span></span><span class="tl" data-tool="marvin" title="Marvin"><span class="tl-i" aria-hidden="true"><img src="/assets/f1c436798be04494a5914613bd7efe3b.webp" alt="" draggable="false"></span></span><span class="tl" data-tool="claude" title="Claude"><span class="tl-i" aria-hidden="true"><img src="/assets/e3c493f9624cb62e2aac56d4f893d0be.webp" alt="" draggable="false"></span></span></span>
+</span>
+</li>
+</ol>
+</div>
+
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 14px;">
+<div role="group" class="deckbox" aria-label="Photos from each step" style="position: relative; width: 100%; max-width: {{cardMaxW}}px; aspect-ratio: 4 / 3; container-type: inline-size;">
+
+<!-- 01: research -->
+<div class="card c0">
+<div class="deck">
+<figure class="dk" data-pos="0"><img src="/assets/4140d0a616c1099e42f00778eb7bd44e.webp" alt="Miro board with research notes clustered into themes" draggable="false" loading="lazy"><figcaption><span class="dk-t">Affinity map<span class="dk-p">IDEXX</span></span><span class="dk-tool">Miro</span></figcaption></figure>
+<figure class="dk" data-pos="1"><img src="/assets/260cb3afd0dbb63cfc6de9b1d09f0913.webp" alt="FigJam board mapping patterns across research sources, such as cognitive load and time pressure" draggable="false" loading="lazy"><figcaption><span class="dk-t">Patterns across sources<span class="dk-p">IDEXX</span></span><span class="dk-tool">FigJam</span></figcaption></figure>
+<figure class="dk" data-pos="2"><img src="/assets/57e98095501f4dec586426c257489fcd.webp" alt="FigJam heuristic evaluation with issues and recommendations per heuristic" draggable="false" loading="lazy"><figcaption><span class="dk-t">Heuristic audit<span class="dk-p">IDEXX</span></span><span class="dk-tool">FigJam</span></figcaption></figure>
+</div>
+<div class="dk-nav"><button type="button" class="dk-b" data-dir="-1" aria-label="Previous photo"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="M10 3 L5 8 L10 13"></path></svg></button><span class="dk-count" aria-live="polite">1 / 3</span><button type="button" class="dk-b" data-dir="1" aria-label="Next photo"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="M6 3 L11 8 L6 13"></path></svg></button></div>
+</div>
+
+<!-- 02: wireframes and system -->
+<div class="card c1">
+<div class="deck">
+<figure class="dk" data-pos="0"><img src="/assets/4a26aa761b2bcd90fa4d8555eacbe8b2.webp" alt="Four hand-drawn screen sketches in a notebook" draggable="false" loading="lazy"><figcaption><span class="dk-t">Paper sketches<span class="dk-p">IDEXX</span></span><span class="dk-tool">Pen &amp; paper</span></figcaption></figure>
+<figure class="dk" data-pos="1"><img src="/assets/9e81284e8427865047cdfa1a4bc00811.webp" alt="Grey lo-fi wireframes of the dashboard and order list" draggable="false" loading="lazy"><figcaption><span class="dk-t">Lo-fi wireframes<span class="dk-p">IDEXX</span></span><span class="dk-tool">Figma</span></figcaption></figure>
+<figure class="dk" data-pos="2"><img src="/assets/a7652b626b4032a76f19711bba9ddf55.webp" alt="Design system page for the Just in Time clock component" draggable="false" loading="lazy"><figcaption><span class="dk-t">Design system<span class="dk-p">Just in Time</span></span><span class="dk-tool">Claude</span></figcaption></figure>
+</div>
+<div class="dk-nav"><button type="button" class="dk-b" data-dir="-1" aria-label="Previous photo"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="M10 3 L5 8 L10 13"></path></svg></button><span class="dk-count" aria-live="polite">1 / 3</span><button type="button" class="dk-b" data-dir="1" aria-label="Next photo"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="M6 3 L11 8 L6 13"></path></svg></button></div>
+</div>
+
+<!-- 03: prototype -->
+<div class="card c2">
+<div class="deck">
+<figure class="dk" data-pos="0"><img src="/assets/447fb2c60aaa763ad98e39b37cc4ac2d.webp" alt="Lovable chat next to the live Just in Time app preview" draggable="false" loading="lazy"><figcaption><span class="dk-t">Building the app<span class="dk-p">Just in Time</span></span><span class="dk-tool">Lovable</span></figcaption></figure>
+</div>
+</div>
+
+<!-- 04: testing -->
+<div class="card c3">
+<div class="deck">
+<figure class="dk" data-pos="0"><img src="/assets/79494a038e7b8cfa4cb9bf37b1d2aed5.webp" alt="Remote usability test of the new order screen, with the tester’s face blurred" draggable="false" loading="lazy"><figcaption><span class="dk-t">Testing the order flow<span class="dk-p">IDEXX</span></span><span class="dk-tool">Live prototype</span></figcaption></figure>
+<figure class="dk" data-pos="1"><img src="/assets/9d0cb0d697a8eb4b321c870846933805.webp" alt="Remote session walking through the order list prototype, with the other person’s face blurred" draggable="false" loading="lazy"><figcaption><span class="dk-t">Testing the order list<span class="dk-p">IDEXX</span></span><span class="dk-tool">Live prototype</span></figcaption></figure>
+<figure class="dk" data-pos="2"><img src="/assets/85f0d99172ba54daffe3034682793e62.webp" alt="FigJam board with test findings pinned to each screen" draggable="false" loading="lazy"><figcaption><span class="dk-t">Findings on each screen<span class="dk-p">IDEXX</span></span><span class="dk-tool">FigJam</span></figcaption></figure>
+</div>
+<div class="dk-nav"><button type="button" class="dk-b" data-dir="-1" aria-label="Previous photo"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="M10 3 L5 8 L10 13"></path></svg></button><span class="dk-count" aria-live="polite">1 / 3</span><button type="button" class="dk-b" data-dir="1" aria-label="Next photo"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="M6 3 L11 8 L6 13"></path></svg></button></div>
+</div>
+</div>
+<div aria-hidden="true" style="display: flex; gap: 8px;">
+<span class="bar b0"></span><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- PLAYGROUND -->
+<section id="playground" style="border-top: 1px solid rgba(21,21,21,0.18);">
+<div style="max-width: 1280px; margin: 0 auto; padding: 96px clamp(40px, 6vw, 88px); display: flex; flex-direction: column; gap: 40px;">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px;">
+<h2 ref="{{refT3}}" style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 900; font-size: clamp(52px, 8vw, 120px); line-height: 0.84; letter-spacing: -0.02em;">Play<span style="color: {{blue}};">ground</span></h2>
+<span style="font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #4F4A42;">Side projects, challenges and experiments</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 32px;">
+<a href="#playground" data-pg="jit" aria-haspopup="dialog" style="display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: #151515;">
+<div style="aspect-ratio: 1 / 1; border-radius: 8px; overflow: hidden; background: #ECECEC;"><img src="/assets/349b3e1276d9dd1dabdb4a84b8e39734.webp" alt="Just in Time on a phone: the day planned as one clock" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover;"></div>
+<h3 style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 800; font-size: 44px; line-height: 0.92;">Just in Time App</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55;">A task clock that helps people with ADHD focus on what’s in front of them, right now.</p>
+<span class="pg-pills"><span class="pg-pill">Lovable</span><span class="pg-pill">Hackathon</span><span class="pg-pill">Vibe coding</span></span>
+</a>
+<a href="#playground" data-pg="lunar" aria-haspopup="dialog" style="display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: #151515;">
+<div style="aspect-ratio: 1 / 1; border-radius: 8px; overflow: hidden; background: #1A1A1A;"><img src="/assets/713b9b434132bdbf4cd3870c0508a432.jpg" alt="Lunar Colony Hexabot app on two phones" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 80% 50%;"></div>
+<h3 style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 800; font-size: 44px; line-height: 0.92;">Lunar Colony Hexabot</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55;">A mobile app for lunar colonists to run their Hexabot robots, made for gloves, helmets and emergencies.</p>
+<span class="pg-pills"><span class="pg-pill">Figma</span><span class="pg-pill">UX/UI</span><span class="pg-pill">Competition</span></span>
+</a>
+<a href="#playground" data-pg="ataraxia" aria-haspopup="dialog" style="display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: #151515;">
+<div style="aspect-ratio: 1 / 1; border-radius: 8px; overflow: hidden; background: #050608;"><img src="/assets/30ad55b37df3bc6d54e9ed892663fc06.jpg" alt="Ataraxia: notes shown as a constellation" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover;"></div>
+<h3 style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 800; font-size: 44px; line-height: 0.92;">Ataraxia</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55;">A quiet space to archive your thoughts, where every note becomes a star in your own universe.</p>
+<span class="pg-pills"><span class="pg-pill">Lovable</span><span class="pg-pill">Vibe coding</span><span class="pg-pill">Product design</span></span>
+</a>
+<a href="#playground" data-pg="operator" aria-haspopup="dialog" style="display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: #151515;">
+<div style="aspect-ratio: 1 / 1; border-radius: 8px; overflow: hidden; background: #F4F8F7;"><img src="/assets/3a0c949a4880f2baebe3c98129b1facf.jpg" alt="The Operator landing page: hero with webinar sign-up" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover;"></div>
+<h3 style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 800; font-size: 44px; line-height: 0.92;">The Operator</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55;">A landing page and design system that guide homeowners to the right rental programme.</p>
+<span class="pg-pills"><span class="pg-pill">Figma</span><span class="pg-pill">Claude Design</span><span class="pg-pill">Design system</span></span>
+</a>
+</div>
+</div>
+</section>
+
+<!-- CONTACT + FOOTER -->
+<section id="contact" ref="{{refContact}}" style="background: {{blue}}; color: #F9F7F2;">
+<div style="max-width: 1280px; margin: 0 auto; padding: 112px clamp(40px, 6vw, 88px) 40px; display: flex; flex-direction: column; gap: 56px;">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<h2 style="margin: 0; font-family: 'Darker Grotesque', sans-serif; font-weight: 900; font-size: clamp(44px, 6.6vw, 100px); line-height: 0.86; letter-spacing: -0.02em;">Got something<br>complex?</h2>
+<span style="font-family: 'Nanum Pen Script', cursive; font-size: 32px; line-height: 1; transform: rotate(-3deg); align-self: flex-start;">let’s make it simple.</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; border-top: 1px solid rgba(249,247,242,0.45); padding-top: 24px;">
+<a href="mailto:juhui.seo.contact@gmail.com" style="font-family: Roboto, system-ui, sans-serif; font-weight: 500; font-size: clamp(18px, 2vw, 26px); line-height: 1.3; color: #F9F7F2; overflow-wrap: anywhere;">juhui.seo.contact@gmail.com</a>
+<div style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 16px; font-weight: 500;">
+<a href="https://www.linkedin.com/in/juhuiseo/" style="color: #F9F7F2;">LinkedIn ↗</a>
+<a href="https://dribbble.com/juhuiseo" style="color: #F9F7F2;">Dribbble ↗</a>
+<a href="https://www.youtube.com/channel/UCyn-fNuBjj2t_fVWONj39Rw" style="color: #F9F7F2;">YouTube ↗</a>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px;">
+<span>© 2026 Juhui Seo</span>
+<span>Designed in Figma, built with Claude</span>
+</div>
+</div>
+</section>
+
+<!-- THE BLUE THREAD: unspools from the hero down the left margin as you scroll; underlines each section title it passes -->
+<sc-if value="{{hasLayout}}" hint-placeholder-val="{{ false }}">
+<svg data-ov="1" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: {{ovW}}px; height: {{ovH}}px; overflow: visible; pointer-events: none; z-index: 5;">
+<defs><linearGradient id="thread-ink" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" data-dc-y2="{{ovH}}"><stop data-dc-offset="{{gT}}" data-dc-stop-color="{{blue}}"></stop><stop data-dc-offset="{{gT}}" stop-color="#FFFFFF"></stop><stop data-dc-offset="{{gB}}" stop-color="#FFFFFF"></stop><stop data-dc-offset="{{gB}}" data-dc-stop-color="{{blue}}"></stop></linearGradient></defs>
+<sc-if value="{{hasThread}}" hint-placeholder-val="{{ false }}">
+<path data-thread="1" ref="{{refThread}}" data-dc-d="{{threadD}}" style="fill: none; stroke: url(#thread-ink); stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;"></path>
+<sc-if value="{{hasThread2}}" hint-placeholder-val="{{ false }}"><path data-thread="2" data-dc-d="{{threadD2}}" style="fill: none; stroke: url(#thread-ink); stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;"></path></sc-if>
+</sc-if>
+<sc-for list="{{unders}}" as="u" hint-placeholder-count="0">
+<path pathLength="1" data-dc-d="{{u.d}}" style="fill: none; stroke: url(#thread-ink); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 1 2; stroke-dashoffset: {{u.off}}; transition: {{u.tr}};"></path>
+</sc-for>
+</svg>
+</sc-if>
+
+<div class="dot" ref="{{refDot}}" aria-hidden="true"><i></i><b>View case</b></div>
+</div>
+</template>
+<script type="text/x-dc" data-dc-script data-props='{"blue":{"editor":"color","default":"#2343B5","options":["#2343B5","#1D3A9E","#2F52D0","#16297A"]},"paper":{"editor":"color","default":"#F9F7F2","options":["#F9F7F2","#F6F2EA","#FBFAF6"]},"$preview":{"width":1440,"height":8000}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+// fixC: "complex" is untangled. liftS: "simple, easy" is lifted.
+// layout: measured thread + underline geometry. drawn: how many section titles are underlined.
+// pin: how the How I build section is pinned (measured). step: which of its four steps is showing.
+this.state = { clPaused: false, fixC: false, liftS: false, reduce: false, scrolled: false, layout: null, drawn: 0, pin: null, cardMaxW: 520 };
+this.buildStep = 0;
+this.timers = [];
+this.els = { root: null, hero: null, contact: null, build: null, titles: [null, null, null, null] };
+this.thread = null;
+this.table = null;
+this.raf = 0;
+var self = this;
+this.refRoot = function (el) { self.els.root = el; };
+this.refHero = function (el) { self.els.hero = el; };
+this.refContact = function (el) { self.els.contact = el; };
+this.refBuild = function (el) { self.els.build = el; };
+this.refT = [0, 1, 2, 3].map(function (i) { return function (el) { self.els.titles[i] = el; }; });
+this.refThread = function (el) { self.thread = el; };
+this.refDot = function (el) { self.dot = el; };
+// Who am I clothesline
+this.refClStage = function (el) { self.clStage = el; };
+this.refClSvg = function (el) { self.clSvg = el; };
+this.refClLead = function (el) { self.clLead = el; };
+this.clToggle = function () { self.setState({ clPaused: !self.state.clPaused }); };
+// Words from collaborators: one quote at a time. A name switches it; otherwise it moves on every 8 s.
+this.wdQuotes = [["From day one, Juhui was adding value to the team, driving user feedback and data-driven design. She handled everything she tackled like someone with many more years of experience.", "Craig Davis", "Director of UX Design @IDEXX", "https://lnkd.in/p/gGkuEkzY", "LinkedIn post"], ["She took initiative from day one, earned trust across the organisation, and delivered work at the quality bar we set for experienced practitioners. Her thinking is just that clear.", "Natalia Nedelko", "Head of Product @IDEXX Animana", "https://www.linkedin.com/in/juhuiseo/details/recommendations/", "LinkedIn recommendation"], ["She was praised as a clear and structured communicator, both verbally and in writing, and she effectively managed relationships with stakeholders.", "Danica Mast", "Research Coordinator at De Haagse Hogeschool", "", ""], ["I had the opportunity to work with Juhui on several client-based projects during university. She is an excellent team player who keeps the team aligned, encourages open idea sharing, and helps keep projects on track.", "Sheilla Limandjaja", "UX/UI Designer", "", ""]];
+this.wdShow = function (i, byUser) {
+if (byUser) { clearInterval(self.wdIv); self.wdIv = null; }
+if (i === (self.state.wdI || 0)) return;
+self.setState({ wdI: i }, function () {
+var c = self.els.root && self.els.root.querySelector('#words .wd-card');
+if (c && !self.state.reduce) { try { c.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }); } catch (e) {} }
+});
+};
+this.wdPick = [0, 1, 2, 3].map(function (i) { return function () { self.wdShow(i, true); }; });
+this.clD1 = this.clPath(1.4, 0); this.clD2 = this.clPath(2.2, 3);
+// The dot sits exactly on the pointer (no lag), so it feels like the real cursor.
+this.onMove = function (e) {
+var d = self.dot; if (!d) return;
+d.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+d.dataset.on = '1';
+var t = e.target && e.target.closest ? e.target : null;
+var lab = t ? t.closest('[data-cursor]') : null;
+if (self.curMedia && self.curMedia !== lab) { var cm = self.curMedia.style; cm.setProperty('--px', '0px'); cm.setProperty('--py', '0px'); cm.setProperty('--ps', '1'); self.curMedia = null; }
+if (lab) {
+var txt = lab.getAttribute('data-cursor');
+if (d.lastLabel !== txt) { var bl = d.querySelector('b'); if (bl) bl.textContent = txt; d.lastLabel = txt; }
+d.dataset.label = '1'; d.dataset.hover = '0';
+if (!self.reduce) {
+var r = lab.getBoundingClientRect();
+var px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+lab.style.setProperty('--px', (-px * 18).toFixed(1) + 'px');
+lab.style.setProperty('--py', (-py * 12).toFixed(1) + 'px');
+lab.style.setProperty('--ps', '1.04');
+self.curMedia = lab;
+}
+} else {
+d.dataset.label = '0';
+d.dataset.hover = t && t.closest('a, button, [data-hover]') ? '1' : '0';
+}
+d.dataset.dark = t && t.closest('#contact') ? '1' : '0';
+};
+this.onLeave = function () { if (self.dot) self.dot.dataset.on = '0'; };
+this.onDown = function () { if (self.dot) self.dot.dataset.down = '1'; };
+this.onUp = function () { if (self.dot) self.dot.dataset.down = '0'; };
+// Header links glide to their section instead of jumping.
+this.onClick = function (e) {
+if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+if (!a || !self.els.root || !self.els.root.contains(a)) return;
+var id = a.getAttribute('href').slice(1);
+var target = id ? self.els.root.querySelector('#' + id) : null;
+if (!target) return;
+e.preventDefault();
+self.glideTo(id === 'top' ? null : target);
+};
+this.stopGlide = function () { if (self.glideRaf) { cancelAnimationFrame(self.glideRaf); self.glideRaf = 0; } };
+// Scroll work runs at most once per frame and writes the thread's dash offset straight to the
+// element, so scrolling never re-renders the page.
+this.onScroll = function () {
+if (self.raf) return;
+self.raf = requestAnimationFrame(function () { self.raf = 0; self.update(); });
+};
+this.onResize = function () { self.measure(); };
+}
+componentDidMount() {
+var reduce = false;
+try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+this.setState({ reduce: reduce });
+this.reduce = reduce;
+// Capture catches whichever element actually scrolls (the window or a preview frame).
+document.addEventListener('scroll', this.onScroll, { capture: true, passive: true });
+window.addEventListener('resize', this.onResize);
+var root = this.els.root;
+if (root) root.addEventListener('click', this.onClick);
+window.addEventListener('wheel', this.stopGlide, { passive: true });
+window.addEventListener('touchstart', this.stopGlide, { passive: true });
+var fine = false;
+try { fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches; } catch (e) {}
+if (fine && root) {
+// Hero drawing follows the mouse a little: a small shift and tilt toward the pointer, eased by the
+// CSS transition on .hero-par. Mouse only (fine pointers), off for reduced motion.
+if (!reduce) {
+this.onPar = function (e) {
+if (self.parRaf) return;
+self.parRaf = requestAnimationFrame(function () {
+self.parRaf = 0;
+var par = self.parEl || (self.parEl = root.querySelector('.hero-par'));
+if (!par) return;
+var nx = (e.clientX / window.innerWidth) * 2 - 1, ny = (e.clientY / window.innerHeight) * 2 - 1;
+par.style.transform = 'translate3d(' + (nx * 14).toFixed(1) + 'px,' + (ny * 10).toFixed(1) + 'px,0) rotate(' + (nx * 2.2).toFixed(2) + 'deg)';
+self.parNx = nx; self.parNy = ny;
+self.capFollow();
+});
+};
+document.addEventListener('mousemove', this.onPar, { passive: true });
+}
+root.classList.add('has-dot');
+document.addEventListener('mousemove', this.onMove, { passive: true });
+document.addEventListener('mouseleave', this.onLeave);
+document.addEventListener('mousedown', this.onDown);
+document.addEventListener('mouseup', this.onUp);
+}
+var self = this;
+requestAnimationFrame(function () { self.measure(); });
+this.timers.push(setTimeout(function () { self.measure(); }, 900));
+// Sections can change height after load (images, the pinned How I build, the clothesline), which
+// moves every title below them. Re-measure so the thread's underlines stay under their titles.
+if ('ResizeObserver' in window && this.els.root) {
+var roT = 0, lastH = {};
+this.ro = new ResizeObserver(function (entries) {
+var changed = false;
+entries.forEach(function (en) { var k = en.target.id || en.target.tagName; var hh = Math.round(en.contentRect.height); if (lastH[k] !== undefined && Math.abs(lastH[k] - hh) > 1) changed = true; lastH[k] = hh; });
+if (!changed) return;
+clearTimeout(roT); roT = setTimeout(function () { self.measure(); }, 120);
+});
+Array.prototype.forEach.call(this.els.root.querySelectorAll('header, section, footer'), function (el) { self.ro.observe(el); });
+}
+this.initMotion();
+this.clInit();
+this.deckInit();
+this.pgInit();
+// Arriving from a case study's "All work": land on that section.
+var goto = null;
+if (window.__jhGoto) { goto = window.__jhGoto; window.__jhGoto = null; }
+try { if (!goto && /^jh-goto:/.test(window.name)) goto = window.name.slice(8); window.name = ''; } catch (x) {}
+try { if (!goto) goto = sessionStorage.getItem('jh-goto'); sessionStorage.removeItem('jh-goto'); } catch (x) {}
+try { if (!goto) goto = localStorage.getItem('jh-goto'); localStorage.removeItem('jh-goto'); } catch (x) {}
+try { if (location.hash) { if (!goto) goto = location.hash.slice(1); history.replaceState(null, '', location.pathname + location.search); } } catch (x) {}
+// If this page is already open (the canvas keeps artboards alive), hear the request live.
+this.onGotoStorage = function (e) {
+if (e.key !== 'jh-goto' || !e.newValue) return;
+var g2 = e.newValue;
+try { localStorage.removeItem('jh-goto'); sessionStorage.removeItem('jh-goto'); } catch (x) {}
+self.jumpTo(g2);
+};
+window.addEventListener('storage', this.onGotoStorage);
+if (goto) this.jumpTo(goto);
+else {
+// Otherwise always open at the top: no restored scroll position, no leftover #hash.
+try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (x) {}
+try { if (location.hash) history.replaceState(null, '', location.pathname + location.search); } catch (x) {}
+var toTop = function () { if (self.userMoved) return; var sc = self.scroller(); if (sc.scrollTop > 0) sc.scrollTop = 0; };
+this.onFirstInput = function () { self.userMoved = true; };
+['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (t) { window.addEventListener(t, self.onFirstInput, { passive: true, once: true }); });
+requestAnimationFrame(toTop);
+this.timers.push(setTimeout(toTop, 300));
+this.timers.push(setTimeout(toTop, 1000));
+}
+try { document.fonts.ready.then(function () { self.measure(); }); } catch (e) {}
+if (!reduce) {
+// Loop the idea on its own: complex untangles, the pen runs on to simple, easy, holds, then resets.
+// First run waits until the bubble has finished writing "Hi, I'm Juhui!" (about 2.7s).
+this.rotSetup();
+this.subSetup();
+}
+// Hero intro: the speech bubble says hi on its own; clicking the drawing types the caption.
+this.heroIntro();
+}
+componentDidUpdate() {
+// The runtime does not pass the previous state here, so remember the last layout ourselves.
+if (this.state.layout && this.state.layout !== this.builtFor) {
+this.builtFor = this.state.layout;
+this.buildPinTable();
+this.buildTable();
+}
+}
+buildPinTable() {
+var root = this.els.root;
+var el = root ? root.querySelector('path[data-pthread]') : null;
+var ends = this.state.layout ? this.state.layout.pinEnds : [];
+this.pinThread = el;
+this.pinTable = null;
+if (!el || !el.getTotalLength || !ends.length) return;
+var L = el.getTotalLength();
+var lens = ends.map(function () { return 0; });
+var N = 240, maxY = -Infinity;
+for (var i = 0; i <= N; i++) {
+var len = (L * i) / N;
+var py = el.getPointAtLength(len).y;
+if (py > maxY) maxY = py;
+for (var j = 0; j < ends.length; j++) { if (maxY <= ends[j] + 0.5) lens[j] = len; }
+}
+this.pinTable = { L: L, lens: lens };
+el.style.transition = 'none';
+el.style.strokeDasharray = L + ' ' + L;
+el.style.strokeDashoffset = String(L);
+this.pinLen = 0;
+el.getBoundingClientRect();
+}
+// ---- Shared motion: smooth (inertial) wheel scrolling + scroll reveals ----
+initMotion() {
+var self = this, root = this.motionRoot();
+if (!root) return;
+this.revealEls = [];
+if (this.reduce) root.classList.add('rv-off');
+this.markReveals(root);
+this.markMedia(root);
+this.revealEls = Array.prototype.slice.call(root.querySelectorAll('[data-rv]'));
+// IntersectionObserver measures against what is really on screen, even when the canvas
+// (not this frame) is the thing that scrolls.
+if ('IntersectionObserver' in window) {
+var watched = this.revealEls;
+this.io = new IntersectionObserver(function (entries) {
+entries.forEach(function (en) { if (en.isIntersecting) en.target.dataset.in = '1'; });
+}, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+// A zoomed-out canvas shows the whole board at once, so everything "appears" before anyone
+// reads it. Whatever then sits fully below the screen is reset, and plays when scrolled to.
+if (!this.reduce) {
+this.io2 = new IntersectionObserver(function (entries) {
+entries.forEach(function (en) { en.target._vis = en.isIntersecting; });
+var vt = null;
+probes.forEach(function (el) { if (el._vis) { var t = el.getBoundingClientRect().top; if (vt === null || t > vt) vt = t; } });
+if (vt === null) return;
+entries.forEach(function (en) { if (!en.isIntersecting && en.boundingClientRect.top > vt && en.target.dataset.in) delete en.target.dataset.in; });
+}, { threshold: 0 });
+}
+var probes = watched.concat(Array.prototype.slice.call(root.querySelectorAll('section, header, footer')));
+watched.forEach(function (el) { self.io.observe(el); });
+if (this.io2) probes.forEach(function (el) { self.io2.observe(el); });
+}
+var hi = root.querySelectorAll('.heroimg');
+this.timers.push(setTimeout(function () { hi.forEach(function (e) { e.dataset.in = '1'; }); self.reveal(); }, 120));
+var fine = false;
+try { fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches; } catch (e) {}
+if (fine && !this.reduce) {
+this.onWheelSmooth = function (e) { self.wheelSmooth(e); };
+window.addEventListener('wheel', this.onWheelSmooth, { passive: false });
+}
+}
+stopMotion() {
+if (this.io) this.io.disconnect();
+if (this.io2) this.io2.disconnect();
+if (this.onWheelSmooth) window.removeEventListener('wheel', this.onWheelSmooth, { passive: false });
+if (this.smoothRaf) cancelAnimationFrame(this.smoothRaf);
+}
+reveal() {
+var els = this.revealEls; if (!els || !els.length) return;
+var vh = Math.min(window.innerHeight, 1000);
+if (this.io) return;
+for (var i = els.length - 1; i >= 0; i--) {
+var el = els[i];
+if (el.getBoundingClientRect().top < vh * 0.9) { el.dataset.in = '1'; els.splice(i, 1); }
+}
+}
+// Wheel input eases toward its target (like Lenis). Keyboard, scrollbar and touch stay native.
+wheelSmooth(e) {
+if (this.pgOpen) return;
+if (e.ctrlKey || e.defaultPrevented || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+this.lastWheelDir = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0; this.lastWheelAt = performance.now();
+if (this.holdUntil && performance.now() < this.holdUntil) { e.preventDefault(); return; }
+var sc = this.scroller();
+var max = sc.scrollHeight - sc.clientHeight;
+if (max < 2) return;
+var t = e.target;
+while (t && t !== sc && t !== document.body && t.nodeType === 1) {
+var o = getComputedStyle(t).overflowY;
+if ((o === 'auto' || o === 'scroll') && t.scrollHeight > t.clientHeight + 1) return; // inner scroller: leave it alone
+t = t.parentElement;
+}
+var d = e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? sc.clientHeight : 1);
+if (!this.smoothRaf) this.smoothTarget = sc.scrollTop;
+var next = Math.max(0, Math.min(max, this.smoothTarget + d));
+if (next === this.smoothTarget && (next <= 0 || next >= max)) return; // at an edge: let the outer view scroll
+e.preventDefault();
+this.smoothTarget = next;
+if (this.glideRaf) { cancelAnimationFrame(this.glideRaf); this.glideRaf = 0; }
+var self = this;
+if (this.smoothRaf) return;
+var step = function () {
+var cur = sc.scrollTop, to = self.smoothTarget;
+var n = cur + (to - cur) * 0.1;
+if (Math.abs(to - n) < 0.5) { sc.scrollTop = to; self.smoothRaf = 0; return; }
+sc.scrollTop = n;
+self.smoothRaf = requestAnimationFrame(step);
+};
+this.smoothRaf = requestAnimationFrame(step);
+}
+// Stop wheel easing so it can't pull the page back toward an old target after a jump.
+stopSmooth() { if (this.smoothRaf) { cancelAnimationFrame(this.smoothRaf); this.smoothRaf = 0; } }
+motionRoot() { return this.els.root; }
+// Project pictures get a cursor label: cases that exist say "View case", the rest say they are coming.
+markMedia(root) {
+var mark = function (sel, label) {
+root.querySelectorAll(sel).forEach(function (a) {
+var m = a.firstElementChild;
+if (!m || !/height|aspect-ratio/.test(m.getAttribute('style') || '')) return;
+var live = /^\/(idexx|nstem|miles)\b/.test(a.getAttribute('href') || '');
+m.setAttribute('data-cursor', label === 'case' ? (live ? 'View case' : 'Case coming soon') : label);
+m.classList.add('pm');
+});
+};
+mark('#work a', 'case');
+mark('#playground a', 'Try it');
+}
+// What rises in on the landing page. Section titles stay put: the thread measures them.
+markReveals(root) {
+var mark = function (list, stagger) { Array.prototype.forEach.call(list, function (el, i) { el.setAttribute('data-rv', ''); if (stagger) el.style.setProperty('--rd', Math.min(i, 3) * 90 + 'ms'); }); };
+mark(root.querySelectorAll('#work > div > a'));
+mark(root.querySelectorAll('#work > div > div > a'), true);
+mark(root.querySelectorAll('#about > .cl-top > div > p'), true);
+mark(root.querySelectorAll('#build .steps > .step'), true);
+mark(root.querySelectorAll('#build .note'));
+var bg = root.querySelector('#build [role=group]');
+if (bg) { bg.setAttribute('data-rv', ''); bg.style.setProperty('--rd', '180ms'); }
+mark(root.querySelectorAll('#playground > div > div:last-child > a'), true);
+mark(root.querySelectorAll('#contact > div > div'), true);
+}
+// The canvas may still be bringing this artboard on screen: retry until it has a real size.
+jumpTo(id, tries) {
+if (!/^[a-z]+$/.test(id || '')) return;
+var self = this; tries = tries || 0;
+var sc0 = this.scroller();
+if ((!this.els.root || sc0.clientHeight < 50 || document.visibilityState === 'hidden') && tries < 40) {
+this.timers.push(setTimeout(function () { self.jumpTo(id, tries + 1); }, 100)); return;
+}
+if (tries < 3) { this.timers.push(setTimeout(function () { self.jumpTo(id, 3); }, 250)); return; }
+var root = this.els.root, t = root && root.querySelector('#' + id);
+if (!t) return;
+var sc = this.scroller();
+var isDoc = sc === document.scrollingElement || sc === document.documentElement;
+var hd = root.querySelector('header');
+var off = (hd ? hd.getBoundingClientRect().height : 0) + 8;
+sc.scrollTop = sc.scrollTop + t.getBoundingClientRect().top - (isDoc ? 0 : sc.getBoundingClientRect().top) - off;
+}
+// Find whatever actually scrolls this page (the window, or a preview frame around it).
+scroller() {
+var el = this.els.root ? this.els.root.parentElement : null;
+while (el && el !== document.body && el !== document.documentElement) {
+var o = getComputedStyle(el).overflowY;
+if ((o === 'auto' || o === 'scroll') && el.scrollHeight > el.clientHeight + 1) return el;
+el = el.parentElement;
+}
+return document.scrollingElement || document.documentElement;
+}
+// Glide to a section: slow start, quick middle, soft landing. Longer trips take a little longer.
+glideTo(target) {
+this.stopGlide();
+this.stopSmooth();
+var sc = this.scroller();
+var isDoc = sc === document.scrollingElement || sc === document.documentElement;
+var header = this.els.root.querySelector('header');
+var off = header ? header.getBoundingClientRect().height : 0;
+var scTop = isDoc ? 0 : sc.getBoundingClientRect().top;
+var from = sc.scrollTop;
+var to = target ? from + target.getBoundingClientRect().top - scTop - off : 0;
+to = Math.max(0, Math.min(to, sc.scrollHeight - sc.clientHeight));
+var dist = to - from;
+if (Math.abs(dist) < 2) return;
+if (this.state.reduce) { sc.scrollTop = to; return; }
+var dur = Math.max(950, Math.min(1800, 700 + Math.abs(dist) * 0.2));
+// A slow wind-up (first ~45% of the time covers ~38% of the way, starting almost still),
+// then the whoosh, then a long soft landing. The two halves meet at the same speed.
+var ease = function (t) {
+var a = 0.45, c = 0.3803;
+return t < a ? c * Math.pow(t / a, 4) : 1 - (1 - c) * Math.pow((1 - t) / (1 - a), 3);
+};
+var t0 = performance.now(), self = this;
+var step = function (now) {
+var p = Math.min(1, (now - t0) / dur);
+sc.scrollTop = from + dist * ease(p);
+self.glideRaf = p < 1 ? requestAnimationFrame(step) : 0;
+};
+this.glideRaf = requestAnimationFrame(step);
+}
+// Ease the page thread toward its target, one frame at a time, then stop.
+followThread() {
+if (this.followRaf) return;
+var self = this;
+var step = function () {
+self.followRaf = 0;
+var moving = false;
+(self.lines || []).forEach(function (ln) {
+var next = ln.cur + (ln.target - ln.cur) * 0.22;
+if (Math.abs(ln.target - next) < 0.6) next = ln.target; else moving = true;
+if (next !== ln.cur) { ln.cur = next; ln.el.style.strokeDashoffset = String(ln.L - next); }
+});
+if (moving) self.followRaf = requestAnimationFrame(step);
+};
+this.followRaf = requestAnimationFrame(step);
+}
+
+// Draw the pinned thread down to step `step` (or hide it before the section is reached).
+drawPin(step) {
+var t = this.pinTable, el = this.pinThread;
+if (!t || !el) return;
+var target = step < 0 ? 0 : (this.state.reduce ? t.L : t.lens[Math.min(step, t.lens.length - 1)]);
+if (Math.abs(target - (this.pinLen || 0)) < 0.5) return;
+var forward = target > (this.pinLen || 0);
+var ms = this.state.reduce ? 0 : (forward ? 700 : 350);
+el.style.transition = ms ? 'stroke-dashoffset ' + ms + 'ms cubic-bezier(0.65, 0, 0.35, 1)' : 'none';
+el.style.strokeDashoffset = String(t.L - target);
+this.pinLen = target;
+}
+// ---- Who am I: photo cards on a clothesline. They drift like a conveyor belt, swing on a soft
+// spring, can be dragged and flung, and the page's scrolling gives the line a push.
+clY(u) { return 0.17 + 0.23 * u + 0.08 * 4 * u * (1 - u); }
+clS(u) { return 0.23 + 0.08 * 4 * (1 - 2 * u); }
+clPath(wob, seed) {
+var pts = [];
+for (var u = -0.15; u <= 1.151; u += 0.05) pts.push([u * 1000, this.clY(u) * 600 + Math.sin(u * 23 + seed) * wob + Math.sin(u * 61 + seed * 2) * wob * 0.4 + seed * 0.8]);
+var d = 'M ' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+for (var i = 1; i < pts.length - 1; i++) d += ' Q ' + pts[i][0].toFixed(1) + ' ' + pts[i][1].toFixed(1) + ' ' + ((pts[i][0] + pts[i + 1][0]) / 2).toFixed(1) + ' ' + ((pts[i][1] + pts[i + 1][1]) / 2).toFixed(1);
+return d;
+}
+// In pixels: the drop is capped by the width, so a phone gets a gentle slope too.
+clAmp(W, H) { return Math.min(H, W * 0.62); }
+clYpx(x, W, H) { return H * 0.17 + this.clAmp(W, H) * (this.clY(x / W) - 0.17); }
+clSpx(x, W, H) { return this.clAmp(W, H) * this.clS(x / W) / W; }
+clDrawLine(W, H) {
+if (!this.clSvg || (this.clLw === W && this.clLh === H)) return;
+this.clLw = W; this.clLh = H;
+this.clSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+var ps = this.clSvg.querySelectorAll('path'), self = this;
+[[1.4, 0], [2.2, 3]].forEach(function (o, k) {
+var pts = [];
+for (var u = -0.15; u <= 1.151; u += 0.05) { var x = u * W; pts.push([x, self.clYpx(x, W, H) + Math.sin(u * 23 + o[1]) * o[0] + Math.sin(u * 61 + o[1] * 2) * o[0] * 0.4 + o[1] * 0.8]); }
+var d = 'M ' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+for (var i = 1; i < pts.length - 1; i++) d += ' Q ' + pts[i][0].toFixed(1) + ' ' + pts[i][1].toFixed(1) + ' ' + ((pts[i][0] + pts[i + 1][0]) / 2).toFixed(1) + ' ' + ((pts[i][1] + pts[i + 1][1]) / 2).toFixed(1);
+if (ps[k]) ps[k].setAttribute('d', d);
+});
+}
+clInit() {
+var self = this, st = this.clStage;
+// The lead's pen lines draw once, when it is properly on screen.
+if (this.clLead) {
+var ld = this.clLead;
+if (this.reduce || !('IntersectionObserver' in window)) ld.dataset.on = '1';
+else { this.clLio = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { ld.dataset.on = '1'; self.clLio.disconnect(); } }, { threshold: 0.6 }); this.clLio.observe(ld); }
+}
+if (!st) return;
+this.clCards = Array.prototype.slice.call(st.querySelectorAll('.cl-pc'));
+this.clTh = this.clCards.map(function () { return 0; });
+this.clOm = this.clCards.map(function () { return 0; });
+this.clOff = 0; this.clBoost = 0; this.clHover = -1; this.clFocus = false; this.clDrag = null; this.clVis = true;
+this.clCards.forEach(function (c, i) {
+c.addEventListener('pointerenter', function () { self.clHover = i; self.clOm[i] += 70; });
+c.addEventListener('pointerleave', function () { if (self.clHover === i) self.clHover = -1; });
+c.addEventListener('focus', function () { self.clFocus = true; self.clOm[i] += 50; });
+c.addEventListener('blur', function () { self.clFocus = false; });
+});
+this.clDown = function (e) {
+if (e.button !== 0 || (e.target.closest && e.target.closest('a, button'))) return;
+self.clDrag = { x: e.clientX, t: performance.now(), v: 0 };
+st.dataset.drag = '1';
+try { st.setPointerCapture(e.pointerId); } catch (err) {}
+};
+this.clMove = function (e) {
+var d = self.clDrag; if (!d) return;
+var now = performance.now(), dx = e.clientX - d.x;
+self.clOff -= dx;
+d.v = 0.7 * d.v + 0.3 * (-dx / Math.max(1, now - d.t) * 1000);
+d.x = e.clientX; d.t = now;
+if (self.reduce) self.clPlace(0);
+};
+this.clUp = function () {
+if (!self.clDrag) return;
+self.clBoost = Math.max(-1600, Math.min(1600, self.clDrag.v));
+self.clDrag = null; st.dataset.drag = '0';
+};
+st.addEventListener('pointerdown', this.clDown);
+st.addEventListener('pointermove', this.clMove);
+st.addEventListener('pointerup', this.clUp);
+st.addEventListener('pointercancel', this.clUp);
+// Arrival: the cards wait above the line until the section is properly on screen, then drop
+// onto their pins one by one and swing. Scrolling down into it settles the view and holds it a beat.
+this.clArrived = false;
+this.clDrop = this.clCards.map(function () { return 1; });
+this.clDv = this.clCards.map(function () { return 0; });
+this.clRel = this.clCards.map(function () { return Infinity; });
+this.clArrive = function () {
+if (self.clArrived) return;
+self.clArrived = true;
+if (self.reduce) return;
+var t0 = performance.now();
+// Release order follows what is on screen, left to right.
+var order = self.clCards.map(function (c, i) { return [i, c._x == null ? i * 1000 : c._x]; }).sort(function (a, b) { return a[1] - b[1]; });
+order.forEach(function (o, k) { self.clRel[o[0]] = t0 + 120 + k * 110; });
+if (self.lastWheelDir > 0 && performance.now() - (self.lastWheelAt || 0) < 700) self.settleOn(st);
+self.clKick();
+};
+this.clResize = function () { if (self.reduce) self.clPlace(0); };
+window.addEventListener('resize', this.clResize);
+if ('IntersectionObserver' in window) {
+this.clIo = new IntersectionObserver(function (en) {
+var e = en[0]; self.clVis = e.isIntersecting;
+if (self.clVis && !self.reduce) self.clKick();
+if (e.isIntersecting && e.intersectionRatio >= 0.55) self.clArrive();
+}, { threshold: [0, 0.55] });
+this.clIo.observe(st);
+}
+else this.clArrive();
+if (this.reduce) { this.clArrived = true; this.clDrop = this.clDrop.map(function () { return 0; }); this.clPlace(0); return; }
+this.clKick();
+}
+// Scrolled into a section: ease it into view, then ignore the wheel for a moment so it can play.
+settleOn(el) {
+if (this.state.reduce || !el) return;
+var sc = this.scroller();
+var isDoc = sc === document.scrollingElement || sc === document.documentElement;
+var vh = isDoc ? window.innerHeight : sc.clientHeight;
+var scTop = isDoc ? 0 : sc.getBoundingClientRect().top;
+var hd = this.els.root.querySelector('header');
+var hh = hd ? hd.getBoundingClientRect().height : 0;
+var r = el.getBoundingClientRect();
+var room = vh - hh;
+var to = sc.scrollTop + (r.top - scTop) - hh - Math.max(0, (room - r.height) / 2);
+to = Math.max(0, Math.min(to, sc.scrollHeight - sc.clientHeight));
+var from = sc.scrollTop, dist = to - from;
+this.holdUntil = performance.now() + 1500;
+if (Math.abs(dist) < 2 || Math.abs(dist) > vh * 0.7) return;
+if (this.smoothRaf) { cancelAnimationFrame(this.smoothRaf); this.smoothRaf = 0; }
+this.stopGlide();
+if (this.settleRaf) cancelAnimationFrame(this.settleRaf);
+var t0 = performance.now(), self = this;
+var step = function (now) {
+var p = Math.min(1, (now - t0) / 650), e = 1 - Math.pow(1 - p, 3);
+sc.scrollTop = from + dist * e;
+self.settleRaf = p < 1 ? requestAnimationFrame(step) : 0;
+};
+this.settleRaf = requestAnimationFrame(step);
+}
+clKick() {
+if (this.clRaf) return;
+var self = this, last = 0;
+var step = function (now) {
+self.clRaf = 0;
+if (!self.clVis || !self.clStage) return;
+var dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
+last = now;
+self.clPlace(dt);
+self.clRaf = requestAnimationFrame(step);
+};
+this.clRaf = requestAnimationFrame(step);
+}
+// Places every card along the line. dt = 0 places them without moving anything.
+clPlace(dt) {
+var st = this.clStage, cards = this.clCards; if (!st || !cards || !cards.length) return;
+var W = st.clientWidth, H = st.clientHeight, N = cards.length;
+var cw = cards[0].offsetWidth || 200;
+this.clDrawLine(W, H);
+var gap = Math.max(cw * 1.32, (W + cw * 2) / N);
+var total = gap * N;
+var c0;
+var still = this.state.clPaused || this.clHover >= 0 || this.clFocus || this.clDrag;
+var drift = (still || !this.clArrived) ? 0 : 26;
+if (!this.clDrag) this.clOff += (drift + this.clBoost) * dt;
+this.clBoost *= Math.exp(-dt * 2.2);
+var v = this.clDrag ? this.clDrag.v : drift + this.clBoost;
+// a card is fully off the left edge at L, and comes back one loop later off the right
+var L = -(cw / 2 + 30);
+var cx = W * 0.5, start = Math.min(W * 0.1, L + gap - 12);
+for (var i = 0; i < N; i++) {
+var s = ((i * gap - this.clOff + start - L) % total + total) % total;
+var x = s + L;
+var y = this.clYpx(x, W, H);
+var a0 = Math.atan(this.clSpx(x, W, H)) * 180 / Math.PI;
+var f = Math.max(0, 1 - Math.abs(x - cx) / (gap * 0.85));
+var fe = f * f * (3 - 2 * f);
+var target = Math.max(-9, Math.min(9, -v * 0.02));
+c0 = cards[i]; c0._x = x;
+var drop = this.clDrop[i];
+if (dt && drop > 0 && performance.now() >= this.clRel[i]) {
+// fall with gravity, land with a small bounce and a swing
+this.clDv[i] += 9 * dt;
+drop -= this.clDv[i] * dt;
+if (drop <= 0) { drop = 0; this.clOm[i] += (i % 2 ? -1 : 1) * (60 + 20 * Math.min(1, this.clDv[i])); this.clDv[i] = 0; }
+this.clDrop[i] = drop;
+}
+if (dt) {
+this.clOm[i] += (-55 * (this.clTh[i] - target) - 6.5 * this.clOm[i]) * dt;
+this.clTh[i] += this.clOm[i] * dt;
+}
+var rot = a0 * (1 - fe) + this.clTh[i];
+var sc = 1 + 0.22 * fe;
+var c = cards[i];
+if (!c._live) { c._live = 1; c.style.left = '0px'; c.style.top = '0px'; }
+var dy = -drop * (H * 0.9);
+c.style.opacity = drop > 0.6 ? String(Math.max(0, (1 - drop) / 0.4)) : '';
+c.style.transform = 'translate3d(' + (x - cw / 2).toFixed(1) + 'px,' + (y + 20 + dy).toFixed(1) + 'px,0) rotate(' + rot.toFixed(2) + 'deg) scale(' + sc.toFixed(3) + ')';
+c.style.zIndex = String(2 + Math.round(fe * 10));
+c.style.boxShadow = '0 ' + (2 + 22 * fe).toFixed(1) + 'px ' + (4 + 40 * fe).toFixed(1) + 'px rgba(21,21,21,' + (0.06 + 0.14 * fe).toFixed(3) + ')';
+}
+}
+// How I build photo stacks: a photo or an arrow brings the next photo to the front.
+deckInit() {
+var root = this.els.root; if (!root) return;
+this.onDeck = function (e) {
+var t = e.target && e.target.closest ? e.target.closest('.dk-b, .dk') : null;
+if (!t || !root.contains(t)) return;
+var card = t.closest('.card'), deck = card ? card.querySelector('.deck') : null;
+if (!deck) return;
+var figs = deck.querySelectorAll('.dk'), n = figs.length;
+if (n < 2) return;
+var dir = t.classList.contains('dk-b') ? +t.getAttribute('data-dir') : 1;
+var i = ((+(deck.getAttribute('data-i') || 0)) + dir + n) % n;
+deck.setAttribute('data-i', String(i));
+Array.prototype.forEach.call(figs, function (f, k) { f.setAttribute('data-pos', String((k - i + n) % n)); });
+var c = card.querySelector('.dk-count'); if (c) c.textContent = (i + 1) + ' / ' + n;
+};
+root.addEventListener('click', this.onDeck);
+// Steps are also clickable (and keyboard-reachable): jump to where that step shows.
+var self = this;
+this.onStepGo = function (e) {
+if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+var li = e.target && e.target.closest ? e.target.closest('#build .step[data-go]') : null;
+if (!li || !root.contains(li)) return;
+if (e.type === 'keydown') e.preventDefault();
+self.stepTo(+li.getAttribute('data-go'));
+};
+root.addEventListener('click', this.onStepGo);
+root.addEventListener('keydown', this.onStepGo);
+}
+// Scroll so How I build lands in the middle of step i (the inverse of the mapping in the scroll handler).
+stepTo(i) {
+var bEl = this.els.build, s = this.state; if (!bEl) return;
+var sc = this.scroller();
+var vhEff = Math.min(window.innerHeight, 1000);
+var br = bEl.getBoundingClientRect();
+var pr = (i + 0.5) / 4, wantTop;
+if (s.pin && s.pin.on) wantTop = s.pin.top - pr * Math.max(1, br.height - s.pin.h);
+else wantTop = vhEff * 0.62 - pr * Math.max(1, br.height);
+var from = sc.scrollTop;
+var to = Math.max(0, Math.min(sc.scrollHeight - sc.clientHeight, from + br.top - wantTop));
+var dist = to - from;
+if (Math.abs(dist) < 2) return;
+if (this.smoothRaf) { cancelAnimationFrame(this.smoothRaf); this.smoothRaf = 0; }
+this.stopGlide();
+if (this.settleRaf) cancelAnimationFrame(this.settleRaf);
+if (s.reduce) { sc.scrollTop = to; return; }
+var dur = Math.max(450, Math.min(900, 350 + Math.abs(dist) * 0.5));
+var t0 = performance.now(), self = this;
+var step = function (now) {
+var p = Math.min(1, (now - t0) / dur), e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+sc.scrollTop = from + dist * e;
+self.settleRaf = p < 1 ? requestAnimationFrame(step) : 0;
+};
+this.settleRaf = requestAnimationFrame(step);
+}
+// Playground: each card opens a project modal (images you can flip, a scrolling story,
+// and previous / next project at the bottom). Content lives here so cards stay simple.
+pgData() {
+return [
+{ id: 'jit', tag: 'Hackathon · SheBuilds S04 by Lovable', title: 'Just in Time App',
+  lead: 'A task clock that helps people with ADHD focus on what\u2019s in front of them, right now.',
+  meta: [['Role', 'Design and build, solo'], ['Tools', 'Lovable, Figma, Claude'], ['When', 'Oct 2026'], ['Time', '3 days'], ['Result', 'Minimum marketable product']],
+  idea: 'I watched friends with ADHD work hard but struggle to feel time. Most know what to do; the hard part is sensing time while doing it. Just in Time turns a to-do list into one clock, built around three needs from ADHD research.',
+  made: ['Time you can see: the list becomes one clock, and the current slice shrinks as you work.', 'Rewards that come soon: the day splits into short rounds, each ending with a reward you chose.', 'Kindness over alarms: no streaks or red labels, and it learns your real pace to suggest honest times.'],
+  learned: 'Even in 72 hours I started with a design system, checked every flow against UX heuristics and tested colour contrast. A clear PRD and a real understanding of the users are what let vibe coding reach a marketable product that fast.',
+  link: { label: 'Try the live app \u2197', href: 'https://justintimeataskclock.lovable.app/' },
+  imgs: [{ src: '/assets/b17d5130ae79e4aaf5801c533413705f.webp', cap: 'Your whole day as one clock' }, { src: '/assets/cfad6761095badfc542762dffe61f244.webp', cap: 'Replay: planned vs. real, with kind feedback' }, { video: '/assets/748758824191f6eda36fc85b57d0aa58.mp4', poster: '/assets/5bb747ae7c6255ad2cac1959369ff548.jpg', cap: 'Demo: a full round, from plan to replay' }, { src: '/assets/142f434d6d15353cb96983bc20eb9c69.webp', cap: 'Plan your day as a clock' }, { src: '/assets/16ebab20b42424cef6ae9b4bf8756519.webp', cap: 'Time\u2019s up: no alarm, it waits for you' }, { src: '/assets/d2f398aa6a366bea7334730fb4787c6b.webp', cap: 'Replay: look at what you did' }] },
+{ id: 'lunar', tag: 'Design competition · Designflows 2025', title: 'Lunar Colony Hexabot',
+  lead: 'A mobile app for lunar colonists to run their Hexabot robots, made for gloves, helmets and emergencies.',
+  meta: [['Role', 'UX/UI design, solo'], ['Tools', 'Figma'], ['When', 'Feb 2025'], ['Time', '4 days'], ['Platform', 'iOS (iPhone 14)']],
+  idea: 'The Designflows brief asked for an app that helps people on the Moon manage Hexabots, the robots that mine, farm and explore for them. I designed for Dr. Jane Flow, a lunar scientist who checks her bots 7–10 times a day and often has to act fast in gloves and a fogged helmet.',
+  made: ['A home hub where critical alerts read themselves aloud, so urgent news reaches you without a tap.', 'Emergency missions with step-by-step guidance and a voice countdown, for clear action under pressure.', 'A live map of every Hexabot, with names you can change and clear battery and sensor alerts.'],
+  learned: 'In four days, I went from brief analysis and dark-mode research straight to high-fidelity screens, then tested the flow with UX classmates. Even in a fictional world, real usability rules like big targets, high contrast and voice kept the design grounded.',
+  link: { label: 'See it on Dribbble ↗', href: '' },
+  imgs: [{ src: '/assets/713b9b434132bdbf4cd3870c0508a432.jpg', cap: 'Home and an ongoing task: the colony at a glance' }, { src: '/assets/ab8230b9ee5ad64d1fd178d4f550c1ce.jpg', cap: 'Home: urgent warnings, live updates and every bot at a glance' }, { src: '/assets/6549a6aa6604cdb9ef73c464d7491b4c.jpg', cap: 'Emergency mission: a voice countdown and spoken step-by-step guidance' }, { src: '/assets/6ee1d61e2b17e586e17ca83c0f78a810.jpg', cap: 'My Hexabots: a live map, task-linked locations and renamable bots' }, { src: '/assets/e74b46c9aa7b29798ec9214115a4b596.png', cap: 'The final flow: 12 screens from sign-in to ID card' }, { src: '/assets/4a77bccb3ad889b6e3d59b9a0900d500.jpg', cap: 'Colony Briefing: community news and upcoming events' }, { src: '/assets/fdf2ebdddb4fe7bee4b9f3c2c0a99d77.jpg', cap: 'Mission Update: resource collection completed' }] },
+{ id: 'ataraxia', tag: 'Side project · Vibe coding', title: 'Ataraxia',
+  lead: 'A quiet space to archive your thoughts, where every note becomes a star in your own universe.',
+  meta: [['Role', 'Design and build, solo'], ['Tools', 'Lovable'], ['When', '2026'], ['Platform', 'Web, desktop and mobile']],
+  idea: 'Ataraxia started with a simple question: what if there were a space where you could easily keep your thoughts, memories and inspirations? I wanted it to feel less like a productivity tool and more like a personal universe that grows over time.',
+  made: ['One + button to capture a journal entry, book, song, website or photo in seconds.', 'Every entry becomes a star, and your notes slowly connect into a constellation of your own.', 'A Guest Mode to try it without an account, working the same on desktop and mobile.'],
+  learned: 'The hardest part was thinking through all the logic, like what should happen when you edit a photo later. Lovable made building fast, but keeping UX and interaction design at the centre is what made it work.',
+  link: { label: 'Try the live app ↗', href: 'https://mind-star-atlas.lovable.app/auth' },
+  imgs: [{ src: '/assets/30ad55b37df3bc6d54e9ed892663fc06.jpg', cap: 'Your notes as a constellation' }, { video: '/assets/f32d31dcd18bffd842b32ea2c7477cdd.mp4', poster: '/assets/bf8e1503a86dcfcdef31eb07441840fe.jpg', cap: 'Demo on desktop: from universe to new entry' }, { src: '/assets/d74adc16d265b171de7aa0c07fb31a74.jpg', cap: 'An entry: title, thoughts and images as one memory' }, { src: '/assets/585e512cfad9f545c7768d02fc664625.jpg', cap: 'New journal: capture it, then place it in your universe' }, { video: '/assets/cf18675864efb11e9ce4ec0539663194.mp4', poster: '/assets/5dc487b55f30779a166b98b80be74a3d.jpg', cap: 'Demo on mobile: adding a photo entry' }] },
+{ id: 'operator', tag: 'Design assignment · Landing page & design system', title: 'The Operator',
+  lead: 'A landing page and design system that guide homeowners to the right rental programme.',
+  meta: [['Role', 'Product and brand design, solo'], ['Tools', 'Figma, Claude Design'], ['When', 'Oct 2026'], ['Time', '4 days'], ['Result', 'Handoff-ready Figma file']],
+  idea: 'The Operator teaches homeowners how to rent out their property, with paid programmes and software to run it. The brief was a landing page that explains the value clearly and guides each visitor to the right programme.',
+  made: ['Two clear paths: a free webinar for people starting out, and a strategy call for those who already run units.', 'Content built around real worries, each one linked to the module that answers it.', 'A design system with WCAG-checked colour pairs, a calm voice guide and reusable components.'],
+  learned: 'Claude Design helped me explore directions and iterate on layouts fast, while I owned the direction, the UX decisions and the final polish. Writing the voice rules, like no fake urgency and no income promises, shaped the page as much as the visuals did.',
+  link: { label: '', href: '' },
+  imgs: [{ src: '/assets/d86b280088d7d187bd88aa15e17bb003.jpg', cap: 'The Operator: landing page design' }, { video: '/assets/65f14c403bf30042b0aba63214825e26.mp4', poster: '/assets/61fb0fa2b71ece3431fb4b333588d327.jpg', cap: 'Scrolling through the landing page' }, { src: '/assets/a0c5d52e678119a663561b595d687870.jpg', cap: 'CTA flows: webinar sign-up, strategy call booking and the checklist, with error and loading states' }, { src: '/assets/aa78875ba1c417258dd7fd0401a5970c.jpg', cap: 'Design system: focus ring, imagery and voice' }, { src: '/assets/09f6503f5491d463f19098de3454ba31.jpg', cap: 'Contrast pairs checked against WCAG' }, { src: '/assets/b4a828c5c48389edee798ef5eecf7517.jpg', cap: 'Components with default and hover states' }] }
+];
+}
+pgInit() {
+var self = this, root = this.els.root; if (!root || this.pgEl) return;
+var D = this.pgData();
+var m = document.createElement('div');
+m.className = 'pgm'; m.setAttribute('aria-hidden', 'true');
+m.innerHTML = '<div class="pgm-box" role="dialog" aria-modal="true" aria-labelledby="pgm-t">' +
+'<button type="button" class="pgm-x" aria-label="Close">×</button>' +
+'<div class="pgm-body"><div class="pgm-media"><div class="pgm-stage"><div class="pgm-img"></div>' +
+'<button type="button" class="pgm-ib" data-dir="-1" aria-label="Previous image"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M9 2 4 7l5 5"/></svg></button><button type="button" class="pgm-ib" data-dir="1" aria-label="Next image"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5 2 5 5-5 5"/></svg></button></div>' +
+'<div class="pgm-dots" role="group" aria-label="Images"></div><div class="pgm-cap"><span class="pgm-c"></span><span class="pgm-n pgm-sr" aria-live="polite"></span></div></div>' +
+'<div class="pgm-info"><div class="pgm-scroll"></div><div class="pgm-bar" aria-hidden="true"><span class="pgm-thumb"></span></div><div class="pgm-cta"></div></div></div>' +
+'<nav class="pgm-nav" aria-label="Projects"><button type="button" class="pgm-nb" data-go="-1"></button><button type="button" class="pgm-nb" data-go="1"></button></nav></div>';
+document.body.appendChild(m);
+this.pgEl = m; this.pgOpen = false;
+var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+this.pgShowImg = function () {
+var p = D[self.pgI], im = p.imgs[self.pgK], box = m.querySelector('.pgm-img');
+box.innerHTML = im.video ? '<video src="' + im.video + '" poster="' + im.poster + '" controls muted playsinline loop preload="metadata" aria-label="' + esc(im.cap) + '"></video>' : im.src ? '<img src="' + im.src + '"' + (im.fill ? ' class="fill"' : '') + ' alt="' + esc(im.cap) + '">' : '<span class="pgm-ph">[ ' + esc(im.ph) + ' ]</span>';
+var vid = box.querySelector('video'); if (vid && !self.state.reduce) { var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); }
+m.querySelector('.pgm-c').textContent = im.cap;
+m.querySelector('.pgm-n').textContent = 'Image ' + (self.pgK + 1) + ' of ' + p.imgs.length;
+var dots = m.querySelector('.pgm-dots');
+if (dots.getAttribute('data-for') !== p.id) {
+dots.setAttribute('data-for', p.id);
+dots.innerHTML = p.imgs.length > 1 ? p.imgs.map(function (x, k) { return '<button type="button" class="pgm-dot" data-k="' + k + '" aria-label="Image ' + (k + 1) + ': ' + esc(x.cap) + '">' + (x.video ? '<img src="' + x.poster + '" alt="" loading="lazy"><i class="pgm-play" aria-hidden="true"></i>' : x.src ? '<img src="' + x.src + '" alt="" loading="lazy">' : '<span>' + esc(x.ph) + '</span>') + '</button>'; }).join('') : '';
+}
+Array.prototype.forEach.call(dots.children, function (b, k) { if (k === self.pgK) { b.setAttribute('aria-current', 'true'); var l = b.offsetLeft - dots.offsetLeft; if (l < dots.scrollLeft || l + b.offsetWidth > dots.scrollLeft + dots.clientWidth) dots.scrollLeft = l - 8; } else b.removeAttribute('aria-current'); });
+Array.prototype.forEach.call(m.querySelectorAll('.pgm-ib'), function (b) { b.style.display = p.imgs.length > 1 ? '' : 'none'; });
+};
+this.pgRender = function () {
+var p = D[self.pgI], n = D.length;
+var h = '<span class="pgm-tag">' + esc(p.tag) + '</span><h3 class="pgm-t" id="pgm-t">' + esc(p.title) + '</h3><p class="pgm-lead">' + esc(p.lead) + '</p>';
+h += '<dl class="pgm-meta">' + p.meta.map(function (r) { return '<dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('') + '</dl>';
+if (p.idea) h += '<h4 class="pgm-h">The idea</h4><p class="pgm-p">' + esc(p.idea) + '</p>';
+if (p.made && p.made.length) h += '<h4 class="pgm-h">What I made</h4><ul class="pgm-ul">' + p.made.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+if (p.learned) h += '<h4 class="pgm-h">What I learned</h4><p class="pgm-p">' + esc(p.learned) + '</p>';
+var sc = m.querySelector('.pgm-scroll'); sc.innerHTML = h; sc.scrollTop = 0;
+var body = m.querySelector('.pgm-body'); if (body) body.scrollTop = 0;
+m.querySelector('.pgm-cta').innerHTML = p.link && p.link.href ? '<a class="pgm-btn" href="' + esc(p.link.href) + '" target="_blank" rel="noopener">' + esc(p.link.label) + '</a>' : '';
+// No wrap-around: the first project has no "previous", the last has no "next".
+var prev = D[self.pgI - 1], next = D[self.pgI + 1];
+var nb = m.querySelectorAll('.pgm-nb');
+if (prev) { nb[0].hidden = false; nb[0].innerHTML = '← <span>' + esc(prev.title) + '</span>'; nb[0].setAttribute('aria-label', 'Previous project: ' + prev.title); } else nb[0].hidden = true;
+if (next) { nb[1].hidden = false; nb[1].innerHTML = '<span>' + esc(next.title) + '</span> →'; nb[1].setAttribute('aria-label', 'Next project: ' + next.title); } else nb[1].hidden = true;
+m.querySelector('.pgm-nav').style.display = n > 1 ? '' : 'none';
+self.pgK = 0; self.pgShowImg();
+requestAnimationFrame(function () { self.pgBar(); });
+};
+this.pgOpenAt = function (id, from) {
+var i = D.findIndex(function (d) { return d.id === id; }); if (i < 0) return;
+self.pgI = i; self.pgFrom = from || null; self.pgRender();
+self.pgOpen = true; self.stopGlide && self.stopGlide(); self.stopSmooth();
+m.setAttribute('data-open', '1'); m.setAttribute('aria-hidden', 'false');
+var sc = self.scroller(); self.pgOverflow = sc.style.overflow; sc.style.overflow = 'hidden';
+setTimeout(function () { var x = m.querySelector('.pgm-x'); x && x.focus(); }, 30);
+};
+this.pgClose = function () {
+if (!self.pgOpen) return;
+self.pgOpen = false; var v0 = m.querySelector('.pgm-img video'); if (v0) v0.pause(); m.removeAttribute('data-open'); m.setAttribute('aria-hidden', 'true');
+var sc = self.scroller(); sc.style.overflow = self.pgOverflow || '';
+if (self.pgFrom) try { self.pgFrom.focus(); } catch (x) {}
+};
+var scEl = m.querySelector('.pgm-scroll'), bar = m.querySelector('.pgm-bar'), thumb = bar.firstChild, barT = 0;
+this.pgBar = function (moving) {
+var sh = scEl.scrollHeight, ch = scEl.clientHeight;
+if (sh <= ch + 2 || getComputedStyle(scEl).overflowY === 'visible') { bar.hidden = true; return; }
+bar.hidden = false;
+var pad = 12, top = scEl.offsetTop + pad, h = ch - pad * 2;
+bar.style.top = top + 'px'; bar.style.height = h + 'px';
+var th = Math.max(28, h * ch / sh), y = (h - th) * (scEl.scrollTop / (sh - ch));
+thumb.style.height = th + 'px'; thumb.style.top = y + 'px';
+if (moving) { bar.setAttribute('data-moving', '1'); clearTimeout(barT); barT = setTimeout(function () { bar.removeAttribute('data-moving'); }, 700); }
+};
+scEl.addEventListener('scroll', function () { self.pgBar(true); }, { passive: true });
+window.addEventListener('resize', function () { if (self.pgOpen) self.pgBar(); });
+this.pgGo = function (d) { var i = self.pgI + d; if (i < 0 || i >= D.length) return; var f = document.activeElement; self.pgI = i; self.pgRender(); if (f && f.classList.contains('pgm-nb') && f.hidden) { var o = m.querySelector('.pgm-nb:not([hidden])'); o && o.focus(); } };
+this.pgImg = function (d) { var n = D[self.pgI].imgs.length; self.pgK = (self.pgK + d + n) % n; self.pgShowImg(); };
+this.onPgCard = function (e) {
+var a = e.target && e.target.closest ? e.target.closest('[data-pg]') : null;
+if (!a || !root.contains(a)) return;
+e.preventDefault(); self.pgOpenAt(a.getAttribute('data-pg'), a);
+};
+root.addEventListener('click', this.onPgCard);
+this.onPgClick = function (e) {
+var t = e.target;
+if (t === m) return self.pgClose();
+var b = t.closest('button'); if (!b) return;
+if (b.classList.contains('pgm-x')) self.pgClose();
+else if (b.classList.contains('pgm-ib')) self.pgImg(+b.getAttribute('data-dir'));
+else if (b.classList.contains('pgm-dot')) { self.pgK = +b.getAttribute('data-k'); self.pgShowImg(); var d = m.querySelector('.pgm-dot[data-k="' + self.pgK + '"]'); d && d.focus(); }
+else if (b.classList.contains('pgm-nb')) self.pgGo(+b.getAttribute('data-go'));
+};
+m.addEventListener('click', this.onPgClick);
+// Swipe the image on touch screens.
+this.onPgTouch = function (e) {
+if (e.type === 'touchstart') { self.pgTx = e.touches[0].clientX; return; }
+if (self.pgTx == null) return;
+var dx = e.changedTouches[0].clientX - self.pgTx; self.pgTx = null;
+if (Math.abs(dx) > 40) self.pgImg(dx < 0 ? 1 : -1);
+};
+var mi = m.querySelector('.pgm-img');
+mi.addEventListener('touchstart', this.onPgTouch, { passive: true });
+mi.addEventListener('touchend', this.onPgTouch, { passive: true });
+this.onPgKey = function (e) {
+if (!self.pgOpen) return;
+if (e.key === 'Escape') { e.preventDefault(); self.pgClose(); return; }
+if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+var d = e.key === 'ArrowLeft' ? -1 : 1;
+e.preventDefault();
+var ae = document.activeElement; if (ae && (ae.classList.contains('pgm-ib') || ae.classList.contains('pgm-dot'))) { self.pgImg(d); if (ae.classList.contains('pgm-dot')) { var nd = m.querySelector('.pgm-dot[data-k="' + self.pgK + '"]'); nd && nd.focus(); } } else self.pgGo(d);
+return;
+}
+if (e.key === 'Tab') {
+var f = Array.prototype.filter.call(m.querySelectorAll('button, a[href]'), function (x) { return x.offsetParent !== null; });
+if (!f.length) return;
+var first = f[0], last = f[f.length - 1];
+if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+};
+document.addEventListener('keydown', this.onPgKey);
+}
+pgStop() {
+if (this.onPgCard && this.els.root) this.els.root.removeEventListener('click', this.onPgCard);
+if (this.onPgKey) document.removeEventListener('keydown', this.onPgKey);
+if (this.pgOpen) this.pgClose();
+if (this.pgEl && this.pgEl.parentNode) this.pgEl.parentNode.removeChild(this.pgEl);
+this.pgEl = null;
+}
+clStop() {
+if (this.clRaf) cancelAnimationFrame(this.clRaf);
+if (this.clIo) this.clIo.disconnect();
+if (this.clLio) this.clLio.disconnect();
+var st = this.clStage;
+if (st && this.clDown) {
+st.removeEventListener('pointerdown', this.clDown);
+st.removeEventListener('pointermove', this.clMove);
+st.removeEventListener('pointerup', this.clUp);
+st.removeEventListener('pointercancel', this.clUp);
+}
+if (this.clScroll) window.removeEventListener('scroll', this.clScroll, { capture: true });
+if (this.clResize) window.removeEventListener('resize', this.clResize);
+}
+// Hero loop: tangled -> straight (animation ~1s, then hold) -> tangled (short pause) -> repeat.
+// Hovering the words holds the straight state; the loop resumes when the pointer leaves.
+heroLoop(delay) {
+var self = this;
+clearTimeout(this.heroT);
+if (this.state.reduce) return;
+this.heroT = setTimeout(function () {
+if (self.heroHold) return;
+var next = !self.state.fixC;
+self.setState({ fixC: next });
+self.heroLoop(next ? 5950 : 2040);
+}, delay);
+}
+// Web Animations (not CSS transitions) so these also play on the design canvas.
+// Hero: the blue word after "designer for" slides up and the next slides in, every 2.2 s (Web Animations, so it also plays on the canvas).
+rotSetup() {
+var root = this.els.root;
+if (!root) return;
+var reduce = this.reduce;
+var ws = Array.prototype.slice.call(root.querySelectorAll('#top [data-w]'));
+if (!ws.length) return;
+var i = 0, ease = 'cubic-bezier(0.22, 1, 0.36, 1)';
+this.rotIv = setInterval(function () {
+var n = (i + 1) % ws.length, out = ws[i], inn = ws[n];
+out.removeAttribute('data-on'); inn.setAttribute('data-on', '1');
+if (!reduce) { try {
+out.animate([{ transform: 'none', opacity: 1 }, { transform: 'translateY(-100%)', opacity: 0 }], { duration: 520, easing: ease });
+inn.animate([{ transform: 'translateY(100%)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 620, easing: ease, delay: 60, fill: 'backwards' });
+} catch (e) {} }
+i = n;
+}, 2200);
+}
+// Subtext: "complex" starts messy and its letters straighten one by one; then "simple, easy" is underlined
+// left to right and turns blue behind the pen. Holds, then resets. Hover holds it straight; tap toggles.
+subSetup() {
+var root = this.els.root, reduce = this.reduce;
+if (!root) return;
+root = root.querySelector('#top') || root;
+var self = this;
+var ease = 'cubic-bezier(0.22, 1, 0.36, 1)';
+var blue = '#2343B5', ink = '#151515';
+var rot = [-14, 10, -7, 17, -11, 8, -19], dx = [0, -0.02, 0.03, -0.03, 0.02, -0.02, 0.03], dy = [0.08, -0.13, 0.11, -0.07, 0.15, -0.1, 0.05];
+var messy = function (i) { return 'translate(' + dx[i] + 'em, ' + dy[i] + 'em) rotate(' + rot[i] + 'deg)'; };
+var subs = Array.prototype.slice.call(root.querySelectorAll('.sub'));
+var run = function (el, from, to, opt) { el.getAnimations().forEach(function (a) { a.cancel(); }); if (reduce) return; try { el.animate([from, to], Object.assign({ fill: 'backwards' }, opt)); } catch (e) {} };
+this.subFix = false;
+this.subSet = function (on) {
+if (on === self.subFix) return;
+self.subFix = on;
+subs.forEach(function (p) {
+var cls = p.querySelectorAll('[data-cl]'), sls = p.querySelectorAll('[data-sl]');
+var uls = p.querySelector('[data-uls]');
+Array.prototype.forEach.call(cls, function (el, i) {
+var a = messy(i), b = 'none';
+el.style.transform = on ? b : a;
+run(el, { transform: on ? a : b }, { transform: on ? b : a }, on ? { duration: 510, easing: ease, delay: i * 119 } : { duration: 520, easing: ease, delay: i * 40 });
+});
+var n = sls.length;
+Array.prototype.forEach.call(sls, function (el, i) {
+var f = (i + 0.5) / n;
+el.style.color = on ? blue : ink;
+run(el, { color: on ? ink : blue }, { color: on ? blue : ink }, on ? { duration: 357, easing: ease, delay: Math.round(1479 + 1190 * (1 - Math.sqrt(1 - f))) } : { duration: 260, easing: ease, delay: (n - 1 - i) * 24 });
+});
+uls.style.strokeDashoffset = on ? '0' : '1';
+run(uls, { strokeDashoffset: on ? 1 : 0 }, { strokeDashoffset: on ? 0 : 1 }, on ? { duration: 1190, easing: 'cubic-bezier(0.2, 0, 0.6, 1)', delay: 1479 } : { duration: 420, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' });
+});
+};
+if (reduce) { this.subSet(true); return; }
+this.subHold = false;
+this.subLoop = function (delay) {
+clearTimeout(self.subT);
+self.subT = setTimeout(function () { if (self.subHold) return; var next = !self.subFix; self.subSet(next); self.subLoop(next ? 5950 : 2040); }, delay);
+};
+root.querySelectorAll('[data-kw]').forEach(function (k) {
+k.addEventListener('pointerenter', function (e) { if (e.pointerType === 'touch') return; self.subHold = true; clearTimeout(self.subT); self.subSet(true); });
+k.addEventListener('pointerleave', function (e) { if (e.pointerType === 'touch') return; self.subHold = false; self.subLoop(1800); });
+k.addEventListener('click', function () { self.subHold = !self.subHold; clearTimeout(self.subT); self.subSet(true); if (!self.subHold) self.subLoop(1800); });
+});
+this.subLoop(2900);
+}
+heroIntro() {
+var self = this, root = this.els.root;
+if (!root || this.introOn) return;
+this.introOn = true;
+this.introTimers = []; this.introAnims = [];
+var trig = root.querySelector('[data-hero-trig]');
+if (trig) trig.addEventListener('click', function () { var par = root.querySelector('.hero-par'); if (par) par.setAttribute('data-tapped', '1'); self.typeCaption(); });
+this.menuSetup();
+this.spySetup();
+if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) this.wdIv = setInterval(function () { self.wdShow(((self.state.wdI || 0) + 1) % 4, false); }, 8000);
+var bubble = root.querySelector('[data-bubble]');
+if (!bubble) return;
+var bl = Array.prototype.slice.call(bubble.querySelectorAll('[data-bch]'));
+// The bubble is visible in the markup (so it still shows if this script never runs); hide it here,
+// then pop it in.
+if (this.reduce) { var parR = root.querySelector('.hero-par'); if (parR) parR.setAttribute('data-hint', '1'); return; }
+// Page-load entrance (once): the four headline lines rise in one after another, the drawing sharpens
+// (CSS, from 120ms), then the CV button, the bubble (1.15s), and once "Hi, I'm Juhui!" is written, the first complex loop (2.9s).
+// fill 'backwards' keeps each part hidden only while it waits, so nothing stays hidden if this fails.
+Array.prototype.forEach.call(root.querySelectorAll('[data-hl]'), function (ln, i) {
+self.introAnim(ln, [{ opacity: 0, transform: 'translateY(0.32em)' }, { opacity: 1, transform: 'none' }], { duration: 720, delay: i * 90, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'backwards' });
+});
+var cta = root.querySelector('[data-hero-cta]');
+if (cta) self.introAnim(cta, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 560, delay: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'backwards' });
+bubble.style.opacity = '0'; bl.forEach(function (l) { l.style.opacity = '0'; });
+this.introLater(function () {
+bubble.style.opacity = '1';
+self.introAnim(bubble, [{ opacity: 0, transform: 'scale(0.4) rotate(-6deg)' }, { opacity: 1, transform: 'scale(1.06) rotate(1deg)', offset: 0.7 }, { opacity: 1, transform: 'none' }], { duration: 440, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+bl.forEach(function (l, i) { self.introLater(function () { self.inkIn(l); }, 360 + i * 70); });
+}, 1150);
+// Once "Hi, I'm Juhui!" is written, the click/tap hint appears and stays.
+this.introLater(function () { var par = root.querySelector('.hero-par'); if (par) par.setAttribute('data-hint', '1'); }, 2800);
+}
+// The written caption drifts with the mouse like the drawing (a bit less, and without the tilt, so it
+// keeps its own slant). Uses the separate 'translate' property so its rotate(-4deg) stays.
+capFollow() {
+if (!this.capDone || this.parNx === undefined) return;
+var cap = this.capEl || (this.capEl = this.els.root && this.els.root.querySelector('[data-hero-cap]'));
+if (cap) cap.style.translate = (this.parNx * 10).toFixed(1) + 'px ' + (this.parNy * 7).toFixed(1) + 'px';
+}
+// Mobile menu: the Menu button opens a full-screen sheet; a link, Close or Escape shuts it.
+// The link itself then scrolls as usual (the page-wide click handler runs after this one).
+// Header: the link of the section you're reading turns into the blue pill.
+spySetup() {
+var root = this.els.root;
+if (!root) return;
+var links = Array.prototype.slice.call(root.querySelectorAll('.mainnav [data-spy]'));
+var ids = ['work', 'words', 'about', 'build', 'playground', 'contact'];
+var header = root.querySelector('header');
+var last = null;
+this.onSpy = function () {
+var line = (header ? header.getBoundingClientRect().bottom : 80) + 80;
+var cur = null;
+ids.forEach(function (id) { var el = root.querySelector('#' + id); if (el && el.getBoundingClientRect().top <= line) cur = id; });
+if (cur === last) return;
+last = cur;
+links.forEach(function (l) { if (l.getAttribute('data-spy') === cur) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current'); });
+};
+document.addEventListener('scroll', this.onSpy, { capture: true, passive: true });
+this.onSpy();
+}
+menuSetup() {
+var root = this.els.root;
+var menu = root.querySelector('[data-menu]'), open = root.querySelector('[data-menu-toggle]'), close = root.querySelector('[data-menu-close]');
+if (!menu || !open) return;
+var set = function (on) {
+menu.setAttribute('data-open', on ? '1' : '0');
+open.setAttribute('aria-expanded', on ? 'true' : 'false');
+document.documentElement.style.overflow = on ? 'hidden' : '';
+if (on) { var f = menu.querySelector('.mnav-links a'); if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 60); }
+else open.focus({ preventScroll: true });
+};
+open.addEventListener('click', function () { set(true); });
+if (close) close.addEventListener('click', function () { set(false); });
+menu.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) { menu.setAttribute('data-open', '0'); open.setAttribute('aria-expanded', 'false'); document.documentElement.style.overflow = ''; } });
+this.onMenuKey = function (e) { if (e.key === 'Escape' && menu.getAttribute('data-open') === '1') set(false); };
+document.addEventListener('keydown', this.onMenuKey);
+}
+introLater(fn, ms) { this.introTimers.push(setTimeout(fn, ms)); }
+introAnim(el, kf, opt) { var a = el.animate(kf, opt); this.introAnims.push(a); return a; }
+inkIn(el) {
+el.style.opacity = '1';
+this.introAnim(el, [{ opacity: 0, filter: 'blur(3px)', transform: 'translateY(4px)' }, { opacity: 1, filter: 'blur(0)', transform: 'none' }], { duration: 300, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+}
+// Types the caption in its own handwriting, letter by letter at a slightly uneven pace, with a blinking
+// cursor that disappears at the end. Clicking again types it afresh.
+typeCaption() {
+// Each tap shows the next line: the current one is erased back to front (like backspace), then the
+// next is typed. Three lines, then it starts over. All lines sit stacked in one grid cell, so the
+// space never jumps.
+var self = this, root = this.els.root;
+var cap = root.querySelector('[data-hero-cap]');
+if (!cap) return;
+cap.setAttribute('data-shown', '1');
+var layers = Array.prototype.slice.call(cap.querySelectorAll('[data-cap-line]'));
+var caret = cap.querySelector('[data-caret]');
+(this.typeTimers || []).forEach(clearTimeout); this.typeTimers = [];
+if (this.blink) { this.blink.cancel(); this.blink = null; }
+var prev = this.capIdx === undefined ? -1 : this.capIdx;
+var next = (prev + 1) % layers.length;
+this.capIdx = next;
+var dots = root.querySelector('[data-cap-dots]');
+if (dots) { dots.style.visibility = 'visible'; Array.prototype.forEach.call(dots.children, function (d, j) { d.setAttribute('data-on', j === next ? '1' : '0'); }); }
+var lettersOf = function (n) { return Array.prototype.slice.call(layers[n].querySelectorAll('[data-cch]')); };
+var show = function (n) { layers.forEach(function (L, j) { L.style.visibility = j === n ? 'visible' : 'hidden'; }); };
+if (this.reduce) { show(next); lettersOf(next).forEach(function (l) { l.style.opacity = '1'; }); return; }
+caret.style.opacity = '1';
+this.blink = caret.animate([{ opacity: 1 }, { opacity: 1, offset: 0.5 }, { opacity: 0, offset: 0.51 }, { opacity: 0 }], { duration: 900, iterations: Infinity });
+var t = 0;
+if (prev >= 0) {
+var old = lettersOf(prev).filter(function (l) { return l.style.opacity === '1'; });
+var last = old[old.length - 1];
+if (last) last.parentNode.insertBefore(caret, last.nextSibling);
+old.reverse().forEach(function (l, i) {
+t += 18;
+self.typeTimers.push(setTimeout(function () { l.style.opacity = '0'; l.parentNode.insertBefore(caret, l); }, t));
+});
+t += 260;
+}
+var ls = lettersOf(next);
+this.typeTimers.push(setTimeout(function () {
+ls.forEach(function (l) { l.style.opacity = '0'; });
+show(next);
+ls[0].parentNode.insertBefore(caret, ls[0]);
+}, t));
+t += 200;
+ls.forEach(function (l, i) {
+t += 38 + ((i * 37) % 5) * 9 + (l.textContent === ',' || l.textContent === '.' ? 150 : 0);
+self.typeTimers.push(setTimeout(function () { l.style.opacity = '1'; l.parentNode.insertBefore(caret, l.nextSibling); }, t));
+});
+// Once a line is written, it joins the drawing in following the mouse.
+this.typeTimers.push(setTimeout(function () { self.capDone = true; self.capFollow(); }, t + 200));
+// Then the hint comes back with new words ("one more?" / "again?"), so people know to tap again.
+this.typeTimers.push(setTimeout(function () {
+var word = next === layers.length - 1 ? 'again?' : 'one more?';
+var hc = root.querySelector('[data-hk-c]'), ht = root.querySelector('[data-hk-t]');
+if (hc) hc.textContent = word; if (ht) ht.textContent = word;
+var par = root.querySelector('.hero-par'); if (par) par.removeAttribute('data-tapped');
+}, t + 500));
+this.typeTimers.push(setTimeout(function () { if (self.blink) { self.blink.cancel(); self.blink = null; } caret.style.opacity = '0'; }, t + 1400));
+}
+componentWillUnmount() {
+clearTimeout(this.heroT);
+clearInterval(this.rotIv);
+clearTimeout(this.subT);
+if (this.onSpy) document.removeEventListener('scroll', this.onSpy, { capture: true });
+clearInterval(this.wdIv);
+if (this.onMenuKey) document.removeEventListener('keydown', this.onMenuKey);
+document.documentElement.style.overflow = '';
+(this.introTimers || []).forEach(clearTimeout);
+(this.typeTimers || []).forEach(clearTimeout);
+(this.introAnims || []).forEach(function (a) { try { a.cancel(); } catch (e) {} });
+if (this.blink) this.blink.cancel();
+if (this.onPar) document.removeEventListener('mousemove', this.onPar);
+this.pgStop();
+if (this.ro) { this.ro.disconnect(); this.ro = null; }
+this.stopMotion();
+this.clStop();
+if (this.onDeck && this.els.root) this.els.root.removeEventListener('click', this.onDeck);
+if (this.onStepGo && this.els.root) { this.els.root.removeEventListener('click', this.onStepGo); this.els.root.removeEventListener('keydown', this.onStepGo); }
+if (this.onGotoStorage) window.removeEventListener('storage', this.onGotoStorage);
+document.removeEventListener('scroll', this.onScroll, { capture: true });
+window.removeEventListener('resize', this.onResize);
+if (this.els.root) this.els.root.removeEventListener('click', this.onClick);
+window.removeEventListener('wheel', this.stopGlide);
+window.removeEventListener('touchstart', this.stopGlide);
+document.removeEventListener('mousemove', this.onMove);
+document.removeEventListener('mouseleave', this.onLeave);
+document.removeEventListener('mousedown', this.onDown);
+document.removeEventListener('mouseup', this.onUp);
+this.stopGlide();
+if (this.raf) cancelAnimationFrame(this.raf);
+if (this.followRaf) cancelAnimationFrame(this.followRaf);
+if (this.settleRaf) cancelAnimationFrame(this.settleRaf);
+this.timers.forEach(function (t) { clearTimeout(t); });
+}
+// One cursive loop that hangs to the right of x, starting at y and ending 2.6r lower.
+loop(x, y, r) {
+return ' C ' + x + ' ' + (y + r * 1.6) + ', ' + (x + r * 1.4) + ' ' + (y + r * 1.4) + ', ' + (x + r * 1.2) + ' ' + (y + r * 0.4) +
+' C ' + (x + r) + ' ' + (y - r * 0.6) + ', ' + (x - r * 0.4) + ' ' + (y - r * 0.2) + ', ' + (x - r * 0.2) + ' ' + (y + r * 0.9) +
+' C ' + (x - r * 0.1) + ' ' + (y + r * 1.6) + ', ' + x + ' ' + (y + r * 2) + ', ' + x + ' ' + (y + r * 2.6);
+}
+measure() {
+var root = this.els.root;
+if (!root) return;
+var self = this;
+// Pin the How I build section on screens tall enough to hold it; the section is 3.4 screens
+// long, so each of the four steps gets most of a screen of scrolling.
+var header = root.querySelector('header');
+var headerH = header ? Math.round(header.getBoundingClientRect().height) : 0;
+var vh = Math.min(window.innerHeight, 1000);
+var pin = vh >= 560
+? { on: true, top: headerH, h: vh - headerH, total: Math.round((vh - headerH) * 3.4) }
+: { on: false, top: 0, h: 0, total: 0 };
+var old = this.state.pin;
+if (!old || old.on !== pin.on || Math.abs(old.h - pin.h) > 2 || old.top !== pin.top) {
+this.setState({ pin: pin, narrow: window.innerWidth < 760 }, function () { self.measure(); });
+return;
+}
+if (this.state.narrow !== (window.innerWidth < 760)) this.setState({ narrow: window.innerWidth < 760 });
+this.sizeCard();
+var rr = root.getBoundingClientRect();
+var W = rr.width;
+// Measure the page without the thread overlay: the overlay keeps the old height, so counting it
+// would leave empty scroll space below the footer whenever the page gets shorter.
+var ovEl = root.querySelector('[data-ov]');
+if (ovEl) ovEl.style.display = 'none';
+var H = root.scrollHeight;
+if (ovEl) ovEl.style.display = '';
+var topOf = function (el) { return el ? el.getBoundingClientRect().top - rr.top : 0; };
+// Where the text column actually starts (measured, so it follows the responsive padding).
+var contentLeft = this.els.hero ? this.els.hero.getBoundingClientRect().left - rr.left : 32;
+var gx = Math.round(contentLeft * 0.4);
+// Loops hang to the right of the thread by up to 1.4 r; keep them clear of the text.
+var maxR = (contentLeft - gx - 6) / 1.4;
+var k = Math.max(0.2, Math.min(1, maxR / 25));
+var unders = [];
+var knotYs = [];
+this.els.titles.forEach(function (h) {
+if (!h) return;
+var range = document.createRange();
+range.selectNodeContents(h);
+var r = range.getBoundingClientRect();
+// Underline only the title's last line, just under the letters (not under the line box).
+var rects = Array.prototype.slice.call(range.getClientRects()).filter(function (q) { return q.width > 0; });
+var lastTop = rects.reduce(function (m, q) { return Math.max(m, q.top); }, -Infinity);
+var line = rects.filter(function (q) { return Math.abs(q.top - lastTop) < 4; });
+var lx0 = Math.min.apply(null, line.map(function (q) { return q.left; }));
+var lx1 = Math.max.apply(null, line.map(function (q) { return q.right; }));
+// Find the real baseline with a zero-size probe at the end of the title, so the line sits
+// just under the letters whatever the font's line box looks like.
+var probe = document.createElement('span');
+probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline;';
+// A word joiner in front keeps the probe on the title's last line: without it, a title that
+// exactly fills its column (Who am I) pushed the probe to a new line and the underline sat a line too low.
+var glue = document.createTextNode('\u2060');
+h.appendChild(glue);
+h.appendChild(probe);
+var baseline = probe.getBoundingClientRect().bottom;
+h.removeChild(probe);
+h.removeChild(glue);
+var fs = parseFloat(getComputedStyle(h).fontSize) || 64;
+var x0 = lx0 - rr.left;
+var x1 = lx1 - rr.left;
+var y = baseline - rr.top + fs * 0.13;
+var w = x1 - x0;
+unders.push({
+d: 'M ' + x0 + ' ' + y + ' C ' + (x0 + w * 0.3) + ' ' + (y - 4) + ', ' + (x0 + w * 0.7) + ' ' + (y + 4) + ', ' + x1 + ' ' + (y - 1),
+y: r.top - rr.top
+});
+knotYs.push(r.top - rr.top + r.height / 2);
+});
+// Titles are stored by slot, not page order (Words sits above Who am I): sort so underlines draw top to bottom.
+var ord = unders.map(function (u, i) { return i; }).sort(function (a, b) { return unders[a].y - unders[b].y; });
+unders = ord.map(function (i) { return unders[i]; });
+knotYs = ord.map(function (i) { return knotYs[i]; });
+// Section triggers: each section title (and the How I build section) gets one loop.
+var knots = knotYs.map(function (ky, i) { return { y: ky, trigger: unders[i] ? unders[i].y : ky }; });
+// How I build has its own pinned thread, so the page thread stops at the section and
+// picks up again below it (a gap in the same path).
+var gapTop = null, gapBottom = null;
+if (this.els.build) {
+gapTop = topOf(this.els.build);
+gapBottom = gapTop + this.els.build.getBoundingClientRect().height;
+knots.push({ y: gapTop, gap: true });
+}
+knots.sort(function (a, b) { return a.y - b.y; });
+var startY = this.els.hero ? topOf(this.els.hero) + 10 : 200;
+var endY = this.els.contact ? topOf(this.els.contact) - 32 : H - 200;
+var threadD = null;
+var checks = [];
+var threadParts = [];
+// Only draw the thread when the side margin is wide enough to hold it without touching text.
+if (contentLeft >= 28) {
+var y = startY;
+var d = 'M ' + gx + ' ' + (startY - 48) + ' L ' + gx + ' ' + y;
+// The hero: a big tangle of three loops.
+[11, 8.5, 12.5].forEach(function (r) { r = r * k; d += self.loop(gx, y, r); y += r * 2.6; });
+checks.push({ trigger: -Infinity, y: y });
+// Each section: one smaller loop, so the line gets simpler the further you read.
+var small = [16, 12, 7];
+var si2 = 0;
+knots.forEach(function (kn) {
+if (kn.gap) {
+if (gapTop > y) { d += ' L ' + gx + ' ' + gapTop; y = gapTop; }
+checks.push({ trigger: gapTop - window.innerHeight * 0.3, y: y });
+// Close the first line here and start a separate second line below the section.
+// (One path with a jump would be dashed per piece, drawing the lower part too early.)
+threadParts.push(d);
+d = 'M ' + gx + ' ' + gapBottom;
+y = gapBottom;
+return;
+}
+var r = (small[si2++] || 5) * k;
+var ys = kn.y - r;
+if (ys > y) { d += ' L ' + gx + ' ' + ys; y = ys; }
+d += self.loop(gx, y, r);
+y += r * 2.6;
+checks.push({ trigger: kn.trigger, y: y });
+});
+var lastY = Math.max(y, endY);
+d += ' L ' + gx + ' ' + lastY;
+checks.push({ trigger: endY - 200, y: lastY });
+threadParts.push(d);
+threadD = threadParts[0];
+}
+// The pinned thread for How I build: from the top of the panel down the same margin,
+// one hero-sized loop per step, spaced down beside the step list.
+var pinD = null, pinEnds = [];
+var pinEl = this.els.build ? this.els.build.querySelector('.pin') : null;
+var listEl = this.els.build ? this.els.build.querySelector('.steps') : null;
+if (pinEl && listEl && this.state.pin && this.state.pin.on && contentLeft >= 28) {
+var pr = pinEl.getBoundingClientRect();
+var listTop = listEl.getBoundingClientRect().top - pr.top;
+var avail = Math.max(120, pr.height - listTop - 24);
+var gap = Math.min(72, avail / 4);
+var py = 0;
+var pd = 'M ' + gx + ' 0';
+var pbig = [10, 8, 11.5, 9];
+for (var pi = 0; pi < 4; pi++) {
+var pr2 = Math.min(pbig[pi] * k, gap / 2.8);
+var target = listTop + 8 + pi * gap;
+if (target > py) { pd += ' L ' + gx + ' ' + target; py = target; }
+pd += self.loop(gx, py, pr2);
+py += pr2 * 2.6;
+pinEnds.push(py);
+}
+// A tail down to the bottom of the panel: when the section un-pins, the panel's bottom is the
+// section's bottom, exactly where the page thread picks up again, so the two meet with no gap.
+var pinBottom = Math.ceil(pr.height) + 1;
+if (pinBottom > py) { pd += ' L ' + gx + ' ' + pinBottom; pinEnds.push(pinBottom); }
+pinD = pd;
+}
+// The thread and underlines turn white over the blue Selected work section (to the middle of its wavy edge).
+var wkEl = root.querySelector('#work'), gT = 0, gB = 0;
+if (wkEl && H > 0) { var wkTop = topOf(wkEl); gT = Math.max(0, Math.min(1, wkTop / H)); gB = Math.max(gT, Math.min(1, (wkTop + wkEl.getBoundingClientRect().height - 14) / H)); }
+this.setState({ layout: { gT: gT, gB: gB, W: W, H: H, threadD: threadD, threadD2: threadParts[1] || null, unders: unders, checks: checks, pinD: pinD, pinEnds: pinEnds } });
+}
+// The card takes whatever height the pinned view has left, so nothing is cut off.
+sizeCard() {
+var s = this.state;
+var b = this.els.build;
+if (!b || !s.pin || !s.pin.on) { if (this.state.cardMaxW !== 520) this.setState({ cardMaxW: 520 }); return; }
+var narrow = window.innerWidth < 760;
+var free;
+if (narrow) {
+var left = b.querySelector('.leftcol');
+var lh = 260;
+if (left) {
+// Measure the left column at every step and keep the tallest, so the card never has to shrink mid-scroll.
+var keep = b.getAttribute('data-step');
+lh = 0;
+for (var i = 0; i < 4; i++) { b.setAttribute('data-step', String(i)); lh = Math.max(lh, left.getBoundingClientRect().height); }
+b.setAttribute('data-step', keep);
+}
+free = s.pin.h - lh - 16 - 16 - 16 - 18 - 12;
+} else {
+free = s.pin.h - 48 - 18 - 16;
+}
+var w = Math.floor(Math.max(200, Math.min(520, free * (narrow ? 10 / 9 : 4 / 3))));
+if (Math.abs((this.state.cardMaxW || 0) - w) > 2) this.setState({ cardMaxW: w });
+}
+// Sample the path once so scroll position maps to drawn length, loops included.
+buildTable() {
+// One sampling table per thread line, so scroll position maps to drawn length on each.
+var root = this.els.root;
+var els = root ? Array.prototype.slice.call(root.querySelectorAll('path[data-thread]')) : [];
+var old = this.lines || [];
+this.lines = els.map(function (el, idx) {
+var L = el.getTotalLength();
+var N = 300, samples = [], maxY = -Infinity;
+for (var i = 0; i <= N; i++) {
+var len = (L * i) / N;
+var py = el.getPointAtLength(len).y;
+if (py > maxY) maxY = py;
+samples.push({ len: len, y: maxY });
+}
+var prev = old[idx] && old[idx].el === el ? Math.min(old[idx].cur, L) : 0;
+el.style.transition = 'none';
+el.style.strokeDasharray = L + ' ' + L;
+el.style.strokeDashoffset = String(L - prev);
+return { el: el, L: L, samples: samples, cur: prev, target: prev };
+});
+this.thread = els[0] || null;
+this.table = this.lines.length ? true : null;
+this.update();
+}
+update() {
+var root = this.els.root;
+if (!root) return;
+this.reveal();
+var rr = root.getBoundingClientRect();
+var scrolled = rr.top < -8;
+// The reading line sits 62% down a real screen. On the design canvas the frame can be thousands of
+// pixels tall; capping the height keeps the thread from appearing pre-drawn there.
+var vhEff = Math.min(window.innerHeight, 1000);
+var probe = -rr.top + vhEff * 0.62;
+var s = this.state;
+var t = this.table;
+if (this.lines && this.lines.length) {
+// Each line follows the scroll in real time: its target is the length that reaches the reading line.
+this.lines.forEach(function (ln) {
+var target = ln.L;
+if (!s.reduce) {
+target = 0;
+for (var i = 0; i < ln.samples.length; i++) { if (ln.samples[i].y > probe) break; target = ln.samples[i].len; }
+}
+ln.target = target;
+if (s.reduce) { ln.cur = target; ln.el.style.strokeDashoffset = String(ln.L - target); }
+});
+if (!s.reduce) this.followThread();
+}
+var drawn = 0;
+if (s.layout) {
+s.layout.unders.forEach(function (u) { if (u.y < probe) drawn++; });
+if (s.reduce) drawn = s.layout.unders.length;
+}
+// Experience timeline: reveal once it reaches the reading line (CSS does the motion).
+var xp = this.xpEl || (this.xpEl = root.querySelector('.xp'));
+// Each row plays as it reaches the reading line and resets once it is fully below the screen again;
+// the rails grow with the scroll.
+if (xp) {
+var xpRows = this.xpRows || (this.xpRows = Array.prototype.slice.call(xp.querySelectorAll('.xp-heads, .xp-yr')));
+xpRows.forEach(function (r) {
+var t = r.getBoundingClientRect().top;
+if (s.reduce || t < vhEff * 0.86) { if (r.getAttribute('data-in') !== '1') r.setAttribute('data-in', '1'); }
+else if (t > vhEff + 10 && r.getAttribute('data-in') === '1') r.setAttribute('data-in', '0');
+});
+var xl = this.xpList || (this.xpList = xp.querySelector('.xp-list'));
+if (xl) { var lr = xl.getBoundingClientRect(); var xpP = s.reduce ? 1 : Math.max(0, Math.min(1, (vhEff * 0.86 - lr.top) / Math.max(1, lr.height))); xl.style.setProperty('--xp', xpP.toFixed(3)); }
+}
+var bEl = this.els.build;
+if (bEl) {
+var br = bEl.getBoundingClientRect();
+var pr;
+if (s.pin && s.pin.on) {
+pr = (s.pin.top - br.top) / Math.max(1, br.height - s.pin.h);
+} else {
+pr = (vhEff * 0.62 - br.top) / Math.max(1, br.height);
+}
+var raw = Math.max(0, Math.min(3.999, pr * 4));
+var cur = this.buildStep || 0;
+// Hysteresis: only move to a new step once you are 8% past its edge, so tiny scroll
+// wobbles at a boundary never make the card flicker back and forth.
+var next = Math.floor(raw);
+if (next !== cur && Math.abs(raw - (next > cur ? next : cur)) < 0.08) next = cur;
+if (next !== cur) { this.buildStep = next; bEl.setAttribute('data-step', String(next)); }
+var on = br.top < vhEff * 0.62 ? '1' : '0';
+if (bEl.getAttribute('data-on') !== on) bEl.setAttribute('data-on', on);
+// The pinned thread starts once the section is pinned, and ties one loop per step.
+var pinned = s.pin && s.pin.on ? br.top <= s.pin.top + 1 : on === '1';
+// After step 04, the last stretch of scrolling draws the tail that hands over to the page thread.
+var pinStep = this.buildStep;
+if (raw >= 3.8 || (s.pin && s.pin.on && br.bottom <= s.pin.top + s.pin.h + 2)) pinStep = 4;
+this.drawPin(pinned ? pinStep : -1);
+}
+if (drawn !== s.drawn || scrolled !== s.scrolled) this.setState({ drawn: drawn, scrolled: scrolled });
+}
+renderVals() {
+var s = this.state;
+var self = this;
+// Motion rules (Design Motion Principles): transform/opacity only, custom curves,
+// no overshoot, one stagger per view, under ~400ms, reduced motion respected.
+var easeOut = 'cubic-bezier(0.22, 1, 0.36, 1)';
+var draw = 'cubic-bezier(0.65, 0, 0.35, 1)';
+// Tangled pose for each letter of "complex": rotation (deg), x and y offset (em).
+var rot = [-14, 10, -7, 17, -11, 8, -19];
+var dx = [0, -0.02, 0.03, -0.03, 0.02, -0.02, 0.03];
+var dy = [0.08, -0.13, 0.11, -0.07, 0.15, -0.1, 0.05];
+var cLetters = 'complex'.split('').map(function (ch, i) {
+return {
+ch: ch,
+t: s.fixC ? 'none' : 'translate(' + dx[i] + 'em, ' + dy[i] + 'em) rotate(' + rot[i] + 'deg)',
+// Straightening: one letter after another (119ms apart) so the order is visible.
+tr: s.reduce ? 'none' : (s.fixC ? 'transform 510ms ' + easeOut + ' ' + (i * 119) + 'ms' : 'transform 520ms ' + easeOut + ' ' + (i * 40) + 'ms')
+};
+});
+var blue = this.props.blue ?? '#2343B5';
+// "simple, easy" follows "complex": once complex is straight and underlined (~460ms), its own
+// underline draws left to right and each letter turns blue just behind the pen. Going back, it
+// all returns to ink quickly, right to left.
+var sChars = 'simple, easy'.split('');
+var sN = sChars.length;
+var sLetters = sChars.map(function (ch, i) {
+// The pen reaches letter i at the same moment the underline gets there (ease-out timing below).
+var f = (i + 0.5) / sN;
+var delay = s.fixC ? Math.round(1479 + 1190 * (1 - Math.sqrt(1 - f))) : (sN - 1 - i) * 24;
+return {
+ch: ch === ' ' ? '\u00a0' : ch,
+c: s.fixC ? blue : '#151515',
+tr: s.reduce ? 'none' : 'color ' + (s.fixC ? 357 : 260) + 'ms ' + easeOut + ' ' + delay + 'ms'
+};
+});
+var pin = s.pin && s.pin.on ? s.pin : null;
+return {
+refBuild: this.refBuild,
+hasPinThread: !!(s.layout && s.layout.pinD),
+pinD: s.layout && s.layout.pinD ? s.layout.pinD : 'M 0 0',
+buildH: pin ? pin.total + 'px' : 'auto',
+pinPos: pin ? 'sticky' : 'relative',
+pinTop: pin ? pin.top : 0,
+pinMinH: pin ? pin.h + 'px' : 'auto',
+pinAttr: pin ? '1' : '0',
+shortAttr: pin && pin.h < 600 ? '1' : '0',
+cardMaxW: s.cardMaxW || 520,
+blue: blue,
+paper: this.props.paper ?? '#F9F7F2',
+headerLine: s.scrolled ? 'rgba(21,21,21,0.18)' : 'transparent',
+refRoot: this.refRoot,
+refDot: this.refDot,
+refHero: this.refHero,
+refContact: this.refContact,
+refT0: this.refT[0],
+refT1: this.refT[1],
+wdAct: String(s.wdI || 0), wdQ: this.wdQuotes[s.wdI || 0][0], wdN: this.wdQuotes[s.wdI || 0][1], wdR: this.wdQuotes[s.wdI || 0][2],
+wdL: this.wdQuotes[s.wdI || 0][3] || '#words', wdLT: (this.wdQuotes[s.wdI || 0][4] || '') + ' \u2197', wdLD: this.wdQuotes[s.wdI || 0][3] ? 'inline' : 'none',
+wdP0: (s.wdI || 0) === 0 ? 'true' : 'false', wdP1: s.wdI === 1 ? 'true' : 'false', wdP2: s.wdI === 2 ? 'true' : 'false', wdP3: s.wdI === 3 ? 'true' : 'false',
+wdPick0: this.wdPick[0], wdPick1: this.wdPick[1], wdPick2: this.wdPick[2], wdPick3: this.wdPick[3],
+refClStage: this.refClStage, refClSvg: this.refClSvg, refClLead: this.refClLead, clToggle: this.clToggle,
+clLineD: this.clD1, clLineD2: this.clD2,
+clPauseLabel: s.clPaused ? 'Play' : 'Pause', clPressed: s.clPaused ? 'true' : 'false',
+clPzIcon: s.clPaused ? 'M5 3 L13 8 L5 13 Z' : 'M5 3 V13 M11 3 V13',
+refT2: this.refT[2],
+refT3: this.refT[3],
+refThread: this.refThread,
+hasLayout: !!s.layout,
+hasThread2: !!(s.layout && s.layout.threadD2),
+threadD2: s.layout && s.layout.threadD2 ? s.layout.threadD2 : 'M 0 0',
+hasThread: !!(s.layout && s.layout.threadD),
+ovW: s.layout ? s.layout.W : 0,
+ovH: s.layout ? s.layout.H : 0,
+gT: s.layout ? s.layout.gT : 0,
+gB: s.layout ? s.layout.gB : 0,
+threadD: s.layout && s.layout.threadD ? s.layout.threadD : 'M 0 0',
+unders: s.layout ? s.layout.unders.map(function (u, i) {
+var on = s.reduce || i < s.drawn;
+// Draw in at 560ms; when scrolling back up, rewind faster (280ms).
+return { d: u.d, off: on ? 0 : 1, tr: s.reduce ? 'none' : 'stroke-dashoffset ' + (on ? 560 : 280) + 'ms ' + draw };
+}) : [],
+cLetters: cLetters,
+// Letters are written out one by one in the markup (not a list), so each span stays the same
+// element between renders and its CSS transition actually plays.
+cT0: cLetters[0].t, cT1: cLetters[1].t, cT2: cLetters[2].t, cT3: cLetters[3].t, cT4: cLetters[4].t, cT5: cLetters[5].t, cT6: cLetters[6].t,
+cTr0: cLetters[0].tr, cTr1: cLetters[1].tr, cTr2: cLetters[2].tr, cTr3: cLetters[3].tr, cTr4: cLetters[4].tr, cTr5: cLetters[5].tr, cTr6: cLetters[6].tr,
+scribbleOff: s.fixC ? 1 : 0,
+straightOff: s.fixC ? 0 : 1,
+sLetters: sLetters,
+sC0: sLetters[0].c, sTr0: sLetters[0].tr,
+sC1: sLetters[1].c, sTr1: sLetters[1].tr,
+sC2: sLetters[2].c, sTr2: sLetters[2].tr,
+sC3: sLetters[3].c, sTr3: sLetters[3].tr,
+sC4: sLetters[4].c, sTr4: sLetters[4].tr,
+sC5: sLetters[5].c, sTr5: sLetters[5].tr,
+sC6: sLetters[6].c, sTr6: sLetters[6].tr,
+sC7: sLetters[7].c, sTr7: sLetters[7].tr,
+sC8: sLetters[8].c, sTr8: sLetters[8].tr,
+sC9: sLetters[9].c, sTr9: sLetters[9].tr,
+sC10: sLetters[10].c, sTr10: sLetters[10].tr,
+sC11: sLetters[11].c, sTr11: sLetters[11].tr,
+sLineOff: s.fixC ? 0 : 1,
+sLineTr: s.reduce ? 'none' : (s.fixC ? 'stroke-dashoffset 1190ms cubic-bezier(0.2, 0, 0.6, 1) 1479ms' : 'stroke-dashoffset 420ms ' + draw),
+sTr: s.reduce ? 'none' : 'transform 220ms ' + easeOut,
+lineTr: s.reduce ? 'none' : 'stroke-dashoffset 460ms ' + draw,
+// One pen stroke across two lines: complex's underline speeds up and hands over at full speed (480ms)
+// to the simple, easy underline, which starts at that same speed and eases out.
+lineTr2: s.reduce ? 'none' : (s.fixC ? 'stroke-dashoffset 544ms cubic-bezier(0.45, 0, 1, 1) 935ms' : 'stroke-dashoffset 420ms ' + draw),
+enterC: function () { self.heroHold = true; clearTimeout(self.heroT); self.setState({ fixC: true }); },
+leaveC: function () { self.heroHold = false; self.heroLoop(1800); },
+tapC: function () { self.heroHold = !self.heroHold; clearTimeout(self.heroT); self.setState({ fixC: true }); if (!self.heroHold) self.heroLoop(1800); },
+enterS: function () { self.setState({ liftS: true }); },
+leaveS: function () { self.setState({ liftS: false }); },
+tapS: function () { self.setState({ liftS: !self.state.liftS }); }
+};
+}
+}
+</script>
+</body>
+</html>

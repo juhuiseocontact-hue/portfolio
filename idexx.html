@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDEXX · Animana case study · Juhui Seo</title>
+<meta name="description" content="Redesigning stock management for vet clinics at IDEXX Animana: research, three design decisions, a working prototype and testing.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="IDEXX · Animana case study · Juhui Seo">
+<meta property="og:description" content="Redesigning stock management for vet clinics at IDEXX Animana: research, three design decisions, a working prototype and testing.">
+<meta property="og:image" content="/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F9F7F2">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@800;900&amp;family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&amp;family=Nanum+Pen+Script&amp;display=swap">
+<style>
+body{margin:0}
+.cs{width:100%;max-width:100%;overflow-x:clip;background:#F9F7F2;color:#151515;font-family:Roboto,system-ui,sans-serif}
+.cs *{box-sizing:border-box}
+.w{max-width:1280px;margin-left:auto;margin-right:auto;padding-left:clamp(40px,6vw,88px);padding-right:clamp(40px,6vw,88px)}
+@media (max-width: 640px){.w{padding-left:24px;padding-right:24px}}
+.d{font-family:'Darker Grotesque',sans-serif;font-weight:800;line-height:.92;margin:0;letter-spacing:-.01em}
+.lbl{display:inline-flex;align-self:flex-start;padding:6px 14px;border:1.5px solid rgba(21,21,21,.6);border-radius:999px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(21,21,21,.85)}
+.cap{font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#4F4A42}
+.cap.b{color:#2343B5}
+.p{font-size:18px;line-height:1.7;margin:0;max-width:660px}
+.p b,.li b{font-weight:700}
+.hand{font-family:'Nanum Pen Script',cursive;color:#2343B5;line-height:1.05}
+.card{background:#FFFFFF;border:1.5px solid rgba(21,21,21,.15);border-radius:20px;padding:26px 28px;display:flex;flex-direction:column;gap:12px}
+.stat .n{font-family:'Darker Grotesque',sans-serif;font-weight:900;font-size:60px;line-height:.85;color:#2343B5}
+.stat .t{font-size:14px;line-height:1.45;color:#4F4A42}
+.sec{display:flex;flex-direction:column;gap:36px;padding-top:144px}
+.sec > .cap.b + .h2{margin-top:-16px}
+.h2{line-height:1.02 !important}
+.h2{font-size:clamp(38px,4.6vw,64px)}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.li{font-size:16px;line-height:1.6;margin:0}
+.toc{position:relative;display:flex;flex-direction:column;gap:14px;font-size:15px;color:#4F4A42;padding-left:22px}
+.toc .rail{position:absolute;left:0;top:4px;bottom:4px;width:1.5px;background:rgba(21,21,21,.15)}
+.toc .fill{position:absolute;left:0;top:4px;height:62px;width:1.5px;background:#2343B5}
+/* media: a still now, a muted looping video later */
+.media{position:relative;border-radius:12px;overflow:hidden;border:1.5px solid rgba(21,21,21,.15);background:#E6DECF}
+.media img,.media video{display:block;width:100%;height:100%;object-fit:cover}
+.media.vid{background:#FFFFFF}
+.vtag{position:absolute;left:14px;bottom:14px;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:rgba(21,21,21,.78);color:#F9F7F2;font-size:12px;font-weight:500;letter-spacing:.04em}
+.vtag i{width:0;height:0;border-left:8px solid #F9F7F2;border-top:5px solid transparent;border-bottom:5px solid transparent}
+/* annotations on screens */
+.pin{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:#2343B5;color:#F9F7F2;font-family:'Darker Grotesque',sans-serif;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(35,67,181,.22)}
+.notes{display:flex;flex-direction:column;gap:14px}
+.note{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:start;font-size:15px;line-height:1.45}
+.note .k{width:30px;height:30px;border-radius:50%;background:#2343B5;color:#F9F7F2;font-family:'Darker Grotesque',sans-serif;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center}
+/* decisions */
+.dec{display:flex;flex-direction:column;gap:32px;padding:64px 0 16px;border-top:1.5px solid rgba(21,21,21,.15)}
+.dhead{display:grid;grid-template-columns:120px minmax(0,1fr);gap:32px;align-items:start}
+.dhead .big{font-family:'Darker Grotesque',sans-serif;font-weight:900;font-size:104px;line-height:.75;color:#2343B5}
+.ptag{display:inline-flex;align-self:flex-start;padding:4px 12px;border-radius:999px;background:#DCE2F4;color:#16297A;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.inst{margin:6px 0 0;font-size:15px;line-height:1.5;color:#4F4A42;padding-left:14px;border-left:2px solid #2343B5;max-width:640px}
+.cpt{gap:8px}
+.cpt .imp{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4F4A42}
+.cpt.on{border-color:#2343B5;box-shadow:6px 6px 0 #2343B5}
+.cpt:not(.on){background:transparent}
+.rule{display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:1px solid rgba(21,21,21,.18)}
+.why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.why .card{padding:22px 24px;gap:10px}
+.why .card.to{background:#DCE2F4;border-color:#DCE2F4}
+.chk{outline:2px dashed rgba(35,67,181,.55);outline-offset:4px}
+.chip{display:inline-flex;padding:8px 14px;border-radius:999px;border:1px solid rgba(21,21,21,.3);font-size:14px;font-weight:500;background:#FFFFFF}
+/* data flow */
+.flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+.fstep{flex:1 1 150px;display:flex;flex-direction:column;gap:6px;padding:16px 18px;border-radius:16px;background:#FFFFFF;border:1.5px solid rgba(21,21,21,.15)}
+.fstep:first-child{background:#2343B5;border-color:#2343B5}
+.fstep:first-child .cap,.fstep:first-child .ft{color:#F9F7F2}
+.ft{font-size:16px;line-height:1.35}
+.ft b{color:#2343B5;font-weight:700}
+.farr{align-self:center;color:#2343B5;font-size:20px}
+@media (max-width: 760px){.flow{flex-direction:column}.farr{transform:rotate(90deg);align-self:flex-start;margin-left:20px}}
+/* AI record */
+.rec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid rgba(21,21,21,.15);border-radius:20px;overflow:hidden;background:#FFFFFF}
+.rec > div{padding:22px 24px;display:flex;flex-direction:column;gap:10px;border-right:1px solid rgba(21,21,21,.12)}
+.rec > div:last-child{border-right:none;background:#DCE2F4}
+header a,.back{color:#151515}header a:hover,.back:hover{color:#2343B5}
+@media (max-width: 640px){
+.brand{font-size:30px !important}
+.hdr{padding-top:12px !important;padding-bottom:10px !important;row-gap:6px !important}
+.mainnav{flex-wrap:nowrap !important;gap:18px !important;font-size:15px !important;overflow-x:auto;max-width:100%;padding-bottom:2px;padding-right:24px;scrollbar-width:none;-webkit-mask-image:linear-gradient(to right,#000 85%,transparent);mask-image:linear-gradient(to right,#000 85%,transparent)}
+.mainnav a{white-space:nowrap}
+}
+/* Scroll reveal: a small rise and fade with a slow start and a long, soft landing. */
+[data-rv]{opacity:0;transform:translateY(28px);transition:opacity 900ms cubic-bezier(.55,0,.1,1),transform 900ms cubic-bezier(.55,0,.1,1);transition-delay:var(--rd,0ms)}
+[data-rv][data-in="1"]{opacity:1;transform:none}
+.rv-off [data-rv]{opacity:1 !important;transform:none !important;transition:none !important}
+.heroimg{filter:blur(12px);transform:scale(1.04);transition:filter 1100ms cubic-bezier(.55,0,.1,1),transform 1100ms cubic-bezier(.55,0,.1,1)}
+.heroimg[data-in="1"],.rv-off .heroimg{filter:none;transform:none}
+@media (prefers-reduced-motion: reduce){[data-rv],.heroimg{opacity:1 !important;transform:none !important;filter:none !important;transition:none !important}}
+/* ---- interactions ---- */
+.toc a{color:inherit;text-decoration:none;transition:color 200ms cubic-bezier(.22,1,.36,1)}
+.toc a[data-on="1"]{color:#151515;font-weight:700}
+.toc a[data-cur="1"]{color:#2343B5;font-weight:700}
+.toc .fill{height:auto;bottom:4px;transform-origin:top;transform:scaleY(0);transition:transform 260ms cubic-bezier(.22,1,.36,1)}
+.pin{transition:transform 200ms cubic-bezier(.22,1,.36,1),opacity 200ms cubic-bezier(.22,1,.36,1)}
+.dec[data-hl] .pin{opacity:.35}
+.dec[data-hl="1"] .pin[data-k="1"],.dec[data-hl="2"] .pin[data-k="2"],.dec[data-hl="3"] .pin[data-k="3"]{opacity:1;transform:scale(1.3)}
+.why [data-k]{cursor:default;transition:border-color 200ms cubic-bezier(.22,1,.36,1)}
+.why [data-k]:hover{border-color:#2343B5}
+.cmp{position:relative;aspect-ratio:2158/1348;border-radius:12px;overflow:hidden;border:1.5px solid rgba(21,21,21,.15);background:#E6DECF;touch-action:pan-y;user-select:none;--x:50%}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left top;pointer-events:none}
+.cmp .aft{clip-path:inset(0 0 0 var(--x))}
+.cmp .bar{position:absolute;top:0;bottom:0;left:var(--x);width:2px;margin-left:-1px;background:#2343B5}
+.cmp .knob{position:absolute;top:50%;left:var(--x);width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#2343B5;color:#F9F7F2;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 0 5px rgba(35,67,181,.2);transition:transform 160ms cubic-bezier(.22,1,.36,1)}
+.cmp:active .knob{transform:scale(.92)}
+.cmp .tg{position:absolute;top:14px;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.cmp .tg.l{left:14px;background:rgba(21,21,21,.78);color:#F9F7F2}
+.cmp .tg.r{right:14px;background:#2343B5;color:#F9F7F2}
+.dot{position:fixed;left:0;top:0;z-index:100;pointer-events:none;opacity:0;transition:opacity 160ms cubic-bezier(.22,1,.36,1)}
+.dot i{display:block;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#151515;transition:transform 200ms cubic-bezier(.22,1,.36,1),background-color 160ms cubic-bezier(.22,1,.36,1)}
+.dot[data-on="1"]{opacity:1}
+.dot[data-hover="1"] i{transform:scale(3.4);background:rgba(21,21,21,.22)}
+.dot[data-dark="1"] i{background:#F9F7F2}
+.dot[data-dark="1"][data-hover="1"] i{background:rgba(249,247,242,.35)}
+.dot[data-drag="1"] i{transform:scale(2.2);background:#2343B5}
+.has-dot,.has-dot *{cursor:none !important}
+/* ---- responsive ---- */
+@media (max-width: 1100px){
+.body{grid-template-columns:minmax(0,1fr) !important;gap:0 !important}
+.side{display:none}
+.hero{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
+.g4,.meta{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+}
+@media (max-width: 900px){
+.g3,.why,.concepts,.rec{grid-template-columns:minmax(0,1fr) !important}
+.rec > div{border-right:none !important;border-bottom:1.5px solid rgba(21,21,21,.15)}
+.rec > div:last-child{border-bottom:none}
+.g3 > .rule{display:grid;grid-template-columns:200px minmax(0,1fr);align-items:baseline;gap:16px}
+}
+@media (max-width: 760px){
+.flow .fstep{flex:0 0 auto}
+.g3 .rule{grid-template-columns:minmax(0,1fr);gap:6px}
+.split,.g2,.g3,.why,.rec{grid-template-columns:minmax(0,1fr) !important}
+.photos{grid-template-columns:repeat(2,minmax(0,1fr)) !important;grid-template-rows:180px 180px 180px !important}
+.photos > div{grid-column:auto !important;grid-row:auto !important}
+.photos > div:first-child{grid-row:span 2 !important}
+.photos > div:last-child{grid-column:span 2 !important}
+.rec > div{border-right:none !important;border-bottom:1.5px solid rgba(21,21,21,.15)}
+.rec > div:last-child{border-bottom:none}
+.dhead{grid-template-columns:minmax(0,1fr) !important;gap:8px !important}
+.dhead .big{font-size:64px !important}
+.sec{padding-top:96px !important;gap:28px !important}
+.stat .n{font-size:46px !important}
+.pin{width:24px;height:24px;margin:-12px 0 0 -12px;font-size:15px}
+.vtag{font-size:11px;left:10px;bottom:10px;max-width:calc(100% - 20px)}
+.nq{text-align:left !important}
+.cmp .knob{width:38px;height:38px;margin:-19px 0 0 -19px}
+}
+@media (max-width: 420px){
+.meta{grid-template-columns:minmax(0,1fr) !important}
+.stat{padding:16px !important}.stat .n{font-size:40px !important}
+}
+@media (prefers-reduced-motion: reduce){.toc .fill,.pin,.cmp .knob{transition:none !important}}
+
+/* Decision blocks: two zoom blocks + one trade-off line */
+.dec{gap:48px}
+.zooms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.zf{margin:0;display:flex;flex-direction:column;background:#FFFFFF;border:1px solid rgba(21,21,21,.12);border-radius:20px;overflow:hidden}
+.zimg{aspect-ratio:16/10;margin:14px 14px 0;border-radius:12px;overflow:hidden;border:1px solid rgba(21,21,21,.1);background:#FFFFFF}
+.zimg img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top}
+.zc{display:grid;grid-template-columns:32px minmax(0,1fr);gap:14px;align-items:start;padding:22px 24px 26px;font-family:'Darker Grotesque',sans-serif;font-weight:800;font-size:24px;line-height:1.15;color:#151515}
+.zn{width:32px;height:32px;border-radius:50%;background:#2343B5;color:#F9F7F2;font-family:'Darker Grotesque',sans-serif;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center}
+.tline{margin:8px 0 0;padding-top:18px;border-top:1px solid #2343B5;font-size:17px;line-height:1.65;max-width:640px}
+.tline .cap{display:block;margin-bottom:6px;color:#2343B5}
+.tline .x{color:#2343B5;font-weight:500}
+.tline .z{color:#6E685E}
+@media (max-width: 640px){.dec{gap:32px}.zooms{grid-template-columns:minmax(0,1fr);gap:16px}.zc{font-size:21px;padding:18px 18px 22px}}
+/* Mobile header: name + Menu button; the links open as a full-screen sheet. */
+.menubtn{display:none;appearance:none;border:1.5px solid #151515;background:transparent;color:#151515;border-radius:999px;padding:8px 16px;font:500 15px/1 Roboto,system-ui,sans-serif;cursor:pointer;min-height:40px}
+.menubtn:focus-visible{outline:2px solid #2343B5;outline-offset:3px}
+.mnav{position:fixed;inset:0;z-index:60;background:#F9F7F2;display:flex;flex-direction:column;padding:12px 24px 32px;box-sizing:border-box;opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity 260ms cubic-bezier(.22,1,.36,1),transform 260ms cubic-bezier(.22,1,.36,1),visibility 0s linear 260ms}
+.mnav[data-open="1"]{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.mnav-top{display:flex;align-items:center;justify-content:space-between;min-height:52px}
+.mnav-top .menubtn{display:inline-flex;align-items:center}
+.mnav-brand{font-family:'Darker Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:1}
+.mnav-links{display:flex;flex-direction:column;gap:6px;margin-top:40px}
+.mnav-links a{font-family:'Darker Grotesque',sans-serif;font-weight:800;font-size:clamp(44px,13vw,64px);line-height:1.05;color:#151515;text-decoration:none;opacity:0;transform:translateY(10px);transition:opacity 320ms cubic-bezier(.22,1,.36,1),transform 320ms cubic-bezier(.22,1,.36,1);transition-delay:calc(60ms + var(--i) * 45ms)}
+.mnav[data-open="1"] .mnav-links a{opacity:1;transform:none}
+.mnav-links a:active{color:#2343B5}
+@media (max-width: 760px){
+.mainnav{display:none !important}
+.hdr > .menubtn{display:inline-flex;align-items:center}
+.hdr{flex-wrap:nowrap !important}
+}
+/* Header A1: links in a see-through paper pill with a hairline edge; current section is a blue pill; one blue "Let's talk" button. */
+.mainnav.pill{gap:2px !important;padding:5px;border-radius:999px;background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(21,21,21,.1);box-shadow:0 6px 20px rgba(21,21,21,.06);font-size:15px !important}
+.mainnav.pill a{padding:9px 16px;border-radius:999px;color:#151515;text-decoration:none;white-space:nowrap;transition:background-color 180ms cubic-bezier(.22,1,.36,1),color 180ms cubic-bezier(.22,1,.36,1)}
+.mainnav.pill a:hover{background:rgba(35,67,181,.07);color:#151515}
+.mainnav.pill a[aria-current="true"]{background:#2343B5;color:#F9F7F2}
+.mainnav.pill a:focus-visible,.hdr-cta:focus-visible{outline:2px solid #2343B5;outline-offset:2px}
+.hdr-cta{display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;border-radius:999px;padding:11px 20px;font-size:15px;font-weight:500;line-height:1;background:#2343B5;color:#F9F7F2 !important;text-decoration:none;white-space:nowrap;transition:background-color 180ms cubic-bezier(.22,1,.36,1)}
+.hdr-cta:hover{background:#16297A}
+.hdr > .menubtn{background:#2343B5;border-color:#2343B5;color:#F9F7F2}
+@media (max-width: 760px){
+.hdr-cta{display:none !important}
+.hdr{margin:10px 12px !important;padding:6px 6px 6px 14px !important;border-radius:999px;background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(21,21,21,.1);box-shadow:0 6px 20px rgba(21,21,21,.06)}
+.hdr .brand{font-size:24px !important}
+.hdr .brand img{width:32px !important}
+.hdr > .menubtn{min-height:36px;padding:6px 15px}
+}
+</style>
+<script src="/dc-lite.js" defer></script>
+</head>
+<body>
+<template id="dc">
+
+<div class="cs" id="top" ref="{{refRoot}}">
+
+<header data-hd="" style="position: sticky; top: 0; z-index: 20; background: #F9F7F2; border-bottom: 1px solid transparent; transition: border-color 200ms cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="hdr" style="max-width: 1280px; margin: 0 auto; padding: 20px clamp(40px, 6vw, 88px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+<a href="/" data-goto="top" class="brand" style="display: inline-flex; align-items: center; gap: 12px; font-family: 'Darker Grotesque', sans-serif; font-weight: 800; font-size: 36px; line-height: 1; text-decoration: none; color: #151515;"><img src="/assets/3686ecb19fa4d0be98c5f110534276f8.png" alt="" width="44" height="41" style="width: 44px; height: auto; display: block;">Juhui Seo</a>
+<nav aria-label="Main" class="mainnav pill" style="display: flex; align-items: center; font-weight: 500;">
+<a href="/#work" data-goto="work">← All work</a>
+<a href="/#about" data-goto="about">About</a>
+</nav>
+<a href="/#contact" data-goto="contact" class="hdr-cta">Let’s talk</a>
+<button type="button" class="menubtn" data-menu-toggle="" aria-expanded="false" aria-controls="mnav">Menu</button>
+</div>
+</header>
+<div id="mnav" class="mnav" data-menu="" data-open="0" role="dialog" aria-modal="true" aria-label="Menu">
+<div class="mnav-top"><span class="mnav-brand" style="display: inline-flex; align-items: center; gap: 10px;"><img src="/assets/3686ecb19fa4d0be98c5f110534276f8.png" alt="" width="38" height="35" style="width: 38px; height: auto; display: block;">Juhui Seo</span><button type="button" class="menubtn" data-menu-close="">Close</button></div>
+<nav aria-label="Main" class="mnav-links">
+<a href="/#work" data-goto="work" style="--i:0">← All work</a>
+<a href="/#about" data-goto="about" style="--i:1">About</a>
+<a href="/#contact" data-goto="contact" style="--i:2">Contact</a>
+</nav>
+</div>
+
+<!-- HERO -->
+<section class="w hero" style="padding-top:72px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:end">
+<div style="display:flex;flex-direction:column;gap:22px">
+<span class="lbl">Case 01 · Graduation internship · 2026</span>
+<h1 class="d" style="font-size:clamp(56px,7.8vw,112px)">IDEXX · Animana</h1>
+<p class="p" style="font-size:24px;line-height:1.35">Redesigning stock management for vet clinics, with the redesign now on IDEXX’s build roadmap.</p>
+</div>
+<div class="media" style="aspect-ratio:16/10">
+<img class="heroimg" src="/assets/17d09ba35f0be80121fcddb8be89d8b0.webp" alt="Redesigned Animana stock dashboard" style="object-position:left top">
+</div>
+</section>
+<section class="w" style="padding-top:36px">
+<dl class="meta" style="margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid #151515">
+<div style="padding:14px 18px 14px 0;border-bottom:1px solid rgba(21,21,21,.18);display:flex;flex-direction:column;gap:6px"><dt class="cap">Role</dt><dd style="margin:0;font-size:16px">UX design intern, sole UX designer</dd></div>
+<div style="padding:14px 18px 14px 0;border-bottom:1px solid rgba(21,21,21,.18);display:flex;flex-direction:column;gap:6px"><dt class="cap">Timeline</dt><dd style="margin:0;font-size:16px">Jan – Jul 2026 · 6 months</dd></div>
+<div style="padding:14px 18px 14px 0;border-bottom:1px solid rgba(21,21,21,.18);display:flex;flex-direction:column;gap:6px"><dt class="cap">Team</dt><dd style="margin:0;font-size:16px">4 PMs, dev team</dd></div>
+<div style="padding:14px 0;border-bottom:1px solid rgba(21,21,21,.18);display:flex;flex-direction:column;gap:6px"><dt class="cap">Built with</dt><dd style="margin:0;font-size:16px">Figma → Claude Design → Claude Code</dd></div>
+</dl>
+</section>
+
+<!-- TL;DR -->
+<section class="w" style="padding-top:56px;display:flex;flex-direction:column;gap:18px">
+<span class="hand" style="font-size:34px;align-self:flex-start;transform:rotate(-2deg);transform-origin:left center">At a glance</span>
+<div class="g4">
+<div class="card stat"><span class="n">2 in 5</span><span class="t">customers used stock management. Most of the rest used paper.</span></div>
+<div class="card stat"><span class="n" data-count="5">5</span><span class="t">clinics visited: the Stock team’s first field research.</span></div>
+<div class="card stat"><span class="n" data-count="2">2</span><span class="t">weeks from Figma to a working, testable prototype.</span></div>
+<div class="card stat"><span class="n">✓</span><span class="t">Development-ready and on the build roadmap.</span></div>
+</div>
+</section>
+
+<!-- BODY -->
+<div class="w body" style="display:grid;grid-template-columns:190px minmax(0,1fr);gap:72px;padding-top:16px">
+<nav class="side" style="padding-top:112px">
+<div class="toc" style="position:sticky;top:120px">
+<span class="rail"></span><span class="fill"></span>
+<a href="#s0" data-go="0">01 The problem</a>
+<a href="#s1" data-go="1">02 Three decisions</a>
+<a href="#s2" data-go="2">03 How I built it</a>
+<a href="#s3" data-go="3">04 Test &amp; iterate</a>
+<a href="#s4" data-go="4">05 Outcome</a>
+</div>
+</nav>
+<div>
+
+<!-- 01 PROBLEM -->
+<section id="s0" data-s="0" class="sec">
+<span class="cap b">01 / The problem</span>
+<h2 class="d h2">Every feature was there. Clinics trusted paper instead.</h2>
+<p class="p">Animana’s stock workflow had grown <b>more complex than the paper process it replaced</b>. I synthesised 300+ earlier research notes, then visited <b>5 clinics</b> for contextual inquiry and interviews.</p>
+<div class="split" style="display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:28px;align-items:start">
+<div class="photos" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:200px 200px;gap:10px">
+<div class="media" style="grid-row:span 2"><img src="/assets/239e81409c6d3005727ed0a9c3c168df.webp" alt="Clinic storage room with shelves of medicine boxes"></div>
+<div class="media" style="grid-column:span 2"><img src="/assets/cb02896f9f00cb9970b04db1d57772e8.webp" alt="Clinic staff member checking pharmacy shelves during a visit"></div>
+<div class="media" style="grid-row:span 2"><img src="/assets/ddf5b849c67a0eb2030359089663c473.webp" alt="Taking notes by hand next to a delivery trolley"></div>
+<div class="media" style="grid-column:span 2"><img src="/assets/7a89c6a8416cf4bf0ef7bf04a2199b45.webp" alt="Staff member showing a medicine cabinet"></div>
+</div>
+<div class="notes" style="padding-top:4px">
+<div class="note"><span class="k">1</span><span>Staff <b>printed order lists and fixed them by hand</b>.</span></div>
+<div class="note"><span class="k">2</span><span>Stock sat in <b>many places</b>: pharmacy, storage, even vets’ cars.</span></div>
+<div class="note"><span class="k">3</span><span>Batch tracking worked for <b>one supplier only</b>.</span></div>
+<div class="note"><span class="k">4</span><span>Orders passed between staff with <b>little visibility</b>.</span></div>
+</div>
+</div>
+<figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+<div class="media" style="aspect-ratio:2400/788;background:#FFFFFF"><img src="/assets/90e1b27fb1ccc4fdc0164aef896d3977.webp" alt="Map of the current external ordering flow with user pain points on sticky notes" style="object-fit:contain"></div>
+<figcaption class="cap">The old ordering flow, step by step. Pain points in yellow.</figcaption>
+</figure>
+<p class="hand" style="font-size:clamp(34px,3.8vw,54px);margin:8px 0 0;max-width:860px">It was all <span style="background:linear-gradient(transparent 62%, rgba(35,67,181,.18) 62%)">too scattered</span>, so people gave up halfway.</p>
+<div class="g3">
+<div class="rule"><span class="d" style="font-size:36px">Simple.</span><p class="li">Fewer steps. Nothing entered twice.</p></div>
+<div class="rule"><span class="d" style="font-size:36px">Visible.</span><p class="li">Always see what was ordered, and where it is.</p></div>
+<div class="rule"><span class="d" style="font-size:36px">In control.</span><p class="li">Mistakes are easy to undo and fix.</p></div>
+</div>
+<span class="cap" style="margin-top:-12px">Design principles, from 140 data notes and 27 prioritised insights</span>
+</section>
+
+<!-- 02 DECISIONS -->
+<section id="s1" data-s="1" class="sec">
+<span class="cap b">02 / Three decisions</span>
+<h2 class="d h2">One place to start, one page to order, one step to book in</h2>
+<p class="p">I scored three directions on impact and effort, then checked them with the Stock PM.</p>
+<div class="g3 concepts">
+<div class="card cpt on"><span class="ptag" style="background:#2343B5;color:#F9F7F2">Chosen</span><span class="d" style="font-size:26px">One entry point, with automation</span><span class="imp">High impact · High effort</span><p class="li">The biggest improvement across the workflow, and a long-term blueprint.</p></div>
+<div class="card cpt"><span class="d" style="font-size:26px">Fewer steps in the current system</span><span class="imp">Medium-high impact · Low–medium effort</span><p class="li">Familiar and cheap, but it keeps the scattered structure.</p></div>
+<div class="card cpt"><span class="d" style="font-size:26px">Accuracy first, through validation</span><span class="imp">High impact · Medium-high effort</span><p class="li">More reliable, but too many checks could overwhelm staff.</p></div>
+</div>
+<p class="p" style="font-size:16px;color:#4F4A42">I built on the first and kept one idea from the third: checks only at the moment they matter.</p>
+
+<div class="dec">
+<div class="dhead"><span class="big">01</span><div style="display:flex;flex-direction:column;gap:18px"><span class="ptag">Visible</span><h3 class="d" style="font-size:clamp(30px,3vw,42px)">A dashboard as the one place to start</h3><p class="p" style="font-size:16px">Stock information was spread across many pages.</p></div></div>
+<div class="media vid" style="aspect-ratio:1920/906"><video data-auto="" muted="" loop="" playsinline="" preload="metadata" poster="/assets/a85ab389071c3f05d62be230e4964ce6.jpg" aria-label="Stock dashboard: filtering locations and checking stock alerts"><source src="/assets/625ecf69b5cc1791ca8cf9aa518f3a39.mp4" type="video/mp4"></video></div>
+<div class="zooms">
+<figure class="zf"><div class="zimg"><img src="/assets/0a138ecac429035dab57545797554f08.webp" alt="Location cards with out-of-stock, under-minimum and expired counts" loading="lazy"></div><figcaption class="zc"><span class="zn">1</span>Every location at a glance, colour-coded by status.</figcaption></figure>
+<figure class="zf"><div class="zimg"><img src="/assets/ea6e2380f497bcc7c637438be257a884.webp" alt="Stock alerts tabs: out of stock, under minimum, expired, discrepancies" loading="lazy"></div><figcaption class="zc"><span class="zn">2</span>Alerts come first: out of stock, under minimum, expired.</figcaption></figure>
+</div>
+<p class="tline"><span class="cap">Trade-off</span>I designed only with Animana’s <span class="x">existing design system</span>, so it was quick to build and hand over. <span class="z">A few older patterns held usability back.</span></p>
+</div>
+
+<div class="dec">
+<div class="dhead"><span class="big">02</span><div style="display:flex;flex-direction:column;gap:18px"><span class="ptag">Simple</span><h3 class="d" style="font-size:clamp(30px,3vw,42px)">One page for every order</h3><p class="p" style="font-size:16px">One order took seven-plus steps and hand-offs.</p></div></div>
+<div class="media vid" style="aspect-ratio:1920/906"><video data-auto="" muted="" loop="" playsinline="" preload="metadata" poster="/assets/088e27412e6061e756099dc294d3e459.jpg" aria-label="New order page: adjusting suggested quantities and building the final order list"><source src="/assets/f807300096125cd4350d58d75829ea8e.mp4" type="video/mp4"></video></div>
+<div class="zooms">
+<figure class="zf"><div class="zimg"><img src="/assets/7ab98f7c708277b8944f7849f4e8bd3a.webp" alt="New order page with numbered tabs: suggested, internal, client, manual" loading="lazy"></div><figcaption class="zc"><span class="zn">1</span>Every order type on one page, in numbered sections.</figcaption></figure>
+<figure class="zf"><div class="zimg"><img src="/assets/547f2cb5c7b54f5db5d3b9d028b7cf03.webp" alt="Suggested quantities next to stock and min/max levels" loading="lazy"></div><figcaption class="zc"><span class="zn">2</span>Suggested quantities, already filled in from min/max levels.</figcaption></figure>
+</div>
+<p class="tline"><span class="cap">Trade-off</span>Putting every order on one page made it long, so <span class="x">numbered steps with quick-jump links</span> keep it easy to move through.</p>
+</div>
+
+<div class="dec">
+<div class="dhead"><span class="big">03</span><div style="display:flex;flex-direction:column;gap:18px"><span class="ptag">In control</span><h3 class="d" style="font-size:clamp(30px,3vw,42px)">Book in a delivery in one modal</h3><p class="p" style="font-size:16px">Partial deliveries and batch numbers were handled by hand.</p></div></div>
+<div class="media vid" style="aspect-ratio:1920/906"><video data-auto="" muted="" loop="" playsinline="" preload="metadata" poster="/assets/dcce550cc5870737d9e089ad2fe6f3ae.jpg" aria-label="Book-in modal: splitting a partial delivery into arrived and delayed"><source src="/assets/d7a68cd461d15e4d4255a241ef09a9ee.mp4" type="video/mp4"></video></div>
+<div class="zooms">
+<figure class="zf"><div class="zimg"><img src="/assets/62cd90f465a9db827824fcb9914ec350.webp" alt="Batch number field inside the book-in row" loading="lazy"></div><figcaption class="zc"><span class="zn">1</span>Batch numbers go in right where the item is booked in.</figcaption></figure>
+<figure class="zf"><div class="zimg"><img src="/assets/65a8259892a5b74dc5e0852fc421b47e.webp" alt="A line split into two arrived and two delayed" loading="lazy"></div><figcaption class="zc"><span class="zn">2</span>A partial delivery splits into arrived and delayed.</figcaption></figure>
+</div>
+<p class="tline"><span class="cap">Trade-off</span>One modal now holds a lot. To keep it manageable, <span class="x">batch fields only appear when an item needs them</span>.</p>
+</div>
+</section>
+
+<!-- 03 BUILT -->
+<section id="s2" data-s="2" class="sec">
+<span class="cap b">03 / How I built it</span>
+<h2 class="d h2">A prototype that behaves like the product</h2>
+<p class="p">None of these screens existed in Animana yet. I designed them in Figma, then built a prototype where <b>every screen shares the same data</b>.</p>
+<div class="flow">
+<div class="fstep"><span class="cap b">You do</span><span class="ft">Place a new order</span></div>
+<span class="farr" aria-hidden="true">→</span>
+<div class="fstep"><span class="cap">Dashboard</span><span class="ft">Open orders <b>37 → 38</b></span></div>
+<span class="farr" aria-hidden="true">→</span>
+<div class="fstep"><span class="cap">Order pipeline</span><span class="ft">“Placed today” <b>+1</b></span></div>
+<span class="farr" aria-hidden="true">→</span>
+<div class="fstep"><span class="cap">Book in</span><span class="ft">Stock, back orders and alerts follow</span></div>
+</div>
+<div class="media vid" style="aspect-ratio:1920/906"><video data-auto="" muted="" loop="" playsinline="" preload="metadata" poster="/assets/c6be0921cea30e6ea2507acd3f8c917e.jpg" aria-label="Sending orders, then the order list and pipeline update with the new orders"><source src="/assets/fa131f42110693649a78f45e63e23057.mp4" type="video/mp4"></video></div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+<span class="chip">Figma</span><span style="color:#2343B5">→</span><span class="chip">Claude Design</span><span style="color:#2343B5">→</span><span class="chip">Claude Code</span><span style="color:#2343B5">→</span><span class="chip">GitHub</span><span style="color:#2343B5">→</span><span class="chip" style="background:#2343B5;border-color:#2343B5;color:#F9F7F2">Vercel</span>
+</div>
+<div class="rec">
+<div><span class="cap">New patterns, tried for real</span><p class="li">All three patterns were <b>new to Animana</b>. AI let me test them as working screens.</p></div>
+<div><span class="cap">The whole flow, connected</span><p class="li">One shared data model, so the prototype follows the <b>real user flow</b> from order to stock.</p></div>
+<div><span class="cap" style="color:#16297A">Tested fast</span><p class="li">A testable concept in <b>two weeks</b>. Testing showed where my rules didn’t match real stock.</p></div>
+</div>
+<p class="hand" style="font-size:34px;margin:0">AI built it fast. Checking it against how clinics really work made it right.</p>
+</section>
+
+<!-- 04 TEST -->
+<section id="s3" data-s="3" class="sec">
+<span class="cap b">04 / Test &amp; iterate</span>
+<h2 class="d h2">From “nearly there” to ready to build</h2>
+<p class="p"><b>5 internal stakeholders</b>, some with a veterinary background, created an order and booked it in. Their feedback became <b>23 insights</b>; I fixed the two biggest.</p>
+<div class="g2">
+<div class="card" style="border-color:#2343B5;box-shadow:6px 6px 0 #2343B5"><span class="cap b">✓ Worked</span><p class="li">Colour-coded status at a glance. The order list felt “like a shopping cart”.</p></div>
+<div class="card" style="background:transparent"><span class="cap">Didn’t</span><p class="li">“Add to order” got lost on long lists. Back orders clashed with batch tracking.</p></div>
+</div>
+<div class="cmp" data-cmp="" aria-label="Drag to compare the book-in modal before and after iteration">
+<img src="/assets/39e5f7e08f18dc3e3d7b19e753988d9a.webp" alt="Book-in modal before iteration">
+<img class="aft" src="/assets/b28b13acde8d1b01e7c180b8c57997fc.webp" alt="Book-in modal after iteration">
+<span class="tg l">Before</span><span class="tg r">After</span>
+<span class="bar"></span><span class="knob" aria-hidden="true">↔</span>
+</div>
+</section>
+
+<!-- 05 OUTCOME -->
+<section id="s4" data-s="4" class="sec" style="padding-bottom:40px">
+<span class="cap b">05 / Outcome</span>
+<h2 class="d h2">Development-ready, and on the roadmap</h2>
+<p class="p">I presented the redesign to the Animana department and handed over a development-ready version. It will be built step by step during the move to Angular, <span style="text-decoration:underline;text-decoration-color:#2343B5;text-decoration-thickness:1.5px;text-underline-offset:4px">starting with ordering</span>.</p>
+<div class="g3">
+<div class="card"><span class="cap">What I learned</span><span class="d" style="font-size:28px">Go to the shelf</span><p class="li">Watching clinics explained what 300+ notes couldn’t.</p></div>
+<div class="card"><span class="cap">What I learned</span><span class="d" style="font-size:28px">Prototype the logic</span><p class="li">Real logic made testing realistic and showed what to improve.</p></div>
+<div class="card" style="background:#DCE2F4;border-color:#2343B5"><span class="cap" style="color:#16297A">What I’d change</span><span class="d" style="font-size:28px;color:#16297A">Next time</span><p class="li">I’d test with clinic staff too, and propose design-system updates where existing patterns held usability back.</p></div>
+</div>
+</section>
+
+</div>
+</div>
+
+<!-- NEXT -->
+<a class="next" href="/nstem" style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:flex-end;margin-top:72px;padding:56px calc(max((100% - 1280px) / 2, 0px) + clamp(40px,6vw,88px)) 64px;background:#2343B5;color:#F9F7F2;text-decoration:none">
+<div style="display:flex;flex-direction:column;gap:12px"><span class="cap" style="color:#DCE2F4">Next case</span><span class="d" style="font-size:clamp(56px,7vw,96px);color:#F9F7F2">NSTEM →</span></div>
+<span class="nq" style="font-size:17px;max-width:360px;text-align:right">How might a nonprofit’s site make sense to students, and still keep its brand?</span>
+</a>
+<div class="dot" ref="{{refDot}}" aria-hidden="true"><i></i></div>
+</div>
+</template>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":10900}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+var self = this;
+this.root = null; this.dot = null; this.raf = 0; this.glideRaf = 0; this.timers = [];
+this.refRoot = function (el) { self.root = el; };
+this.refDot = function (el) { self.dot = el; };
+this.onScroll = function () { if (self.raf) return; self.raf = requestAnimationFrame(function () { self.raf = 0; self.update(); }); };
+this.onResize = function () { self.update(); };
+this.stopGlide = function () { if (self.glideRaf) { cancelAnimationFrame(self.glideRaf); self.glideRaf = 0; } };
+// TOC links glide to their section.
+this.onClick = function (e) {
+if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+var g = e.target.closest ? e.target.closest('[data-goto]') : null;
+if (g) return;
+var a = e.target.closest ? e.target.closest('a[href^="#s"], a[href="#top"]') : null;
+if (!a || !self.root || !self.root.contains(a)) return;
+var t = self.root.querySelector(a.getAttribute('href'));
+if (!t) return;
+e.preventDefault(); self.glideTo(t);
+};
+// Hovering a numbered note highlights its pin on the screen.
+this.onOver = function (e) {
+var c = e.target.closest ? e.target.closest('.why [data-k]') : null;
+var dec = e.target.closest ? e.target.closest('.dec') : null;
+if (dec) { if (c) dec.dataset.hl = c.dataset.k; else delete dec.dataset.hl; }
+};
+this.onOut = function (e) { var dec = e.target.closest ? e.target.closest('.dec') : null; if (dec && !dec.contains(e.relatedTarget)) delete dec.dataset.hl; };
+// Before/after slider.
+this.drag = null;
+this.onDown = function (e) {
+var g = e.target.closest ? e.target.closest('[data-goto]') : null;
+if (g) { var gv = g.getAttribute('data-goto'); try { sessionStorage.setItem('jh-goto', gv); } catch (x) {} try { localStorage.setItem('jh-goto', gv); } catch (x) {} }
+if (self.dot) self.dot.dataset.down = '1';
+var c = e.target.closest ? e.target.closest('[data-cmp]') : null;
+if (!c) return;
+self.drag = c; try { c.setPointerCapture(e.pointerId); } catch (x) {}
+if (self.dot) self.dot.dataset.drag = '1';
+self.slide(e);
+};
+this.onMove = function (e) {
+if (self.drag) self.slide(e);
+var d = self.dot; if (!d || e.pointerType === 'touch') return;
+d.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+d.dataset.on = '1';
+var t = e.target && e.target.closest ? e.target : null;
+d.dataset.hover = t && t.closest('a, button, [data-cmp], .why [data-k]') ? '1' : '0';
+d.dataset.dark = t && t.closest('[data-dark]') ? '1' : '0';
+};
+this.onUp = function () { self.drag = null; if (self.dot) { self.dot.dataset.drag = '0'; self.dot.dataset.down = '0'; } };
+this.onLeave = function () { if (self.dot) self.dot.dataset.on = '0'; };
+}
+slide(e) {
+var r = this.drag.getBoundingClientRect();
+var x = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+this.drag.style.setProperty('--x', (x * 100).toFixed(2) + '%');
+}
+componentDidMount() {
+this.menuSetup();
+var reduce = false;
+try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+this.reduce = reduce;
+var root = this.root;
+document.addEventListener('scroll', this.onScroll, { capture: true, passive: true });
+window.addEventListener('resize', this.onResize);
+window.addEventListener('wheel', this.stopGlide, { passive: true });
+window.addEventListener('touchstart', this.stopGlide, { passive: true });
+document.addEventListener('pointermove', this.onMove, { passive: true });
+document.addEventListener('pointerdown', this.onDown, true);
+document.addEventListener('pointerup', this.onUp);
+document.addEventListener('pointercancel', this.onUp);
+document.addEventListener('mouseleave', this.onLeave);
+if (root) {
+root.addEventListener('click', this.onClick);
+root.addEventListener('mouseover', this.onOver);
+root.addEventListener('mouseout', this.onOut);
+var fine = false;
+try { fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches; } catch (e) {}
+if (fine) root.classList.add('has-dot');
+var next = root.querySelector('a[style*="#2343B5"]'); if (next) next.setAttribute('data-dark', '1');
+}
+var self = this;
+requestAnimationFrame(function () { self.update(); });
+this.timers.push(setTimeout(function () { self.update(); }, 800));
+this.initMotion();
+}
+// Mobile header: the Menu button opens the links as a full-screen sheet (same as the landing page).
+menuSetup() {
+var root = this.root;
+if (!root) return;
+var menu = root.querySelector('[data-menu]'), open = root.querySelector('[data-menu-toggle]'), close = root.querySelector('[data-menu-close]');
+if (!menu || !open) return;
+var set = function (on) {
+menu.setAttribute('data-open', on ? '1' : '0');
+open.setAttribute('aria-expanded', on ? 'true' : 'false');
+document.documentElement.style.overflow = on ? 'hidden' : '';
+if (on) { var f = menu.querySelector('.mnav-links a'); if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 60); }
+else open.focus({ preventScroll: true });
+};
+open.addEventListener('click', function () { set(true); });
+if (close) close.addEventListener('click', function () { set(false); });
+menu.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) { menu.setAttribute('data-open', '0'); open.setAttribute('aria-expanded', 'false'); document.documentElement.style.overflow = ''; } });
+this.onMenuKey = function (e) { if (e.key === 'Escape' && menu.getAttribute('data-open') === '1') set(false); };
+document.addEventListener('keydown', this.onMenuKey);
+}
+componentWillUnmount() {
+if (this.onMenuKey) document.removeEventListener('keydown', this.onMenuKey);
+document.documentElement.style.overflow = '';
+this.stopMotion();
+document.removeEventListener('scroll', this.onScroll, { capture: true });
+window.removeEventListener('resize', this.onResize);
+window.removeEventListener('wheel', this.stopGlide);
+window.removeEventListener('touchstart', this.stopGlide);
+document.removeEventListener('pointermove', this.onMove);
+document.removeEventListener('pointerdown', this.onDown, true);
+document.removeEventListener('pointerup', this.onUp);
+document.removeEventListener('pointercancel', this.onUp);
+document.removeEventListener('mouseleave', this.onLeave);
+if (this.root) { this.root.removeEventListener('click', this.onClick); this.root.removeEventListener('mouseover', this.onOver); this.root.removeEventListener('mouseout', this.onOut); }
+if (this.raf) cancelAnimationFrame(this.raf);
+this.stopGlide();
+this.timers.forEach(function (t) { clearTimeout(t); });
+}
+// Runs once per frame while scrolling: TOC state and progress, plus number count-ups. No re-render.
+update() {
+var root = this.root; if (!root) return;
+this.reveal();
+var hd = root.querySelector('[data-hd]');
+if (hd) hd.style.borderBottomColor = root.getBoundingClientRect().top < -8 ? 'rgba(21,21,21,0.18)' : 'transparent';
+var vh = Math.min(window.innerHeight, 1000);
+var secs = root.querySelectorAll('section[data-s]');
+var links = root.querySelectorAll('.toc a[data-go]');
+var fill = root.querySelector('.toc .fill');
+var cur = -1, prog = 0;
+for (var i = 0; i < secs.length; i++) {
+var r = secs[i].getBoundingClientRect();
+if (r.top < vh * 0.4) { cur = i; prog = Math.max(0, Math.min(1, (vh * 0.4 - r.top) / Math.max(1, r.height))); }
+}
+for (var j = 0; j < links.length; j++) {
+links[j].dataset.on = j < cur ? '1' : '0';
+links[j].dataset.cur = j === cur ? '1' : '0';
+}
+if (fill && links.length) {
+var rail = fill.parentElement.getBoundingClientRect();
+var y = 0;
+if (cur >= 0) {
+var a = links[cur].getBoundingClientRect();
+var b = cur + 1 < links.length ? links[cur + 1].getBoundingClientRect() : { top: rail.bottom - 4 };
+y = (a.top - rail.top) + ((b.top - a.top) * prog);
+}
+fill.style.transform = 'scaleY(' + Math.max(0, Math.min(1, y / Math.max(1, rail.height - 8))).toFixed(4) + ')';
+}
+var self = this;
+// Count-ups: driven by the on-screen observer when there is one; this is the fallback.
+if (!this.io) root.querySelectorAll('[data-count]').forEach(function (el) { if (el.getBoundingClientRect().top <= vh * 0.9) self.countUp(el); });
+}
+countUp(el) {
+if (el.dataset.done) return;
+el.dataset.done = '1';
+var to = +el.dataset.count, suf = el.dataset.suffix || '', fr = +(el.dataset.from || 0), dec = +(el.dataset.dec || 0);
+if (this.reduce) { el.textContent = to.toFixed(dec) + suf; el.dataset.fin = '1'; return; }
+var t0 = performance.now();
+var tick = function (now) {
+if (!el.dataset.done) return;
+var p = Math.min(1, (now - t0) / 700), e = 1 - Math.pow(1 - p, 3);
+el.textContent = (fr + (to - fr) * e).toFixed(dec) + suf;
+if (p < 1) requestAnimationFrame(tick); else el.dataset.fin = '1';
+};
+el.textContent = fr.toFixed(dec) + suf;
+requestAnimationFrame(tick);
+}
+// ---- Shared motion: smooth (inertial) wheel scrolling + scroll reveals ----
+initMotion() {
+var self = this, root = this.motionRoot();
+if (!root) return;
+this.revealEls = [];
+if (this.reduce) root.classList.add('rv-off');
+this.markReveals(root);
+this.revealEls = Array.prototype.slice.call(root.querySelectorAll('[data-rv]'));
+// IntersectionObserver measures against what is really on screen, even when the canvas
+// (not this frame) is the thing that scrolls.
+if ('IntersectionObserver' in window) {
+var watched = this.revealEls.concat(Array.prototype.slice.call(root.querySelectorAll('[data-count]')));
+this.io = new IntersectionObserver(function (entries) {
+entries.forEach(function (en) {
+if (!en.isIntersecting) return;
+var el = en.target;
+if (el.hasAttribute('data-rv')) el.dataset.in = '1';
+if (el.hasAttribute('data-count')) self.countUp(el);
+});
+}, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+// A zoomed-out canvas shows the whole board at once, so everything "appears" before anyone
+// reads it. Whatever then sits fully below the screen is reset, and plays when scrolled to.
+if (!this.reduce) {
+this.io2 = new IntersectionObserver(function (entries) {
+entries.forEach(function (en) { en.target._vis = en.isIntersecting; });
+var vt = null;
+probes.forEach(function (el) { if (el._vis) { var t = el.getBoundingClientRect().top; if (vt === null || t > vt) vt = t; } });
+if (vt === null) return;
+entries.forEach(function (en) {
+if (en.isIntersecting || en.boundingClientRect.top <= vt) return;
+var el = en.target;
+if (el.dataset.in) delete el.dataset.in;
+if (el.dataset.done) { delete el.dataset.done; delete el.dataset.fin; el.textContent = (+(el.dataset.from || 0)).toFixed(+(el.dataset.dec || 0)) + (el.dataset.suffix || ''); }
+});
+}, { threshold: 0 });
+}
+var probes = watched.concat(Array.prototype.slice.call(root.querySelectorAll('section, header, footer')));
+watched.forEach(function (el) { self.io.observe(el); });
+if (this.io2) probes.forEach(function (el) { self.io2.observe(el); });
+}
+// Videos: muted loops that play only while on screen (paused, with controls, for reduced motion).
+var vids = root.querySelectorAll('video[data-auto]');
+if (this.reduce) vids.forEach(function (v) { v.controls = true; });
+else if ('IntersectionObserver' in window) {
+this.vio = new IntersectionObserver(function (entries) {
+entries.forEach(function (en) { var v = en.target; if (en.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); });
+}, { threshold: 0.35 });
+vids.forEach(function (v) { v.muted = true; self.vio.observe(v); });
+}
+// Scroll frames marked data-play move like a screen recording while on screen; any wheel, touch or key hands control back.
+var tours = root.querySelectorAll('[data-play]');
+if (!this.reduce && tours.length && 'IntersectionObserver' in window) {
+this.tio = new IntersectionObserver(function (entries) {
+entries.forEach(function (en) { var el = en.target; el._on = en.isIntersecting; if (el._on && !el._raf && !el._stop) self.playTour(el); });
+}, { threshold: 0.5 });
+tours.forEach(function (el) {
+var stop = function () { el._stop = true; if (el._raf) { cancelAnimationFrame(el._raf); el._raf = 0; } };
+['wheel', 'pointerdown', 'touchstart', 'keydown'].forEach(function (t) { el.addEventListener(t, stop, { passive: true }); });
+self.tio.observe(el);
+});
+}
+var hi = root.querySelectorAll('.heroimg');
+this.timers.push(setTimeout(function () { hi.forEach(function (e) { e.dataset.in = '1'; }); self.reveal(); }, 120));
+var fine = false;
+try { fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches; } catch (e) {}
+if (fine && !this.reduce) {
+this.onWheelSmooth = function (e) { self.wheelSmooth(e); };
+window.addEventListener('wheel', this.onWheelSmooth, { passive: false });
+}
+}
+stopMotion() {
+if (this.io) this.io.disconnect();
+if (this.io2) this.io2.disconnect();
+if (this.vio) this.vio.disconnect();
+if (this.tio) { this.tio.disconnect(); (this.motionRoot() || document).querySelectorAll('[data-play]').forEach(function (el) { el._stop = true; if (el._raf) cancelAnimationFrame(el._raf); el._raf = 0; }); }
+if (this.onWheelSmooth) window.removeEventListener('wheel', this.onWheelSmooth, { passive: false });
+if (this.smoothRaf) cancelAnimationFrame(this.smoothRaf);
+}
+// One pass down at reading pace, a pause, a smooth return to the top, then again.
+playTour(el) {
+var pos = el.scrollTop, phase = 'down', wait = performance.now() + 700, last = 0, from = 0, t0 = 0;
+var step = function (now) {
+if (el._stop || !el._on) { el._raf = 0; return; }
+var max = el.scrollHeight - el.clientHeight;
+if (max < 2) { el._raf = 0; return; }
+if (now >= wait) {
+if (phase === 'down') {
+pos = Math.min(max, pos + Math.min(48, now - (last || now)) * 0.12);
+el.scrollTop = pos;
+if (pos >= max - 1) { phase = 'up'; wait = now + 1600; t0 = wait; from = pos; }
+} else {
+var p = Math.min(1, (now - t0) / 1100), e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+pos = from * (1 - e); el.scrollTop = pos;
+if (p >= 1) { phase = 'down'; pos = 0; wait = now + 1400; }
+}
+}
+last = now;
+el._raf = requestAnimationFrame(step);
+};
+el._raf = requestAnimationFrame(step);
+}
+reveal() {
+var els = this.revealEls; if (!els || !els.length) return;
+var vh = Math.min(window.innerHeight, 1000);
+if (this.io) return;
+for (var i = els.length - 1; i >= 0; i--) {
+var el = els[i];
+if (el.getBoundingClientRect().top < vh * 0.9) { el.dataset.in = '1'; els.splice(i, 1); }
+}
+}
+// Wheel input eases toward its target (like Lenis). Keyboard, scrollbar and touch stay native.
+wheelSmooth(e) {
+if (e.ctrlKey || e.defaultPrevented || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+var sc = this.scroller();
+var max = sc.scrollHeight - sc.clientHeight;
+if (max < 2) return;
+var t = e.target;
+while (t && t !== sc && t !== document.body && t.nodeType === 1) {
+var o = getComputedStyle(t).overflowY;
+if ((o === 'auto' || o === 'scroll') && t.scrollHeight > t.clientHeight + 1) return; // inner scroller: leave it alone
+t = t.parentElement;
+}
+var d = e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? sc.clientHeight : 1);
+if (!this.smoothRaf) this.smoothTarget = sc.scrollTop;
+var next = Math.max(0, Math.min(max, this.smoothTarget + d));
+if (next === this.smoothTarget && (next <= 0 || next >= max)) return; // at an edge: let the outer view scroll
+e.preventDefault();
+this.smoothTarget = next;
+if (this.glideRaf) { cancelAnimationFrame(this.glideRaf); this.glideRaf = 0; }
+var self = this;
+if (this.smoothRaf) return;
+var step = function () {
+var cur = sc.scrollTop, to = self.smoothTarget;
+var n = cur + (to - cur) * 0.1;
+if (Math.abs(to - n) < 0.5) { sc.scrollTop = to; self.smoothRaf = 0; return; }
+sc.scrollTop = n;
+self.smoothRaf = requestAnimationFrame(step);
+};
+this.smoothRaf = requestAnimationFrame(step);
+}
+motionRoot() { return this.root; }
+// What rises in: blocks inside each section; cards in a row follow each other.
+markReveals(root) {
+var GRID = '.g2,.g3,.g4,.why,.zooms,.notes,.photos', DIG = '.split,.dec,figure,.hero > div:first-child';
+var walk = function (el) {
+Array.prototype.forEach.call(el.children, function (c) {
+if (c.matches(DIG)) walk(c);
+else if (c.matches(GRID)) Array.prototype.forEach.call(c.children, function (k, i) { k.setAttribute('data-rv', ''); k.style.setProperty('--rd', Math.min(i, 3) * 90 + 'ms'); });
+else c.setAttribute('data-rv', '');
+});
+};
+root.querySelectorAll('.cs > section, .body section.sec').forEach(function (sec) { walk(sec); });
+root.querySelectorAll('.hero > div:first-child > *').forEach(function (k, i) { k.style.setProperty('--rd', i * 90 + 'ms'); });
+}
+scroller() {
+var el = this.root ? this.root.parentElement : null;
+while (el && el !== document.body && el !== document.documentElement) {
+var o = getComputedStyle(el).overflowY;
+if ((o === 'auto' || o === 'scroll') && el.scrollHeight > el.clientHeight + 1) return el;
+el = el.parentElement;
+}
+return document.scrollingElement || document.documentElement;
+}
+// Same glide as the landing page: slow wind-up, whoosh, soft landing.
+glideTo(target) {
+this.stopGlide();
+var sc = this.scroller();
+var isDoc = sc === document.scrollingElement || sc === document.documentElement;
+var scTop = isDoc ? 0 : sc.getBoundingClientRect().top;
+var from = sc.scrollTop;
+var hd = this.root.querySelector('[data-hd]'); var off = (hd ? hd.getBoundingClientRect().height : 0) + 24;
+if (target === this.root) off = 0;
+var to = Math.max(0, Math.min(from + target.getBoundingClientRect().top - scTop - off, sc.scrollHeight - sc.clientHeight));
+var dist = to - from;
+if (Math.abs(dist) < 2) return;
+if (this.reduce) { sc.scrollTop = to; return; }
+var dur = Math.max(950, Math.min(1800, 700 + Math.abs(dist) * 0.2));
+var ease = function (t) { var a = 0.45, c = 0.3803; return t < a ? c * Math.pow(t / a, 4) : 1 - (1 - c) * Math.pow((1 - t) / (1 - a), 3); };
+var t0 = performance.now(), self = this;
+var step = function (now) {
+var p = Math.min(1, (now - t0) / dur);
+sc.scrollTop = from + dist * ease(p);
+self.glideRaf = p < 1 ? requestAnimationFrame(step) : 0;
+};
+this.glideRaf = requestAnimationFrame(step);
+}
+renderVals() { return { refRoot: this.refRoot, refDot: this.refDot }; }
+}
+</script>
+</body>
+</html>
