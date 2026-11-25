@@ -243,7 +243,9 @@
     host.flushRefs();
     inst.__host = host;
     if (typeof inst.componentDidMount === 'function') inst.componentDidMount();
-    window.addEventListener('pagehide', function () { if (typeof inst.componentWillUnmount === 'function') { try { inst.componentWillUnmount(); } catch (e) {} } });
+    // Only tear down when the page is really discarded. When it goes into the back/forward cache
+    // (e.persisted), it comes back exactly as it was, so its listeners must stay.
+    window.addEventListener('pagehide', function (e) { if (e.persisted) return; if (typeof inst.componentWillUnmount === 'function') { try { inst.componentWillUnmount(); } catch (err) {} } });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
