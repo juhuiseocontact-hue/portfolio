@@ -1068,6 +1068,15 @@ entries.forEach(function (en) { if (!en.isIntersecting && en.boundingClientRect.
 }
 var probes = watched.concat(Array.prototype.slice.call(root.querySelectorAll('section, header, footer')));
 watched.forEach(function (el) { self.io.observe(el); });
+// The reveal line sits 22% above the bottom of the screen, which the last items on the page can
+// never reach. Once the page is scrolled to its end, show whatever is on screen.
+this.onRvEnd = function () {
+var de = document.documentElement, vh = window.innerHeight;
+if (de.scrollHeight <= vh + 10 || window.scrollY + vh < de.scrollHeight - 4) return;
+watched.forEach(function (el) { if (el.getBoundingClientRect().top < vh) el.dataset.in = '1'; });
+};
+document.addEventListener('scroll', this.onRvEnd, { passive: true });
+this.onRvEnd();
 if (this.io2) probes.forEach(function (el) { self.io2.observe(el); });
 }
 var hi = root.querySelectorAll('.heroimg');
@@ -1082,6 +1091,7 @@ window.addEventListener('wheel', this.onWheelSmooth, { passive: false });
 stopMotion() {
 if (this.io) this.io.disconnect();
 if (this.io2) this.io2.disconnect();
+if (this.onRvEnd) document.removeEventListener('scroll', this.onRvEnd, { passive: true });
 if (this.onWheelSmooth) window.removeEventListener('wheel', this.onWheelSmooth, { passive: false });
 if (this.smoothRaf) cancelAnimationFrame(this.smoothRaf);
 }
